@@ -1,8 +1,8 @@
-# [Yo-Kai Watch Randomizer]()
+# [Yo-Kai Watch Randomizer](https://github.com/Tiniifan/YKWrandomizer/releases/tag/1.0.0.0)
 ___________________________________________________________________________
 **Disclaimer**
 
-I'm not affiliated with Level-5, I'm a fan who wants to give a new way to have fun with Yo-Kai Watch games!
+I'm not affiliated with Level-5, I'm a fan who wants to share a new way to have fun in Yo-Kai Watch games!
 
 **What is a Randomizer?**
 
@@ -27,8 +27,9 @@ Tool|Random Encounter
 :-------------------------:|:------------------------:
 ![](https://i.imgur.com/Rso1nQI.png)  |  ![](https://i.imgur.com/qMEeua4.png)
 
-Now, it's you turn to create your dream team!
+Do you have a problem with the tool? <br/>
+Do you have a suggestion? <br/>
+Do you want to share your random run? <br/>
+[Join the Official Discord!](https://discord.gg/TMp8fuygAV)
 
-[Download YKWrandomizer]()
-
-[Discord Server Link](https://discord.gg/TMp8fuygAV)
+[Direct Download Link of YKWrandomizer](https://github.com/Tiniifan/YKWrandomizer/releases/download/1.0.0.0/YKWrandomizer.exe)
