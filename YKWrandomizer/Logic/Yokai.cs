@@ -28,8 +28,6 @@ namespace YKWrandomizer.Logic
 
         public int Experience;
 
-        public bool BeFriend;
-
         public UInt32 CharabaseID;
 
         public string Name;
@@ -43,21 +41,42 @@ namespace YKWrandomizer.Logic
             Status = _Status;
         }
 
-        public void NewStat(int min, int max)
+        public void NewStat(RandomNumber seed, int min, int max)
         {
             for (int stat = 0; stat < BaseStat.Count; stat++)
             {
-                if (Evolution != null)
-                {
-                    min = Evolution.EvolutionTo.BaseStat[stat];
-                }
-
-                if (stat > 0 & Evolution == null)
+                if (stat > 0)
                 {
                     min = 13;
                 }
 
-                BaseStat[stat] = new RandomNumber(min, max).GetNumber() + (Rank.ID + 1) * 2;
+                BaseStat[stat] = seed.GetNumber(min, max) + (Rank.ID + 1) * 2;
+
+                if (Status.Name == "Boss Friendly")
+                {
+                    BaseStat[stat] += 10;
+                }
+            }
+        }
+
+        public void NewStat(RandomNumber seed)
+        {
+            for (int stat = 0; stat < BaseStat.Count; stat++)
+            {
+                int min = Evolution.EvolutionTo.BaseStat[stat] - (Evolution.EvolutionTo.Rank.ID + 1) * 2;
+                int max = 38;
+
+                if (Evolution.EvolutionTo.Status.Name == "Boss Friendly")
+                {
+                    max += 10;
+                }
+
+                BaseStat[stat] = seed.GetNumber(min, max) + (Rank.ID + 1) * 2;
+
+                if (Status.Name == "Boss Friendly")
+                {
+                    BaseStat[stat] += 10;
+                }
             }
         }
     }

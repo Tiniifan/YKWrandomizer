@@ -2,7 +2,7 @@
 
 namespace YKWrandomizer.Common
 {
-    public class StaticYokais
+    public static class StaticYokais
     {
         public static IDictionary<string, List<uint>> YW1 = new Dictionary<string, List<uint>>
         {

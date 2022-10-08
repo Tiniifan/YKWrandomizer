@@ -99,6 +99,6 @@ namespace YKWrandomizer.Common
             {0xE2FD1D25, new Move("Blazing Spirit")},
             {0xAB46DFF4, new Move("Loiterer")},
             {0xC9B1AB2C, new Move("Revenge")}
-    };
+        };
     }
 }

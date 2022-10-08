@@ -31,6 +31,16 @@
             return new Status("Unused");
         }
 
+        public static Status YoCriminal()
+        {
+            return new Status("Yo-Criminal");
+        }
+
+        public static Status BossFriendly()
+        {
+            return new Status("Boss Friendly");
+        }
+
         public static Status NPC()
         {
             return new Status("NPC");

@@ -7,6 +7,7 @@ namespace YKWrandomizer.Common
     {
         public static List<Tribe> YW1 = new List<Tribe>
         {
+            Tribe.NoTribe(),
             Tribe.Brave(),
             Tribe.Mysterious(),
             Tribe.Tough(),

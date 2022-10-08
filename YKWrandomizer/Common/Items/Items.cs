@@ -200,6 +200,6 @@ namespace YKWrandomizer.Common
             {0xF1701046, new Item("Tourmaline")},
             {0x67401731, new Item("Opal")},
             {0xDD111EA8, new Item("Emerald")},
-    };
+        };
     }
 }

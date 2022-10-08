@@ -51,6 +51,6 @@ namespace YKWrandomizer.Common
             {0x29F6B929, new Move("Slap")},
             {0xFA32C923, new Move("Sharp Claws")},
             {0x1B7E6227, new Move("Maul")},
-    };
+        };
     }
 }

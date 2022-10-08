@@ -232,7 +232,7 @@ namespace YKWrandomizer.Common
             {0xF87AEBDB, new Move("Shut Away (Hidabat)")},
             {0x3B64C643, new Move("Slow Down")},
             {0x8C3EE792, new Move("Venoct's Blessing")},
-    };
+        };
     }
 }
 
