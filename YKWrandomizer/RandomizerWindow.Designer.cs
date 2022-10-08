@@ -34,15 +34,10 @@ namespace YKWrandomizer
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomizeSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.joinTheDiscordToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBoxMiscellaneous = new System.Windows.Forms.GroupBox();
-            this.checkBoxFriendly = new System.Windows.Forms.CheckBox();
+            this.checkBoxAllowEvolution = new System.Windows.Forms.CheckBox();
             this.checkBoxScaleEXP = new System.Windows.Forms.CheckBox();
             this.checkBoxScaleMoney = new System.Windows.Forms.CheckBox();
             this.groupBoxSoultimateMove = new System.Windows.Forms.GroupBox();
@@ -88,6 +83,9 @@ namespace YKWrandomizer
             this.radioButtonBaseStat2 = new System.Windows.Forms.RadioButton();
             this.radioButtonBaseStat1 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.groupBoxBossBaseStat = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDownBossBaseStat = new System.Windows.Forms.NumericUpDown();
@@ -100,17 +98,17 @@ namespace YKWrandomizer
             this.radioButtonGivenYokai2 = new System.Windows.Forms.RadioButton();
             this.radioButtonGivenYokai1 = new System.Windows.Forms.RadioButton();
             this.groupBoxStatic = new System.Windows.Forms.GroupBox();
+            this.checkBoxAllowStatic = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDownStaticYokai = new System.Windows.Forms.NumericUpDown();
             this.radioButtonStaticYokai2 = new System.Windows.Forms.RadioButton();
             this.radioButtonStaticYokai1 = new System.Windows.Forms.RadioButton();
             this.groupBoxWild = new System.Windows.Forms.GroupBox();
             this.checkBoxAllowBossWild = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.numericUpDownWild = new System.Windows.Forms.NumericUpDown();
-            this.checkBoxScoutAllYokai = new System.Windows.Forms.CheckBox();
             this.radioButtonWild2 = new System.Windows.Forms.RadioButton();
             this.radioButtonWild1 = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBoxLegendaryYokai = new System.Windows.Forms.GroupBox();
             this.checkBoxAllowBossLegendaryYokai = new System.Windows.Forms.CheckBox();
@@ -127,6 +125,8 @@ namespace YKWrandomizer
             this.groupBoxShop = new System.Windows.Forms.GroupBox();
             this.radioButtonShop2 = new System.Windows.Forms.RadioButton();
             this.radioButtonShop1 = new System.Windows.Forms.RadioButton();
+            this.numericUpDownSeed = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -143,6 +143,7 @@ namespace YKWrandomizer
             this.groupBoxTribe.SuspendLayout();
             this.groupBoxBaseStat.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.groupBoxBossBaseStat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBossBaseStat)).BeginInit();
             this.groupBoxBossSwap.SuspendLayout();
@@ -156,14 +157,14 @@ namespace YKWrandomizer
             this.groupBoxCrankKai.SuspendLayout();
             this.groupBoxTreasureBox.SuspendLayout();
             this.groupBoxShop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeed)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
-            this.randomizeSaveToolStripMenuItem,
-            this.optionsToolStripMenuItem});
+            this.randomizeSaveToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(816, 24);
@@ -183,13 +184,13 @@ namespace YKWrandomizer
             // 
             this.fileToolStripMenuItem.Enabled = false;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // folderToolStripMenuItem
             // 
             this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
-            this.folderToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.folderToolStripMenuItem.Text = "Folder";
             this.folderToolStripMenuItem.Click += new System.EventHandler(this.FolderToolStripMenuItem_Click);
             // 
@@ -200,44 +201,6 @@ namespace YKWrandomizer
             this.randomizeSaveToolStripMenuItem.Size = new System.Drawing.Size(113, 20);
             this.randomizeSaveToolStripMenuItem.Text = "Randomize (Save)";
             this.randomizeSaveToolStripMenuItem.Click += new System.EventHandler(this.RandomizeSaveToolStripMenuItem_Click);
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem,
-            this.joinTheDiscordToolStripMenuItem1});
-            this.optionsToolStripMenuItem.Enabled = false;
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "Options";
-            this.optionsToolStripMenuItem.Visible = false;
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadSettingsToolStripMenuItem,
-            this.saveSettingsToolStripMenuItem});
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            // 
-            // loadSettingsToolStripMenuItem
-            // 
-            this.loadSettingsToolStripMenuItem.Name = "loadSettingsToolStripMenuItem";
-            this.loadSettingsToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.loadSettingsToolStripMenuItem.Text = "Load Settings";
-            // 
-            // saveSettingsToolStripMenuItem
-            // 
-            this.saveSettingsToolStripMenuItem.Name = "saveSettingsToolStripMenuItem";
-            this.saveSettingsToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.saveSettingsToolStripMenuItem.Text = "Save Settings";
-            // 
-            // joinTheDiscordToolStripMenuItem1
-            // 
-            this.joinTheDiscordToolStripMenuItem1.Name = "joinTheDiscordToolStripMenuItem1";
-            this.joinTheDiscordToolStripMenuItem1.Size = new System.Drawing.Size(158, 22);
-            this.joinTheDiscordToolStripMenuItem1.Text = "Join the Discord";
             // 
             // tabControl1
             // 
@@ -275,7 +238,7 @@ namespace YKWrandomizer
             // 
             // groupBoxMiscellaneous
             // 
-            this.groupBoxMiscellaneous.Controls.Add(this.checkBoxFriendly);
+            this.groupBoxMiscellaneous.Controls.Add(this.checkBoxAllowEvolution);
             this.groupBoxMiscellaneous.Controls.Add(this.checkBoxScaleEXP);
             this.groupBoxMiscellaneous.Controls.Add(this.checkBoxScaleMoney);
             this.groupBoxMiscellaneous.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -286,16 +249,16 @@ namespace YKWrandomizer
             this.groupBoxMiscellaneous.TabStop = false;
             this.groupBoxMiscellaneous.Text = "Miscellaneous";
             // 
-            // checkBoxFriendly
+            // checkBoxAllowEvolution
             // 
-            this.checkBoxFriendly.AutoSize = true;
-            this.checkBoxFriendly.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxFriendly.Location = new System.Drawing.Point(23, 74);
-            this.checkBoxFriendly.Name = "checkBoxFriendly";
-            this.checkBoxFriendly.Size = new System.Drawing.Size(143, 17);
-            this.checkBoxFriendly.TabIndex = 18;
-            this.checkBoxFriendly.Text = "All Yo-Kai can be friendly";
-            this.checkBoxFriendly.UseVisualStyleBackColor = true;
+            this.checkBoxAllowEvolution.AutoSize = true;
+            this.checkBoxAllowEvolution.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxAllowEvolution.Location = new System.Drawing.Point(23, 76);
+            this.checkBoxAllowEvolution.Name = "checkBoxAllowEvolution";
+            this.checkBoxAllowEvolution.Size = new System.Drawing.Size(111, 30);
+            this.checkBoxAllowEvolution.TabIndex = 18;
+            this.checkBoxAllowEvolution.Text = "Allow Hidden \r\nYokai in Evolution";
+            this.checkBoxAllowEvolution.UseVisualStyleBackColor = true;
             // 
             // checkBoxScaleEXP
             // 
@@ -825,6 +788,7 @@ namespace YKWrandomizer
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.groupBoxBossBaseStat);
             this.tabPage2.Controls.Add(this.groupBoxBossSwap);
             this.tabPage2.Controls.Add(this.groupBoxGivenYokai);
@@ -838,14 +802,50 @@ namespace YKWrandomizer
             this.tabPage2.Text = "Wild Yokai";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Controls.Add(this.radioButton2);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(592, 137);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(186, 116);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Watch Map Yokai Area";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton1.Location = new System.Drawing.Point(23, 48);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(65, 17);
+            this.radioButton1.TabIndex = 7;
+            this.radioButton1.Text = "Random";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Checked = true;
+            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton2.Location = new System.Drawing.Point(23, 25);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(81, 17);
+            this.radioButton2.TabIndex = 6;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Unchanged";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
             // groupBoxBossBaseStat
             // 
             this.groupBoxBossBaseStat.Controls.Add(this.label3);
             this.groupBoxBossBaseStat.Controls.Add(this.numericUpDownBossBaseStat);
             this.groupBoxBossBaseStat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxBossBaseStat.Location = new System.Drawing.Point(592, 15);
+            this.groupBoxBossBaseStat.Location = new System.Drawing.Point(206, 137);
             this.groupBoxBossBaseStat.Name = "groupBoxBossBaseStat";
-            this.groupBoxBossBaseStat.Size = new System.Drawing.Size(196, 116);
+            this.groupBoxBossBaseStat.Size = new System.Drawing.Size(186, 116);
             this.groupBoxBossBaseStat.TabIndex = 5;
             this.groupBoxBossBaseStat.TabStop = false;
             this.groupBoxBossBaseStat.Text = "Boss Base Stat";
@@ -863,9 +863,9 @@ namespace YKWrandomizer
             // numericUpDownBossBaseStat
             // 
             this.numericUpDownBossBaseStat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownBossBaseStat.Location = new System.Drawing.Point(146, 25);
+            this.numericUpDownBossBaseStat.Location = new System.Drawing.Point(139, 25);
             this.numericUpDownBossBaseStat.Name = "numericUpDownBossBaseStat";
-            this.numericUpDownBossBaseStat.Size = new System.Drawing.Size(47, 20);
+            this.numericUpDownBossBaseStat.Size = new System.Drawing.Size(41, 20);
             this.numericUpDownBossBaseStat.TabIndex = 10;
             // 
             // groupBoxBossSwap
@@ -874,7 +874,7 @@ namespace YKWrandomizer
             this.groupBoxBossSwap.Controls.Add(this.radioButtonBossSwap2);
             this.groupBoxBossSwap.Controls.Add(this.radioButtonBossSwap1);
             this.groupBoxBossSwap.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxBossSwap.Location = new System.Drawing.Point(398, 15);
+            this.groupBoxBossSwap.Location = new System.Drawing.Point(12, 137);
             this.groupBoxBossSwap.Name = "groupBoxBossSwap";
             this.groupBoxBossSwap.Size = new System.Drawing.Size(188, 116);
             this.groupBoxBossSwap.TabIndex = 4;
@@ -924,9 +924,9 @@ namespace YKWrandomizer
             this.groupBoxGivenYokai.Controls.Add(this.radioButtonGivenYokai2);
             this.groupBoxGivenYokai.Controls.Add(this.radioButtonGivenYokai1);
             this.groupBoxGivenYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxGivenYokai.Location = new System.Drawing.Point(397, 137);
+            this.groupBoxGivenYokai.Location = new System.Drawing.Point(398, 137);
             this.groupBoxGivenYokai.Name = "groupBoxGivenYokai";
-            this.groupBoxGivenYokai.Size = new System.Drawing.Size(189, 116);
+            this.groupBoxGivenYokai.Size = new System.Drawing.Size(186, 116);
             this.groupBoxGivenYokai.TabIndex = 3;
             this.groupBoxGivenYokai.TabStop = false;
             this.groupBoxGivenYokai.Text = "Given YoKai";
@@ -938,9 +938,9 @@ namespace YKWrandomizer
             this.checkBoxAllowBossGiven.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxAllowBossGiven.Location = new System.Drawing.Point(110, 25);
             this.checkBoxAllowBossGiven.Name = "checkBoxAllowBossGiven";
-            this.checkBoxAllowBossGiven.Size = new System.Drawing.Size(77, 17);
+            this.checkBoxAllowBossGiven.Size = new System.Drawing.Size(60, 43);
             this.checkBoxAllowBossGiven.TabIndex = 10;
-            this.checkBoxAllowBossGiven.Text = "Allow Boss";
+            this.checkBoxAllowBossGiven.Text = "Allow \r\nHidden\r\nYokai";
             this.checkBoxAllowBossGiven.UseVisualStyleBackColor = true;
             // 
             // radioButtonGivenYokai2
@@ -970,24 +970,37 @@ namespace YKWrandomizer
             // 
             // groupBoxStatic
             // 
+            this.groupBoxStatic.Controls.Add(this.checkBoxAllowStatic);
             this.groupBoxStatic.Controls.Add(this.label2);
             this.groupBoxStatic.Controls.Add(this.numericUpDownStaticYokai);
             this.groupBoxStatic.Controls.Add(this.radioButtonStaticYokai2);
             this.groupBoxStatic.Controls.Add(this.radioButtonStaticYokai1);
             this.groupBoxStatic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxStatic.Location = new System.Drawing.Point(12, 137);
+            this.groupBoxStatic.Location = new System.Drawing.Point(398, 15);
             this.groupBoxStatic.Name = "groupBoxStatic";
             this.groupBoxStatic.Size = new System.Drawing.Size(380, 116);
             this.groupBoxStatic.TabIndex = 2;
             this.groupBoxStatic.TabStop = false;
             this.groupBoxStatic.Text = "Static YoKai";
             // 
+            // checkBoxAllowStatic
+            // 
+            this.checkBoxAllowStatic.AutoSize = true;
+            this.checkBoxAllowStatic.Enabled = false;
+            this.checkBoxAllowStatic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxAllowStatic.Location = new System.Drawing.Point(128, 25);
+            this.checkBoxAllowStatic.Name = "checkBoxAllowStatic";
+            this.checkBoxAllowStatic.Size = new System.Drawing.Size(118, 17);
+            this.checkBoxAllowStatic.TabIndex = 11;
+            this.checkBoxAllowStatic.Text = "Allow Hidden Yokai";
+            this.checkBoxAllowStatic.UseVisualStyleBackColor = true;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Enabled = false;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(125, 27);
+            this.label2.Location = new System.Drawing.Point(125, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(134, 13);
             this.label2.TabIndex = 10;
@@ -997,9 +1010,9 @@ namespace YKWrandomizer
             // 
             this.numericUpDownStaticYokai.Enabled = false;
             this.numericUpDownStaticYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownStaticYokai.Location = new System.Drawing.Point(265, 25);
+            this.numericUpDownStaticYokai.Location = new System.Drawing.Point(265, 48);
             this.numericUpDownStaticYokai.Name = "numericUpDownStaticYokai";
-            this.numericUpDownStaticYokai.Size = new System.Drawing.Size(47, 20);
+            this.numericUpDownStaticYokai.Size = new System.Drawing.Size(41, 20);
             this.numericUpDownStaticYokai.TabIndex = 9;
             // 
             // radioButtonStaticYokai2
@@ -1030,11 +1043,10 @@ namespace YKWrandomizer
             // groupBoxWild
             // 
             this.groupBoxWild.Controls.Add(this.checkBoxAllowBossWild);
-            this.groupBoxWild.Controls.Add(this.label1);
             this.groupBoxWild.Controls.Add(this.numericUpDownWild);
-            this.groupBoxWild.Controls.Add(this.checkBoxScoutAllYokai);
             this.groupBoxWild.Controls.Add(this.radioButtonWild2);
             this.groupBoxWild.Controls.Add(this.radioButtonWild1);
+            this.groupBoxWild.Controls.Add(this.label1);
             this.groupBoxWild.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxWild.Location = new System.Drawing.Point(12, 15);
             this.groupBoxWild.Name = "groupBoxWild";
@@ -1050,41 +1062,19 @@ namespace YKWrandomizer
             this.checkBoxAllowBossWild.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxAllowBossWild.Location = new System.Drawing.Point(128, 25);
             this.checkBoxAllowBossWild.Name = "checkBoxAllowBossWild";
-            this.checkBoxAllowBossWild.Size = new System.Drawing.Size(80, 17);
+            this.checkBoxAllowBossWild.Size = new System.Drawing.Size(118, 17);
             this.checkBoxAllowBossWild.TabIndex = 8;
-            this.checkBoxAllowBossWild.Text = "Allow Boss ";
+            this.checkBoxAllowBossWild.Text = "Allow Hidden Yokai";
             this.checkBoxAllowBossWild.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Enabled = false;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(125, 73);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(134, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Percentage Level Modifier:";
             // 
             // numericUpDownWild
             // 
+            this.numericUpDownWild.Enabled = false;
             this.numericUpDownWild.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownWild.Location = new System.Drawing.Point(265, 71);
+            this.numericUpDownWild.Location = new System.Drawing.Point(265, 48);
             this.numericUpDownWild.Name = "numericUpDownWild";
-            this.numericUpDownWild.Size = new System.Drawing.Size(47, 20);
+            this.numericUpDownWild.Size = new System.Drawing.Size(41, 20);
             this.numericUpDownWild.TabIndex = 6;
-            // 
-            // checkBoxScoutAllYokai
-            // 
-            this.checkBoxScoutAllYokai.AutoSize = true;
-            this.checkBoxScoutAllYokai.Enabled = false;
-            this.checkBoxScoutAllYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxScoutAllYokai.Location = new System.Drawing.Point(128, 50);
-            this.checkBoxScoutAllYokai.Name = "checkBoxScoutAllYokai";
-            this.checkBoxScoutAllYokai.Size = new System.Drawing.Size(157, 17);
-            this.checkBoxScoutAllYokai.TabIndex = 5;
-            this.checkBoxScoutAllYokai.Text = "All Yokais Can Be Watched";
-            this.checkBoxScoutAllYokai.UseVisualStyleBackColor = true;
             // 
             // radioButtonWild2
             // 
@@ -1110,6 +1100,17 @@ namespace YKWrandomizer
             this.radioButtonWild1.TabStop = true;
             this.radioButtonWild1.Text = "Unchanged";
             this.radioButtonWild1.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Enabled = false;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(125, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(134, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Percentage Level Modifier:";
             // 
             // tabPage3
             // 
@@ -1146,9 +1147,9 @@ namespace YKWrandomizer
             this.checkBoxAllowBossLegendaryYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxAllowBossLegendaryYokai.Location = new System.Drawing.Point(23, 71);
             this.checkBoxAllowBossLegendaryYokai.Name = "checkBoxAllowBossLegendaryYokai";
-            this.checkBoxAllowBossLegendaryYokai.Size = new System.Drawing.Size(77, 17);
+            this.checkBoxAllowBossLegendaryYokai.Size = new System.Drawing.Size(118, 17);
             this.checkBoxAllowBossLegendaryYokai.TabIndex = 20;
-            this.checkBoxAllowBossLegendaryYokai.Text = "Allow Boss";
+            this.checkBoxAllowBossLegendaryYokai.Text = "Allow Hidden Yokai\r\n";
             this.checkBoxAllowBossLegendaryYokai.UseVisualStyleBackColor = true;
             // 
             // checkBoxRequirment
@@ -1208,9 +1209,9 @@ namespace YKWrandomizer
             this.checkBoxAllowBossCrankKai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxAllowBossCrankKai.Location = new System.Drawing.Point(110, 25);
             this.checkBoxAllowBossCrankKai.Name = "checkBoxAllowBossCrankKai";
-            this.checkBoxAllowBossCrankKai.Size = new System.Drawing.Size(77, 17);
+            this.checkBoxAllowBossCrankKai.Size = new System.Drawing.Size(60, 56);
             this.checkBoxAllowBossCrankKai.TabIndex = 11;
-            this.checkBoxAllowBossCrankKai.Text = "Allow Boss";
+            this.checkBoxAllowBossCrankKai.Text = "Allow \r\nHidden\r\nYokai\r\n\r\n";
             this.checkBoxAllowBossCrankKai.UseVisualStyleBackColor = true;
             // 
             // radioButtonCrankKai2
@@ -1310,11 +1311,35 @@ namespace YKWrandomizer
             this.radioButtonShop1.Text = "Unchanged";
             this.radioButtonShop1.UseVisualStyleBackColor = true;
             // 
+            // numericUpDownSeed
+            // 
+            this.numericUpDownSeed.BackColor = System.Drawing.SystemColors.Control;
+            this.numericUpDownSeed.Location = new System.Drawing.Point(207, 3);
+            this.numericUpDownSeed.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.numericUpDownSeed.Name = "numericUpDownSeed";
+            this.numericUpDownSeed.Size = new System.Drawing.Size(83, 20);
+            this.numericUpDownSeed.TabIndex = 2;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(173, 5);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Seed";
+            // 
             // RandomizerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(816, 448);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.numericUpDownSeed);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -1322,6 +1347,7 @@ namespace YKWrandomizer
             this.MinimumSize = new System.Drawing.Size(832, 487);
             this.Name = "RandomizerWindow";
             this.Text = "Yo-Kai Watch Randomizer";
+            this.Load += new System.EventHandler(this.RandomizerWindow_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -1351,6 +1377,8 @@ namespace YKWrandomizer
             this.groupBoxBaseStat.ResumeLayout(false);
             this.groupBoxBaseStat.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBoxBossBaseStat.ResumeLayout(false);
             this.groupBoxBossBaseStat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBossBaseStat)).EndInit();
@@ -1373,6 +1401,7 @@ namespace YKWrandomizer
             this.groupBoxTreasureBox.PerformLayout();
             this.groupBoxShop.ResumeLayout(false);
             this.groupBoxShop.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1385,10 +1414,6 @@ namespace YKWrandomizer
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem folderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem randomizeSaveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveSettingsToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.GroupBox groupBoxSkill;
@@ -1418,7 +1443,6 @@ namespace YKWrandomizer
         private System.Windows.Forms.RadioButton radioButtonStaticYokai1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDownWild;
-        private System.Windows.Forms.CheckBox checkBoxScoutAllYokai;
         private System.Windows.Forms.RadioButton radioButtonWild2;
         private System.Windows.Forms.RadioButton radioButtonWild1;
         private System.Windows.Forms.GroupBox groupBoxGivenYokai;
@@ -1443,14 +1467,12 @@ namespace YKWrandomizer
         private System.Windows.Forms.GroupBox groupBoxDrop;
         private System.Windows.Forms.RadioButton radioButtonDrop2;
         private System.Windows.Forms.RadioButton radioButtonDrop1;
-        private System.Windows.Forms.ToolStripMenuItem joinTheDiscordToolStripMenuItem1;
         private System.Windows.Forms.CheckBox checkBoxRequirment;
         private System.Windows.Forms.RadioButton radioButtonEvolution3;
         private System.Windows.Forms.GroupBox groupBoxCrankKai;
         private System.Windows.Forms.RadioButton radioButtonCrankKai2;
         private System.Windows.Forms.RadioButton radioButtonCrankKai1;
         private System.Windows.Forms.GroupBox groupBoxMiscellaneous;
-        private System.Windows.Forms.CheckBox checkBoxFriendly;
         private System.Windows.Forms.CheckBox checkBoxScaleEXP;
         private System.Windows.Forms.CheckBox checkBoxScaleMoney;
         private System.Windows.Forms.GroupBox groupBoxSoultimateMove;
@@ -1478,6 +1500,13 @@ namespace YKWrandomizer
         private System.Windows.Forms.GroupBox groupBoxBossBaseStat;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDownBossBaseStat;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.CheckBox checkBoxAllowStatic;
+        private System.Windows.Forms.CheckBox checkBoxAllowEvolution;
+        private System.Windows.Forms.NumericUpDown numericUpDownSeed;
+        private System.Windows.Forms.Label label4;
     }
 }
 

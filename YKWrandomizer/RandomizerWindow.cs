@@ -17,6 +17,12 @@ namespace YKWrandomizer
             InitializeComponent();
         }
 
+        private void RandomizerWindow_Load(object sender, EventArgs e)
+        {
+            numericUpDownSeed.Value = new Random().Next(0, 2147483647);
+            this.ActiveControl = label4;
+        }
+
         private int GroupRadioButtonSelectedIndex(GroupBox groupBox)
         {
             var radioButtons = groupBox.Controls.OfType<RadioButton>().OrderBy(x => x.Name);
@@ -44,8 +50,18 @@ namespace YKWrandomizer
             {
                 if (Directory.Exists(ofd.SelectedPath + "/yw1_a_fa/"))
                 {
-                    Game = new YW("yw1", ofd.SelectedPath);
-                    this.Text = "Yo-Kai Watch 1 Randomizer";
+                    if (File.ReadAllBytes(ofd.SelectedPath + "/yw1_a_fa/data/res/character/chara_param_0.02.cfg.bin").Length < 125424)
+                    {
+                        MessageBox.Show("chara_param_0.02.cfg.bin unmodified detected\nJoin the Discord server for more information about this error: https://discord.gg/TMp8fuygAV");
+                        this.Text = "Yo-Kai Watch Randomizer";
+                        tabControl1.Enabled = false;
+                        randomizeSaveToolStripMenuItem.Enabled = false;
+                        return;
+                    } else
+                    {
+                        Game = new YW("yw1", ofd.SelectedPath);
+                        this.Text = "Yo-Kai Watch 1 Randomizer";
+                    }
                 } 
                 else
                 {
@@ -63,6 +79,9 @@ namespace YKWrandomizer
 
         private void RandomizeSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Get Seed
+            Game.Seed = new Tools.RandomNumber(Convert.ToInt32(numericUpDownSeed.Value));
+
             Game.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxAllowBossLegendaryYokai.Checked, checkBoxRequirment.Checked);
             Game.BossBaseStat(numericUpDownBossBaseStat.Value);
             Game.BossSwap(radioButtonBossSwap2.Checked, checkBoxScaleStat.Checked);
@@ -80,16 +99,17 @@ namespace YKWrandomizer
                 GroupRadioButtonSelectedIndex(groupBoxBaseStat),
                 Convert.ToInt32(checkBoxScaleMoney.Checked),
                 Convert.ToInt32(checkBoxScaleEXP.Checked),
-                Convert.ToInt32(checkBoxFriendly.Checked)
+                Convert.ToInt32(checkBoxAllowEvolution.Checked)
                 );
 
             Game.RandomizeCrankKai(radioButtonCrankKai2.Checked, checkBoxAllowBossCrankKai.Checked);
             Game.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
             Game.RandomizeShop(radioButtonShop2.Checked);
             
-            Game.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
+            Game.RandomizeStatic(radioButtonStaticYokai2.Checked, checkBoxAllowStatic.Checked, numericUpDownStaticYokai.Value);
             Game.RandomizeGiven(radioButtonGivenYokai2.Checked, checkBoxAllowBossGiven.Checked);
-            Game.RandomizeWild(radioButtonWild2.Checked, checkBoxAllowBossWild.Checked, checkBoxScoutAllYokai.Checked, numericUpDownWild.Value);
+            Game.RandomizeWild(radioButtonWild2.Checked, checkBoxAllowBossWild.Checked, numericUpDownWild.Value);
+            Game.RandomizeWatchmapArea(radioButton1.Checked);
 
             DialogResult dialogResult = MessageBox.Show("Randomized successful!\nDo you want to export the log of random in .txt?", "Save random log", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -135,7 +155,7 @@ namespace YKWrandomizer
                 randomLog += "--Evolutions--\n";
                 for (int i = 0; i < Game.Yokais.Count; i++)
                 {
-                    Yokai yokai = null;
+                    Yokai yokai;
 
                     // Guet The Yokai Order
                     if (i < 223)
@@ -157,7 +177,7 @@ namespace YKWrandomizer
                 randomLog += "\n--Legends Yokai--\n";
                 for (int i = 0; i < Game.Yokais.Count; i++)
                 {
-                    Yokai yokai = null;
+                    Yokai yokai;
 
                     // Guet The Yokai Order
                     if (i < 223)
@@ -192,13 +212,11 @@ namespace YKWrandomizer
             label1.Enabled = radioButtonWild2.Checked;
             numericUpDownWild.Enabled = radioButtonWild2.Checked;
             checkBoxAllowBossWild.Enabled = radioButtonWild2.Checked;
-            checkBoxScoutAllYokai.Enabled = radioButtonWild2.Checked;
 
             if (radioButtonWild2.Checked == false)
             {
                 numericUpDownWild.Value = 0;
                 checkBoxAllowBossWild.Checked = false;
-                checkBoxScoutAllYokai.Checked = true;
             }
         }
 
@@ -225,11 +243,13 @@ namespace YKWrandomizer
         private void RadioButtonStaticYokai2_CheckedChanged(object sender, EventArgs e)
         {
             label2.Enabled = radioButtonStaticYokai2.Checked;
+            checkBoxAllowStatic.Enabled = radioButtonStaticYokai2.Checked;
             numericUpDownStaticYokai.Enabled = radioButtonStaticYokai2.Checked;
 
             if (radioButtonStaticYokai2.Checked == false)
             {
                 numericUpDownStaticYokai.Value = 0;
+                checkBoxAllowStatic.Checked = false;
             }
         }
 
