@@ -45,6 +45,10 @@ namespace YKWrandomizer.YokaiWatch
 
         private List<Rank> Ranks = new List<Rank>() { Rank.E(), Rank.D(), Rank.C(), Rank.B(), Rank.A(), Rank.S() };
 
+        private List<UInt32> Areas;
+
+        public RandomNumber Seed;
+
         public YW(string _Name, string _Directory)
         {
             switch (_Name)
@@ -62,6 +66,7 @@ namespace YKWrandomizer.YokaiWatch
                     StaticYokais = Common.StaticYokais.YW1;
                     MedalliumOrder = Common.Medalliums.YW1;
                     Tribes = Common.Tribes.YW1;
+                    Areas = Common.Areas.YW1;
                     LegendaryYokaisNumber = 5;
                     break;
                 default:
@@ -74,6 +79,22 @@ namespace YKWrandomizer.YokaiWatch
             LoadYokais();
         }
 
+        private Dictionary<UInt32, Yokai> GetYokais(bool hiddenYokai)
+        {
+            Dictionary<UInt32, Yokai> yokaisScoutable = new Dictionary<UInt32, Yokai>();
+
+            if (hiddenYokai == true)
+            {
+                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal" || x.Value.Status.Name == "Yo-Criminal" || x.Value.Status.Name == "Boss Friendly").ToDictionary(x => x.Key, x => x.Value);
+            }
+            else
+            {
+                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal").ToDictionary(x => x.Key, x => x.Value);
+            }
+
+            return yokaisScoutable;
+        }
+
         private void LoadYokais()
         {
             // Initialize File Reader
@@ -83,7 +104,7 @@ namespace YKWrandomizer.YokaiWatch
             if (Name == "yw1")
             {
                 // Create Dictionary Evolution
-                charaparamReader.Seek(0x1A0C8);
+                charaparamReader.Seek(0x1E5E8);
                 charaparamReader.Skip(0x10);
                 Evolutions = new Dictionary<int, Evolution>();
                 int evolutionCount = charaparamReader.ReadInt32();
@@ -99,60 +120,20 @@ namespace YKWrandomizer.YokaiWatch
                 charaparamReader.Seek(0x1C);
                 for (int i = 0; i < Yokais.Count; i++)
                 {
-                    charabaseReader.Seek(0x2BE0);
                     charaparamReader.Skip(0x14);
                     UInt32 charaparamID = charaparamReader.Reverse(charaparamReader.ReadUInt32());
                     UInt32 charabaseID = charaparamReader.Reverse(charaparamReader.ReadUInt32());
-                    UInt32 tryCharabaseID = 0x0;
 
+                    // Exclude NPC Yokai
                     if (Yokais[charaparamID].Status.Name != "NPC")
                     {
-                        while (charabaseID != tryCharabaseID)
-                        {
-                            charabaseReader.Skip(0x0C);
-                            tryCharabaseID = charabaseReader.Reverse(charabaseReader.ReadUInt32());
-                            charabaseReader.Skip(0x5C);
-                        }
-
-                        charabaseReader.Seek((uint)(charabaseReader.BaseStream.Position - 0x5C));
+                        // Find Position Of CharabaseReader
+                        charabaseReader.Seek(charabaseReader.FindUInt32BetweenRange(charabaseID, 0x2BEC, 0x68, 0xBAE4) - 0x0C);
 
                         // Tribe
-                        switch (charaparamReader.Read())
-                        {
-                            case 0x01:
-                                Yokais[charaparamID].Tribe = Tribe.Brave();
-                                break;
-                            case 0x02:
-                                Yokais[charaparamID].Tribe = Tribe.Mysterious();
-                                break;
-                            case 0x03:
-                                Yokais[charaparamID].Tribe = Tribe.Tough();
-                                break;
-                            case 0x04:
-                                Yokais[charaparamID].Tribe = Tribe.Charming();
-                                break;
-                            case 0x05:
-                                Yokais[charaparamID].Tribe = Tribe.Heartful();
-                                break;
-                            case 0x06:
-                                Yokais[charaparamID].Tribe = Tribe.Shady();
-                                break;
-                            case 0x07:
-                                Yokais[charaparamID].Tribe = Tribe.Eerie();
-                                break;
-                            case 0x08:
-                                Yokais[charaparamID].Tribe = Tribe.Slippery();
-                                break;
-                            case 0x09:
-                                Yokais[charaparamID].Tribe = Tribe.Wicked();
-                                break;
-                            default:
-                                Yokais[charaparamID].Tribe = Tribe.NoTribe();
-                                break;
-                        }
+                        Yokais[charaparamID].Tribe = Tribes[charaparamReader.ReadInt32()];
 
                         // Base Stat
-                        charaparamReader.Skip(0x03);
                         for (int s = 0; s < 5; s++)
                         {
                             Yokais[charaparamID].BaseStat[s] = charaparamReader.ReadInt32();
@@ -218,28 +199,8 @@ namespace YKWrandomizer.YokaiWatch
                         }
 
                         // Rank
-                        charabaseReader.Skip(0x28);
-                        switch (charabaseReader.ReadInt32())
-                        {
-                            case 0x01:
-                                Yokais[charaparamID].Rank = Rank.D();
-                                break;
-                            case 0x02:
-                                Yokais[charaparamID].Rank = Rank.C();
-                                break;
-                            case 0x03:
-                                Yokais[charaparamID].Rank = Rank.B();
-                                break;
-                            case 0x04:
-                                Yokais[charaparamID].Rank = Rank.A();
-                                break;
-                            case 0x05:
-                                Yokais[charaparamID].Rank = Rank.S();
-                                break;
-                            default:
-                                Yokais[charaparamID].Rank = Rank.E();
-                                break;
-                        }
+                        charabaseReader.Skip(0x38);
+                        Yokais[charaparamID].Rank = Ranks[charabaseReader.ReadInt32()];
 
                         // Rarity
                         if (charabaseReader.ReadInt32() == 0x01)
@@ -256,7 +217,8 @@ namespace YKWrandomizer.YokaiWatch
 
                         // Next Yokai
                         charaparamReader.Skip(0x08);
-                    } else
+                    }
+                    else
                     {
                         charaparamReader.Skip(0xC4);
                     }
@@ -294,37 +256,29 @@ namespace YKWrandomizer.YokaiWatch
                 }
 
                 // Create charaparamWriter
-                byte[] charaparam = new byte[107708 + evolutionByteArray.Length];
+                byte[] charaparam = new byte[125404 + evolutionByteArray.Length];
                 charaparamWriter = new DataWriter(charaparam);
-                charaparamWriter.Write(charaparamReader.GetSection(0x0, 106696));
+                charaparamWriter.Write(charaparamReader.GetSection(0x0, 124392));
                 charaparamWriter.Write(evolutionByteArray);
-                charaparamWriter.Write(charaparamReader.GetSection(0x1A1CC, 1012));
+                charaparamWriter.Write(charaparamReader.GetSection((uint)charaparamReader.Length-1012, 1012));
                 charaparamWriter.Seek(0x0);
-                charaparamWriter.WriteInt32(689 + Evolutions.Count);
-                charaparamWriter.WriteInt32(106696 + evolutionByteArray.Length + 436);
+                charaparamWriter.WriteInt32(768 + Evolutions.Count);
+                charaparamWriter.WriteInt32(124828 + evolutionByteArray.Length);
 
                 // Save Yokais
                 charaparamReader.Seek(0x1C);
                 for (int i = 0; i < Yokais.Count; i++)
                 {
-                    charabaseReader.Seek(0x2BE0);
                     charaparamReader.Skip(0x14);
                     UInt32 charaparamID = charaparamReader.Reverse(charaparamReader.ReadUInt32());
                     UInt32 charabaseID = charaparamReader.Reverse(charaparamReader.ReadUInt32());
-                    UInt32 tryCharabaseID = 0x0;
 
                     if (Yokais[charaparamID].Status.Name != "NPC")
                     {
-
-                        while (charabaseID != tryCharabaseID)
-                        {
-                            charabaseReader.Skip(0x0C);
-                            tryCharabaseID = charabaseReader.Reverse(charabaseReader.ReadUInt32());
-                            charabaseReader.Skip(0x5C);
-                        }
-
+                        // Set Position
+                        charabaseReader.Seek(charabaseReader.FindUInt32BetweenRange(charabaseID, 0x2BEC, 0x68, 0xBAE4) - 0x0C);
                         charaparamWriter.Seek((uint)charaparamReader.BaseStream.Position);
-                        charabaseWriter.Seek((uint)(charabaseReader.BaseStream.Position - 0x5C));
+                        charabaseWriter.Seek((uint)charabaseReader.BaseStream.Position);
 
                         // Tribe
                         charaparamWriter.WriteInt32(Yokais[charaparamID].Tribe.ID);
@@ -358,27 +312,13 @@ namespace YKWrandomizer.YokaiWatch
                         }
 
                         // Friendship 1
-                        if (i > 223 & Yokais[charaparamID].BeFriend == true)
-                        {
-                            charaparamWriter.Skip(0x0c);
-                            charaparamWriter.Write(new byte[24] { 0x01, 0x00, 0x00, 0x00, 0x66, 0x66, 0xA6, 0x3F, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x33, 0x33, 0x33, 0x3F });
-                        } 
-                        else
-                        {
-                            charaparamWriter.Skip(0x24);
-                        }
+                        charaparamWriter.Skip(0x24);
 
                         // Soultimate
                         charaparamWriter.WriteUInt32(Soultimates.FirstOrDefault(x => x.Value == Yokais[charaparamID].Moveset[3]).Key);
 
                         // Friendship 2
-                        if (i > 223 & Yokais[charaparamID].BeFriend == true)
-                        {
-                            charaparamWriter.Write(new byte[12] { 0x00, 0x00, 0x00, 0x1C, 0x56, 0xEB, 0xEF, 0x32, 0x67, 0x55, 0x24, 0xEB });
-                        } else
-                        {
-                            charaparamWriter.Skip(0x0C);
-                        }
+                        charaparamWriter.Skip(0x0C);
 
                         // Skill
                         charaparamWriter.WriteUInt32(Skills.FirstOrDefault(x => x.Value == Yokais[charaparamID].Skill).Key);
@@ -395,34 +335,29 @@ namespace YKWrandomizer.YokaiWatch
                         }
 
                         // Friendship 3
-                        if (i > 223 & Yokais[charaparamID].BeFriend == true)
-                        {
-                            charaparamWriter.Skip(0x20);
-                            charaparamWriter.Write(new byte[4] { 0xF7, 0xCD, 0x90, 0xA6 });
-                            charaparamWriter.Skip(0x10);
-                        }
-                        else
-                        {
-                            charaparamWriter.Skip(0x34);
-                        }
+                        charaparamWriter.Skip(0x34);
 
                         // Evolution
                         if (Yokais[charaparamID].Evolution != null)
                         {
                             charaparamWriter.WriteInt32(Evolutions.FirstOrDefault(x => x.Value == Yokais[charaparamID].Evolution).Key);
-                        } else
+                        } 
+                        else
                         {
                             charaparamWriter.Write(new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF });
                         }
 
-                        if (Yokais[charaparamID].Status.Name == "Normal")
+                        // Rank
+                        if (Yokais[charaparamID].Status.Name == "Normal" || Yokais[charaparamID].Status.Name == "Yo-Criminal" || Yokais[charaparamID].Status.Name == "Boss Friendly")
                         {
-                            // Rank
-                            charabaseWriter.Skip(0x28);
+                            charabaseWriter.Skip(0x38);
                             charabaseWriter.WriteInt32(Yokais[charaparamID].Rank.ID);
                             charabaseWriter.WriteInt32(Yokais[charaparamID].Rarity.ID);
                             charabaseWriter.WriteInt32(Convert.ToInt32(Yokais[charaparamID].IsLegendary));
+                        }
 
+                        if (Yokais[charaparamID].Status.Name == "Normal")
+                        {
                             // Draw Medals
                             if (i < 223)
                             {
@@ -444,8 +379,6 @@ namespace YKWrandomizer.YokaiWatch
                                 faceIcon = Draw.DrawImage(faceIcon, MedalliumOrder[i] % 23 * 44, MedalliumOrder[i] / 23 * 44, newMedal);
                             }
                         }
-
-
                     }
 
                     // Next Yokai
@@ -466,46 +399,36 @@ namespace YKWrandomizer.YokaiWatch
 
         private void GenerateYokais(params int[] options)
         {
-            // Possible Yokai For The Evolution
-            List<Yokai> possibleYokaiEvolve = new List<Yokai>();
-            if (options[13] == 0)
-            {
-                possibleYokaiEvolve = Yokais.Where(x => x.Value.Status.Name == "Normal").Select(x => x.Value).ToList();
-            }
-            else
-            {
-                possibleYokaiEvolve = Yokais.Where(x => x.Value.Status.Name != "MiniBoss").Select(x => x.Value).ToList();
-            }
+            // Create Evolve Yokais Dictionary
+            Dictionary<UInt32, Yokai> possibleYokaiEvolve = GetYokais(Convert.ToBoolean(options[13]));
 
             // Generate Random Evolution
             if (options[4] == 1)
             {
-                for (int i = 0; i < Yokais.Count; i++)
+                for (int i = 0; i < Evolutions.Count; i++)
                 {
-                    Yokai yokai = Yokais.ElementAt(i).Value;
-
-                    if (yokai.Evolution != null)
-                    {
-                        yokai.Evolution.EvolutionTo = possibleYokaiEvolve[new RandomNumber(0, possibleYokaiEvolve.Count).GetNumber()];
-                    }
+                    Yokai randomYokai = possibleYokaiEvolve.ElementAt(Seed.GetNumber(0, possibleYokaiEvolve.Count)).Value;
+                    Yokai pointedYokai = Yokais.FirstOrDefault(x => x.Value.Evolution == Evolutions[i]).Value;
+                    pointedYokai.Evolution.EvolutionTo = randomYokai;
+                    Evolutions[i].EvolutionTo = randomYokai;
                 }
             }
             else if (options[4] == 2)
             {
-                for (int i = 0; i < Yokais.Count; i++)
+                Evolutions.Clear();
+                for (int i = 0; i < possibleYokaiEvolve.Count; i++)
                 {
-                    Yokai yokai = Yokais.ElementAt(i).Value;
+                    int randomNumber = Seed.GetNumber(0, 101);
 
-                    if (options[13] == 0 && yokai.Status.Name != "Normal") continue;
-
-                    int randomNumber = new RandomNumber(0, 101).GetNumber();
                     if (randomNumber < 20)
                     {
-                        yokai.Evolution = new Evolution(possibleYokaiEvolve[new RandomNumber(0, possibleYokaiEvolve.Count).GetNumber()], new RandomNumber(1, 36).GetNumber());
+                        Evolution randomEvolution = new Evolution(possibleYokaiEvolve.ElementAt(Seed.GetNumber(0, possibleYokaiEvolve.Count)).Value, Seed.GetNumber(1, 36));
+                        possibleYokaiEvolve.ElementAt(i).Value.Evolution = randomEvolution;
+                        Evolutions.Add(Evolutions.Count, randomEvolution);
                     }
                     else
                     {
-                        yokai.Evolution = null;
+                        possibleYokaiEvolve.ElementAt(i).Value.Evolution = null;
                     }
                 }
             }
@@ -515,24 +438,24 @@ namespace YKWrandomizer.YokaiWatch
             {
                 Yokai yokai = Yokais.ElementAt(i).Value;
 
-                if (yokai.Status.Name == "Normal" || yokai.Status.Name == "MiniBoss")
+                if (yokai.Status.Name != "Boss" && yokai.Status.Name != "NPC")
                 {
                     // Randomize Tribe
                     if (options[0] != 0)
                     {
-                        yokai.Tribe = Tribes[new RandomNumber(0, Tribes.Count).GetNumber()];
+                        yokai.Tribe = Tribes[Seed.GetNumber(1, Tribes.Count)];
                     }
 
                     // Randomize Rank
                     if (options[1] != 0)
                     {
-                        yokai.Rank = Ranks[new RandomNumber(0, Ranks.Count).GetNumber()];
+                        yokai.Rank = Ranks[Seed.GetNumber(0, Ranks.Count)];
                     }
 
                     // Randomize Rarity
                     if (options[2] != 0)
                     {
-                        if (new RandomNumber(0, 101).GetNumber() < 95)
+                        if (Seed.GetNumber(0, 101) < 95)
                         {
                             yokai.Rarity = Rarity.Normal();
                         }
@@ -547,47 +470,47 @@ namespace YKWrandomizer.YokaiWatch
                     {
                         for (int drop = 0; drop < 2; drop++)
                         {
-                            yokai.Drops[drop] = Items.ElementAt(new RandomNumber(0, Items.Count).GetNumber()).Value;
+                            yokai.Drops[drop] = Items.ElementAt(Seed.GetNumber(0, Items.Count)).Value;
                         }
                     }
 
                     // Skills
                     if (options[5] == 1)
                     {
-                        yokai.Skill = Skills.ElementAt(new RandomNumber(1, Skills.Count).GetNumber()).Value;
+                        yokai.Skill = Skills.ElementAt(Seed.GetNumber(1, Skills.Count)).Value;
                     }
 
                     // Attacks
                     if (options[6] != 0)
                     {
-                        yokai.Moveset[0] = Attacks.ElementAt(new RandomNumber(1, Attacks.Count).GetNumber()).Value;
+                        yokai.Moveset[0] = Attacks.ElementAt(Seed.GetNumber(1, Attacks.Count)).Value;
                     }
 
                     // Techniques
                     if (options[7] != 0)
                     {
-                        yokai.Moveset[1] = Techniques.ElementAt(new RandomNumber(1, Techniques.Count).GetNumber()).Value;
+                        yokai.Moveset[1] = Techniques.ElementAt(Seed.GetNumber(1, Techniques.Count)).Value;
                     }
 
                     // Inspirit
                     if (options[8] != 0)
                     {
-                        yokai.Moveset[2] = Inspirits.ElementAt(new RandomNumber(1, Inspirits.Count).GetNumber()).Value;
+                        yokai.Moveset[2] = Inspirits.ElementAt(Seed.GetNumber(1, Inspirits.Count)).Value;
                     }
 
                     // Soultimate
                     if (options[9] != 0)
                     {
-                        yokai.Moveset[3] = Soultimates.ElementAt(new RandomNumber(1, Soultimates.Count).GetNumber()).Value;
+                        yokai.Moveset[3] = Soultimates.ElementAt(Seed.GetNumber(1, Soultimates.Count)).Value;
                     }
                 }
 
-                if (yokai.Status.Name == "Normal")
+                if (yokai.Status.Name == "Normal" || yokai.Status.Name == "Yo-Criminal" || yokai.Status.Name == "Boss Friendly")
                 {
                     // Base Stat
                     if (options[10] != 0)
                     {
-                        yokai.NewStat(25, 38);
+                        yokai.NewStat(Seed, 25, 38);
                     }
 
                     // Scale Money
@@ -608,15 +531,6 @@ namespace YKWrandomizer.YokaiWatch
                         }
                     }
                 }
-
-                if (yokai.Status.Name == "Normal" || yokai.Status.Name == "Boss")
-                {
-                    // Enable Friendly
-                    if (options[13] == 1)
-                    {
-                        yokai.BeFriend = true;
-                    }
-                }
             }
 
             // Fix Evolution
@@ -635,7 +549,7 @@ namespace YKWrandomizer.YokaiWatch
                     // Fix Rank
                     if (options[1] == 1)
                     {
-                        yokai.Rank = Ranks[new RandomNumber(yokai.Evolution.EvolutionTo.Rank.ID, Ranks.Count).GetNumber()];
+                        yokai.Rank = Ranks[Seed.GetNumber(yokai.Evolution.EvolutionTo.Rank.ID, Ranks.Count)];
                     }
 
                     // Fix Rarity
@@ -677,9 +591,8 @@ namespace YKWrandomizer.YokaiWatch
                     // Randomize Stat Again Because The Rank Has Changed
                     if (options[10] == 1)
                     {
-                        yokai.NewStat(25, 38);
+                        yokai.NewStat(Seed);
                     }
-
                 }
             }
 
@@ -693,20 +606,12 @@ namespace YKWrandomizer.YokaiWatch
             WriteYokais();
         }
 
-        public void RandomizeWild(bool randomize, bool allowBoss, bool allYokai, decimal percentageLevel)
+        public void RandomizeWild(bool randomize, bool hiddenYokai, decimal percentageLevel)
         {
             if (randomize == false) return;
 
             // Create Scoutable Yokais Dictionary
-            Dictionary<UInt32, Yokai> yokaisScoutable = new Dictionary<UInt32, Yokai>();
-            if (allowBoss == true)
-            {
-                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal" || x.Value.Status.Name == "Boss").ToDictionary(x => x.Key, x => x.Value);
-            }
-            else
-            {
-                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal").ToDictionary(x => x.Key, x => x.Value);
-            }
+            Dictionary<UInt32, Yokai> yokaisScoutable = GetYokais(hiddenYokai);
 
             // Create Dictionary with E-Rank Yokai
             Dictionary<UInt32, Yokai> poorYokais = yokaisScoutable.Where(x => x.Value.Rank.Name == "E").ToDictionary(x => x.Key, x => x.Value);
@@ -739,11 +644,11 @@ namespace YKWrandomizer.YokaiWatch
 
                                 if (i < 6)
                                 {
-                                    wildWriter.WriteUInt32(poorYokais.ElementAt(new RandomNumber(0, poorYokais.Count).GetNumber()).Key);
+                                    wildWriter.WriteUInt32(poorYokais.ElementAt(Seed.GetNumber(0, poorYokais.Count)).Key);
                                 }
                                 else
                                 {
-                                    wildWriter.WriteUInt32(yokaisScoutable.ElementAt(new RandomNumber(0, yokaisScoutable.Count).GetNumber()).Key);
+                                    wildWriter.WriteUInt32(yokaisScoutable.ElementAt(Seed.GetNumber(0, yokaisScoutable.Count)).Key);
                                 }
 
                                 // Get Level Of The Yo-Kai
@@ -772,31 +677,14 @@ namespace YKWrandomizer.YokaiWatch
                     wildWriter.Close();
                 }
             }
-
-            // Unlock All Yokais
-            if (allYokai == true)
-            {
-                using (var fileStream = File.Create(Directory + "/" + Name + "_a_fa/data/res/map/watchmap_common_0.12e.cfg.bin"))
-                {
-                    new ResourceReader(Name + "_Watchmap.bin").GetResourceStream().CopyTo(fileStream);
-                }
-            }
         }
 
-        public void RandomizeGiven(bool randomize, bool allowBoss)
+        public void RandomizeGiven(bool randomize, bool hiddenYokai)
         {
             if (randomize == false) return;
 
             // Create Scoutable Yokais Dictionary
-            Dictionary<UInt32, Yokai> yokaisScoutable = new Dictionary<UInt32, Yokai>();
-            if (allowBoss == true)
-            {
-                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal" || x.Value.Status.Name == "Boss").ToDictionary(x => x.Key, x => x.Value);
-            }
-            else
-            {
-                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal").ToDictionary(x => x.Key, x => x.Value);
-            }
+            Dictionary<UInt32, Yokai> yokaisScoutable = GetYokais(hiddenYokai);
 
             // Randomize Given Yokais
             foreach (KeyValuePair<string, List<uint>> givenYokai in GivenYokais)
@@ -805,18 +693,26 @@ namespace YKWrandomizer.YokaiWatch
                 {
                     DataWriter givenWriter = new DataWriter(Directory + givenYokai.Key);
                     givenWriter.Seek(givenYokai.Value[i]);
-                    givenWriter.WriteUInt32(yokaisScoutable.ElementAt(new RandomNumber(0, yokaisScoutable.Count).GetNumber()).Key);
+                    givenWriter.WriteUInt32(yokaisScoutable.ElementAt(Seed.GetNumber(0, yokaisScoutable.Count)).Key);
                     givenWriter.Close();
                 }
             }
         }
 
-        public void RandomizeStatic(bool randomize, decimal percentageLevel)
+        public void RandomizeStatic(bool randomize, bool hiddenYokai, decimal percentageLevel)
         {
             if (randomize == false) return;
 
             // Create Scoutable Yokais Dictionarys
-            Dictionary<UInt32, Yokai> yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal" || x.Value.Status.Name == "MiniBoss").ToDictionary(x => x.Key, x => x.Value);
+            Dictionary<UInt32, Yokai> yokaisScoutable = new Dictionary<UInt32, Yokai>();
+            if (hiddenYokai == true)
+            {
+                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal" || x.Value.Status.Name == "Added" || x.Value.Status.Name == "MiniBoss").ToDictionary(x => x.Key, x => x.Value);
+            }
+            else
+            {
+                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal" || x.Value.Status.Name == "MiniBoss").ToDictionary(x => x.Key, x => x.Value);
+            }
 
             // Randomize Static
             foreach (KeyValuePair<string, List<uint>> staticYokai in StaticYokais)
@@ -841,7 +737,7 @@ namespace YKWrandomizer.YokaiWatch
 
                         if (yokaisScoutable.ContainsKey(yokaiID))
                         {
-                            staticWriter.WriteUInt32(yokaisScoutable.ElementAt(new RandomNumber(0, yokaisScoutable.Count).GetNumber()).Key);
+                            staticWriter.WriteUInt32(yokaisScoutable.ElementAt(Seed.GetNumber(0, yokaisScoutable.Count)).Key);
 
                             // Add Percentage Level Multiplicator
                             if (percentageLevel > 0)
@@ -880,7 +776,7 @@ namespace YKWrandomizer.YokaiWatch
             for (int i = 0; i < BossYokais.Count; i++)
             {
                 // Take Random Yokai
-                int randomNumber = new RandomNumber(0, tempBossYokais.Count).GetNumber();
+                int randomNumber = Seed.GetNumber(0, tempBossYokais.Count);
                 BossYokai randomBoss = tempBossYokais[randomNumber];;
 
                 // Swap Boss And Script File
@@ -888,13 +784,16 @@ namespace YKWrandomizer.YokaiWatch
                 staticWriter.WriteUInt32(randomBoss.ID);
                 File.Move(Directory + "/" + Name + "_a_fa/seq/battle/encount/" + randomBoss.ScriptName, "./temp/" + BossYokais[i].ScriptName);
 
+                // Scale Money & Experience
+                Yokais[randomBoss.ID].Money = Yokais[BossYokais[i].ID].Money;
+                Yokais[randomBoss.ID].Experience = Yokais[BossYokais[i].ID].Experience;
+
                 // Scale Base Stat Depending Of The Level
                 if (scaleBaseStat == true)
                 {
                     int oldLevel = randomBoss.Level;
                     int newLevel = BossYokais[i].Level;
                     
-
                     int startIndex = Yokais.Keys.ToList().IndexOf(randomBoss.ID);
                     for (int b = 0; b < randomBoss.Count; b++)
                     {
@@ -902,7 +801,8 @@ namespace YKWrandomizer.YokaiWatch
                         {
                             Yokais.ElementAt(startIndex).Value.BaseStat[s] = Convert.ToInt32((double)Yokais.ElementAt(startIndex).Value.BaseStat[s] / oldLevel * newLevel);
                         }
-                        startIndex += b;
+
+                        startIndex++;
                     }
                 }
 
@@ -929,9 +829,9 @@ namespace YKWrandomizer.YokaiWatch
 
                 if (yokai.Status.Name == "Boss" || yokai.Status.Name == "MiniBoss")
                 {
-                    for (int s = 0; s < yokai.BaseStat.Count; i++)
+                    for (int s = 0; s < yokai.BaseStat.Count; s++)
                     {
-                        yokai.BaseStat[s] = Convert.ToInt32(yokai.BaseStat[s] + (percentageBaseStat * 100 / 100));
+                        yokai.BaseStat[s] = Convert.ToInt32(yokai.BaseStat[s] + (percentageBaseStat * yokai.BaseStat[s] / 100));
                     }
                 }
             }
@@ -962,7 +862,7 @@ namespace YKWrandomizer.YokaiWatch
 
                         if (Items.ContainsKey(shopReader.Reverse(shopReader.ReadUInt32())))
                         {
-                            shopWriter.WriteUInt32(Items.ElementAt(new RandomNumber(0, Items.Count).GetNumber()).Key);
+                            shopWriter.WriteUInt32(Items.ElementAt(Seed.GetNumber(0, Items.Count)).Key);
                         }
 
                         shopReader.Skip(0x24);
@@ -998,7 +898,6 @@ namespace YKWrandomizer.YokaiWatch
                     treasureBoxReader.Seek((uint)(28 + unknowCount * 24));
                     treasureBoxReader.Skip(0x10);
                     int boxCount = treasureBoxReader.ReadInt32();
-                    treasureBoxReader.Skip(0x14);
 
                     // Randomize Treasure Box
                     for (int i = 0; i < boxCount; i++)
@@ -1008,7 +907,7 @@ namespace YKWrandomizer.YokaiWatch
 
                         if (Items.ContainsKey(treasureBoxReader.Reverse(treasureBoxReader.ReadUInt32())))
                         {
-                            treasureBoxWriter.WriteUInt32(Items.ElementAt(new RandomNumber(0, Items.Count).GetNumber()).Key);
+                            treasureBoxWriter.WriteUInt32(Items.ElementAt(Seed.GetNumber(0, Items.Count)).Key);
                         }
 
                         treasureBoxReader.Skip(0x10);
@@ -1021,20 +920,12 @@ namespace YKWrandomizer.YokaiWatch
             }
         }
 
-        public void RandomizeCrankKai(bool randomize, bool allowBoss)
+        public void RandomizeCrankKai(bool randomize, bool hiddenYokai)
         {
             if (randomize == false) return;
 
             // Create Scoutable Yokais Dictionary
-            Dictionary<UInt32, Yokai> yokaisScoutable = new Dictionary<UInt32, Yokai>();
-            if (allowBoss == true)
-            {
-                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal" || x.Value.Status.Name == "Boss").ToDictionary(x => x.Key, x => x.Value);
-            }
-            else
-            {
-                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal").ToDictionary(x => x.Key, x => x.Value);
-            }
+            Dictionary<UInt32, Yokai> yokaisScoutable = GetYokais(hiddenYokai);
 
             // Initialize File Reader And File Writer
             DataReader crankKaiReader = new DataReader(File.ReadAllBytes(Directory + "/" + Name + "_a_fa/data/res/capsule/capsule_config.cfg.bin"));
@@ -1052,10 +943,10 @@ namespace YKWrandomizer.YokaiWatch
 
                 if (Items.ContainsKey(dropID))
                 {
-                    crankKaiWriter.WriteUInt32(Items.ElementAt(new RandomNumber(0, Items.Count).GetNumber()).Key);
+                    crankKaiWriter.WriteUInt32(Items.ElementAt(Seed.GetNumber(0, Items.Count)).Key);
                 } else if (yokaisScoutable.ContainsKey(dropID))
                 {
-                    crankKaiWriter.WriteUInt32(yokaisScoutable.ElementAt(new RandomNumber(0, yokaisScoutable.Count).GetNumber()).Key);
+                    crankKaiWriter.WriteUInt32(yokaisScoutable.ElementAt(Seed.GetNumber(0, yokaisScoutable.Count)).Key);
                 }
 
                 crankKaiReader.Skip(0x20);
@@ -1066,7 +957,7 @@ namespace YKWrandomizer.YokaiWatch
             crankKaiWriter.Close();
         }
 
-        public void RandomizeLegendary(bool randomize, bool allowBoss, bool randomizeRequirment)
+        public void RandomizeLegendary(bool randomize, bool hiddenYokai, bool randomizeRequirment)
         {
             if (randomize == false) return;
 
@@ -1085,19 +976,11 @@ namespace YKWrandomizer.YokaiWatch
             }
 
             // Create Scoutable Yokais Dictionary
-            Dictionary<UInt32, Yokai> yokaisScoutable = new Dictionary<UInt32, Yokai>();
-            if (allowBoss == true)
-            {
-                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal" || x.Value.Status.Name == "Boss").ToDictionary(x => x.Key, x => x.Value);
-            }
-            else
-            {
-                yokaisScoutable = Yokais.Where(x => x.Value.Status.Name == "Normal").ToDictionary(x => x.Key, x => x.Value);
-            }
+            Dictionary<UInt32, Yokai> yokaisScoutable = GetYokais(hiddenYokai);
 
             // Create New Legendary Yokais
             legendWriter.Seek(0x1C);
-            List<int> legendaryYokaisIndex = new RandomNumber(0, yokaisScoutable.Count).GetNumbers(LegendaryYokaisNumber);
+            List<int> legendaryYokaisIndex = Seed.GetNumbers(0, yokaisScoutable.Count, LegendaryYokaisNumber);
             for (int i = 0; i < LegendaryYokaisNumber; i++)
             {
                 KeyValuePair<uint, Yokai> yokaiKeyValuePair = yokaisScoutable.ElementAt(legendaryYokaisIndex[i]);
@@ -1118,7 +1001,7 @@ namespace YKWrandomizer.YokaiWatch
                     legendWriter.Skip(0x14);
 
                     // Create Requirment Yokai and Exclude Legend Yokai From The List
-                    List<int> requirmentYokais = new RandomNumber(0, yokaisScoutable.Count).GetNumbers(8, legendaryYokaisIndex);
+                    List<int> requirmentYokais = Seed.GetNumbers(0, yokaisScoutable.Count, 8, legendaryYokaisIndex);
 
                     // Save Requirment Yokais And Show Yokais In The Medallium
                     for (int r = 0; r < requirmentYokais.Count; r++)
@@ -1134,6 +1017,28 @@ namespace YKWrandomizer.YokaiWatch
 
             // Close File
             legendWriter.Close();
+        }
+
+        public void RandomizeWatchmapArea(bool randomize)
+        {
+            if (randomize == false) return;
+
+            // Initialize File Reader and File Writer
+            DataReader watchmapReader = new DataReader(File.ReadAllBytes(Directory + "/" + Name + "_a_fa/data/res/map/watchmap_common_0.12e.cfg.bin"));
+            DataWriter watchmapWriter = new DataWriter(Directory + "/" + Name + "_a_fa/data/res/map/watchmap_common_0.12e.cfg.bin");
+            watchmapReader.Seek(0x18B0);
+            watchmapReader.Skip(0x10);
+            int watchmapCount = watchmapReader.ReadInt32();
+            watchmapWriter.Seek((uint)watchmapReader.BaseStream.Position);
+
+            for (int i = 0; i < watchmapCount; i++)
+            {
+                watchmapWriter.Skip(0x14);
+                watchmapWriter.WriteUInt32(Areas[Seed.GetNumber(0, Areas.Count)]);
+            }
+
+            watchmapReader.Close();
+            watchmapWriter.Close();
         }
     }
 }

@@ -82,6 +82,29 @@ namespace YKWrandomizer.Tools
             return data;
         }
 
+        public uint FindUInt32BetweenRange(UInt32 search, uint start, uint skip, uint end)
+        {
+            long temp = (uint)BaseStream.Position;
+            Seek(start);
+
+            while ((uint)BaseStream.Position < end)
+            {
+                uint pos = (uint)BaseStream.Position;
+                UInt32 found = Reverse(ReadUInt32());
+
+                if (found == search)                
+                {
+                    return pos;
+                } else
+                {
+                    Skip(skip);
+                }
+            }
+
+            Seek((uint)temp);
+            return (uint)Length;
+        }
+
         public void PrintPosition()
         {
             Console.WriteLine(BaseStream.Position.ToString("X"));
