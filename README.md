@@ -23,9 +23,10 @@ The Tool is written in C# and the project is Open Source, everyone can contribut
 
 **Screenshots**
 
-Tool|Random Encounter
+Tool| Randomized Game
 :-------------------------:|:------------------------:
-![](https://i.imgur.com/Rso1nQI.png)  |  ![](https://i.imgur.com/qMEeua4.png)
+![](https://i.imgur.com/W7BsbI2.png)  |  ![](https://i.imgur.com/JQPzBUj.png)
+![](https://i.imgur.com/hMxW7N8.png)  |  ![](https://i.imgur.com/7j9KKxi.png)
 
 Do you have a problem with the tool? <br/>
 Do you have a suggestion? <br/>
