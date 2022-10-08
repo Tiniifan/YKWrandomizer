@@ -1,4 +1,4 @@
-# [Yo-Kai Watch Randomizer](https://github.com/Tiniifan/YKWrandomizer/releases/tag/1.0.0.0)
+# [Yo-Kai Watch Randomizer](https://github.com/Tiniifan/YKWrandomizer/releases/tag/1.1.0.0)
 ___________________________________________________________________________
 **Disclaimer**
 
@@ -33,4 +33,4 @@ Do you have a suggestion? <br/>
 Do you want to share your random run? <br/>
 [Join the Official Discord!](https://discord.gg/TMp8fuygAV)
 
-[Direct Download Link of YKWrandomizer](https://github.com/Tiniifan/YKWrandomizer/releases/download/1.0.0.0/YKWrandomizer.exe)
+[Direct Download Link of YKWrandomizer](https://github.com/Tiniifan/YKWrandomizer/releases/download/1.1.0.0/YKWrandomizer.exe)
