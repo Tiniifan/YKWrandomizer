@@ -3,6 +3,7 @@ ___________________________________________________________________________
 **Disclaimer**
 
 I'm not affiliated with Level-5, I'm a fan who wants to share a new way to have fun in Yo-Kai Watch games!
+Use the randomizer only for single playing to have fun or to discover a new way of playing.
 
 **What is a Randomizer?**
 
@@ -31,6 +32,6 @@ Tool| Randomized Game
 Do you have a problem with the tool? <br/>
 Do you have a suggestion? <br/>
 Do you want to share your random run? <br/>
-[Join the Official Discord!](https://discord.gg/TMp8fuygAV)
+[Join the Official Discord!](https://discord.gg/3wKp5ZxA9N)
 
 [Direct Download Link of YKWrandomizer](https://github.com/Tiniifan/YKWrandomizer/releases/download/1.1.0.0/YKWrandomizer.exe)
