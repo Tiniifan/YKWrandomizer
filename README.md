@@ -26,12 +26,9 @@ The Tool is written in C# and the project is Open Source, everyone can contribut
 
 Tool| Randomized Game
 :-------------------------:|:------------------------:
-![](https://i.imgur.com/W7BsbI2.png)  |  ![](https://i.imgur.com/JQPzBUj.png)
-![](https://i.imgur.com/hMxW7N8.png)  |  ![](https://i.imgur.com/7j9KKxi.png)
+![](https://i.imgur.com/j5ISN1n.png) |  ![](https://imgur.com/pXfFPHI.png)
+![](https://i.imgur.com/WTS5pa2.png)  |  ![](https://imgur.com/EDeqQsZ.png)
 
-Do you have a problem with the tool? <br/>
-Do you have a suggestion? <br/>
-Do you want to share your random run? <br/>
 [Join the Official Discord!](https://discord.gg/3wKp5ZxA9N)
 
 [Direct Download Link of YKWrandomizer](https://github.com/Tiniifan/YKWrandomizer/releases/download/1.1.0.0/YKWrandomizer.exe)
