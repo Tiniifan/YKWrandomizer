@@ -29,6 +29,8 @@ Tool| Randomized Game
 ![](https://i.imgur.com/j5ISN1n.png) |  ![](https://imgur.com/pXfFPHI.png)
 ![](https://i.imgur.com/WTS5pa2.png)  |  ![](https://imgur.com/EDeqQsZ.png)
 
+[Guide How to Randomize YKW games!](https://github.com/Tiniifan/YKWrandomizer/wiki)
+
 [Join the Official Discord!](https://discord.gg/3wKp5ZxA9N)
 
 [Direct Download Link of YKWrandomizer](https://github.com/Tiniifan/YKWrandomizer/releases/download/1.2.0.0/YKWrandomizer.exe)
