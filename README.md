@@ -31,4 +31,4 @@ Tool| Randomized Game
 
 [Join the Official Discord!](https://discord.gg/3wKp5ZxA9N)
 
-[Direct Download Link of YKWrandomizer](https://github.com/Tiniifan/YKWrandomizer/releases/download/1.1.0.0/YKWrandomizer.exe)
+[Direct Download Link of YKWrandomizer](https://github.com/Tiniifan/YKWrandomizer/releases/download/1.2.0.0/YKWrandomizer.exe)
