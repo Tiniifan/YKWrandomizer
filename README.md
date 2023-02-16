@@ -17,10 +17,9 @@ YKWrandomizer is a project to create an application that can randomize some Yo-K
 The Tool is written in C# and the project is Open Source, everyone can contribute.
 
 **Supported Game**
-- Yo-Kai Watch ❌
+- Yo-Kai Watch ✅ (Only on 1.3)
 - Yo-Kai Watch 2 ✅
 - Yo-kai Watch 3 ❌
-- Yo-Kai Watch Blaster ❌
 
 **Screenshots**
 
@@ -31,4 +30,4 @@ Tool| Randomized Game
 
 [Join the Official Discord!](https://discord.gg/3wKp5ZxA9N)
 
-[Guide How to Randomize YKW games!](https://github.com/Tiniifan/YKWrandomizer/wiki)
+[Guide How to Randomize YKW games! 1.2 Guide](https://github.com/Tiniifan/YKWrandomizer/wiki)
