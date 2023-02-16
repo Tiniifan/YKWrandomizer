@@ -100,6 +100,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                         EvolveOffset = charaparam.EvolveOffset,
                         MedaliumOffset = charaparam.MedaliumOffset,
                         Medal = charabase.Medal,
+                        ScoutableID = charaparam.ScoutableID,
                         Statut = new Statut
                         {
                             IsLegendary = charabase.IsLegendary,
@@ -181,11 +182,12 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                         charaparam.MedaliumOffset = yokai.MedaliumOffset;
                         charabase.IsLegendary = yokai.Statut.IsLegendary;
                         charabase.IsRare = yokai.Statut.IsRare;
+                        charaparam.ScoutableID = yokai.ScoutableID;
 
                         charabase.Write(charabaseWriter);
                         charaparam.Write(charaparamWriter);
 
-                        if (yokai.Statut.IsScoutable == true && yokai.Statut.IsBoss == false)
+                        if (yokai.Statut.IsScoutable == true && yokai.Statut.IsBoss == false && yokai.Statut.IsStatic == false)
                         {
                             if (yokai.Tribe != 0x0A && yokai.Tribe != 0x00)
                             {

@@ -819,6 +819,31 @@ namespace YKWrandomizer.Yokai_Watch.Games
             }
         }
 
+        public void RemoveUnscoutableYokai(bool randomize)
+        {
+            if (randomize == false) return;
+
+            Dictionary<UInt32, Yokai> yokais = Yokais.Where(x => x.Value.Statut.IsScoutable == true).ToDictionary(i => i.Key, i => i.Value);
+
+            foreach (Yokai yokai in yokais.Values)
+            {
+                yokai.Statut.IsScoutable = true;
+
+                if (yokai.MedaliumOffset == 0)
+                {
+                    yokai.MedaliumOffset = 1;
+
+                    if (Name == "Yo-Kai Watch 1")
+                    {
+                        yokai.ScoutableID = 0x13345632;
+                    } else if (Name == "Yo-Kai Watch 2")
+                    {
+                        yokai.ScoutableID = 0x00654331;
+                    }
+                }
+            }
+        }
+
         public virtual void FixStory(bool randomize)
         {
 

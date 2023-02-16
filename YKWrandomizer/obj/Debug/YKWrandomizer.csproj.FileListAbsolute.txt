@@ -1,0 +1,10 @@
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\bin\Debug\YKWrandomizer.exe.config
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\bin\Debug\YKWrandomizer.exe
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\bin\Debug\YKWrandomizer.pdb
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Debug\YKWrandomizer.csproj.AssemblyReference.cache
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Debug\YKWrandomizer.LanguageWindow.resources
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Debug\YKWrandomizer.RandomizerWindow.resources
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Debug\YKWrandomizer.csproj.GenerateResource.cache
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Debug\YKWrandomizer.csproj.CoreCompileInputs.cache
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Debug\YKWrandomizer.exe
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Debug\YKWrandomizer.pdb

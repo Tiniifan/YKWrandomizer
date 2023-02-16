@@ -53,6 +53,8 @@ namespace YKWrandomizer.Yokai_Watch.Logic
 
         public Statut Statut;
 
+        public UInt32 ScoutableID;
+
         public Yokai()
         {
 

@@ -151,6 +151,7 @@ namespace YKWrandomizer
 
         private void RandomizeSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
             Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
             Randomizer.RandomizeYokai(TabControlToDictOption(tabControl2));
             Randomizer.RandomizeBossStat(numericUpDownBossBaseStat.Value);

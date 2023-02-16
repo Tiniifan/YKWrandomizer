@@ -49,6 +49,8 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
 
         public bool Scoutable;
 
+        public UInt32 ScoutableID;
+
         public YW1Charaparam()
         {
 
@@ -96,11 +98,12 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
 
             // Unknow byte
             reader.Skip(0x04);
-            UInt32 scoutableCheck = reader.ReadUInt32();
-            if (scoutableCheck == 0x00 || scoutableCheck == 0x05 || scoutableCheck == 0x0A)
+            ScoutableID = reader.ReadUInt32();
+            if (ScoutableID == 0x00 || ScoutableID == 0x05 || ScoutableID == 0x0A)
             {
                 Scoutable = false;
-            } else
+            }
+            else
             {
                 Scoutable = true;
             }
@@ -180,9 +183,9 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             writer.Skip(0x04);
 
             // Unknow byte
-            writer.Skip(0x08);
+            writer.Skip(0x04);
 
-            writer.WriteUInt32(SkillID);
+            writer.WriteUInt32(ScoutableID);
             writer.WriteInt32(Money);
             writer.WriteInt32(Experience);
 
