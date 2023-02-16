@@ -18,8 +18,11 @@ The Tool is written in C# and the project is Open Source, everyone can contribut
 
 **Supported Game**
 - Yo-Kai Watch ✅ (Only on 1.3)
-- Yo-Kai Watch 2 ✅
+- Yo-Kai Watch 2 ✅ (Only Psychic Specters)
 - Yo-kai Watch 3 ❌
+
+**Supported Region**
+- European ✅
 
 **Screenshots**
 
