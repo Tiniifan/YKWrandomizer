@@ -17,7 +17,7 @@ YKWrandomizer is a project to create an application that can randomize some Yo-K
 The Tool is written in C# and the project is Open Source, everyone can contribute.
 
 **Supported Game**
-- Yo-Kai Watch ✅ (Only on 1.3)
+- Yo-Kai Watch ✅
 - Yo-Kai Watch 2 ✅ (Only Psychic Specters)
 - Yo-kai Watch 3 ❌
 
