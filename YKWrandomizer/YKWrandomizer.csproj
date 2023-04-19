@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{25583A25-A110-4172-BADD-3A4C6B3DEDC6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>YKWrandomizer</RootNamespace>
+    <AssemblyName>YKWrandomizer</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>YKWrandomizer.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EndianBitConverter, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EndianBitConverter.1.1.0\lib\net45\EndianBitConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Level5\Archive\ARC0\ARC0.cs" />
+    <Compile Include="Level5\Archive\ARC0\ARC0Support.cs" />
+    <Compile Include="Level5\Archive\XPCK\XPCK.cs" />
+    <Compile Include="Level5\Archive\XPCK\XPCKSupport.cs" />
+    <Compile Include="Level5\Compression\Compressor.cs" />
+    <Compile Include="Level5\Compression\ETC1\ETC1.cs" />
+    <Compile Include="Level5\Compression\ETC1\ETC1Decoder.cs" />
+    <Compile Include="Level5\Compression\ETC1\RGB.cs" />
+    <Compile Include="Level5\Compression\Huffman\Huffman.cs" />
+    <Compile Include="Level5\Compression\Huffman\HuffmanDecoder.cs" />
+    <Compile Include="Level5\Compression\ICompression.cs" />
+    <Compile Include="Level5\Compression\LZ10\LZ10.cs" />
+    <Compile Include="Level5\Compression\NoCompression\NoCompression.cs" />
+    <Compile Include="Level5\Compression\RLE\RLE.cs" />
+    <Compile Include="Level5\Compression\ZLib\Zlib.cs" />
+    <Compile Include="Level5\Image\Color Formats\ColorFormats.cs" />
+    <Compile Include="Level5\Image\Color Formats\IColorFormat.cs" />
+    <Compile Include="Level5\Image\IMGC.cs" />
+    <Compile Include="Level5\Image\IMGCSupport.cs" />
+    <Compile Include="Level5\Image\IMGCSwizzle.cs" />
+    <Compile Include="Level5\Text\T2bþ.cs" />
+    <Compile Include="Level5\Text\T2bþSupport.cs" />
+    <Compile Include="Tool\BinaryDataWriter.cs" />
+    <Compile Include="Tool\Crc32.cs" />
+    <Compile Include="Tool\SubMemoryStream.cs" />
+    <Compile Include="Tool\VirtualDirectory.cs" />
+    <Compile Include="Yokai Watch\Common\Yokais\YokaiBoss.cs" />
+    <Compile Include="Yokai Watch\Common\Yokais\YokaiScoutable.cs" />
+    <Compile Include="Yokai Watch\Common\Yokais\YokaiStatic.cs" />
+    <Compile Include="Yokai Watch\Common\Yokais\YokaiUnscoutableAutorized.cs" />
+    <Compile Include="Yokai Watch\Common\Yokais\YokaiUnused.cs" />
+    <Compile Include="Yokai Watch\Games\GameSupport.cs" />
+    <Compile Include="Yokai Watch\Games\IGame.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\YW1Support.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\YW2Support.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\YW3Support.cs" />
+    <Compile Include="Yokai Watch\Logic\Fusion.cs" />
+    <Compile Include="Yokai Watch\Logic\Evolution.cs" />
+    <Compile Include="Yokai Watch\Logic\Yokai.cs" />
+    <Compile Include="Tool\Draw.cs" />
+    <Compile Include="Tool\ResourceReader.cs" />
+    <Compile Include="Yokai Watch\Common\Items\Items.cs" />
+    <Compile Include="Yokai Watch\Common\Items\Souls.cs" />
+    <Compile Include="Yokai Watch\Common\Yokais\YokaiGiven.cs" />
+    <Compile Include="Yokai Watch\Common\Moveset\Techniques.cs" />
+    <Compile Include="Yokai Watch\Common\Moveset\Soultimates.cs" />
+    <Compile Include="Yokai Watch\Common\Moveset\Skills.cs" />
+    <Compile Include="Yokai Watch\Common\Moveset\Inspirits.cs" />
+    <Compile Include="Yokai Watch\Common\Moveset\Attacks.cs" />
+    <Compile Include="Yokai Watch\Common\Type\ExperienceCurves.cs" />
+    <Compile Include="Yokai Watch\Common\Type\Ranks.cs" />
+    <Compile Include="Yokai Watch\Common\Type\Attribute.cs" />
+    <Compile Include="Yokai Watch\Common\Type\Tribes.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomizerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RandomizerWindow.Designer.cs">
+      <DependentUpon>RandomizerWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tool\Option.cs" />
+    <Compile Include="Tool\BinaryDataReader.cs" />
+    <Compile Include="Yokai Watch\Randomizer\RandomNumber.cs" />
+    <Compile Include="Yokai Watch\Randomizer\Randomizer.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\YW1.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\YW2.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\YW3.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="RandomizerWindow.resx">
+      <DependentUpon>RandomizerWindow.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege01.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege02.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege03.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege04.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege05.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege06.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege07.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege08.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege09.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml01.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml02.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml03.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml04.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml05.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml06.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml07.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml08.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml09.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare01.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare02.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare03.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare04.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare05.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare06.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare07.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare08.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare09.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege10.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_lege11.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml10.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_nml11.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare10.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LICENSE-APACHE.txt" />
+    <Content Include="LICENSE.EndianBitConverter.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
