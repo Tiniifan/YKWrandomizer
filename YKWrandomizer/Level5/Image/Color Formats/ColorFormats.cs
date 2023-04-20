@@ -28,7 +28,6 @@ namespace YKWrandomizer.Level5.Image.Color_Formats
         {
             if (data.Length < 2)
             {
-                System.Console.WriteLine(System.BitConverter.ToString(data).Replace("-", ""));
                 return Color.FromArgb(0);
             }
 
@@ -64,7 +63,6 @@ namespace YKWrandomizer.Level5.Image.Color_Formats
         {
             if (data.Length < 4)
             {
-                System.Console.WriteLine(System.BitConverter.ToString(data).Replace("-", ""));
                 return Color.FromArgb(0);
             }
             int argb = (data[0] << 24) | (data[3] << 16) | (data[2] << 8) | data[1];

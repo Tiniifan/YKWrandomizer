@@ -70,10 +70,12 @@ namespace YKWrandomizer
                         game = new YW1(openFileDialog1.FileName);
                         break;
                     case "yw2_a":
-                        game = new YW2(openFileDialog1.FileName);
+                        //game = new YW2(openFileDialog1.FileName);
+                        game = null;
                         break;
                     case "yw_a":
-                        game = new YW3(openFileDialog1.FileName);
+                        //game = new YW3(openFileDialog1.FileName);
+                        game = null;
                         break;
                     default:
                         game = null;
