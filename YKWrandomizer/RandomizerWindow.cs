@@ -70,12 +70,10 @@ namespace YKWrandomizer
                         game = new YW1(openFileDialog1.FileName);
                         break;
                     case "yw2_a":
-                        //game = new YW2(openFileDialog1.FileName);
-                        game = null;
+                        game = new YW2(openFileDialog1.FileName);
                         break;
                     case "yw_a":
-                        //game = new YW3(openFileDialog1.FileName);
-                        game = null;
+                        game = new YW3(openFileDialog1.FileName);
                         break;
                     default:
                         game = null;
@@ -241,6 +239,28 @@ namespace YKWrandomizer
             if (numericUpDownWild.Enabled == false)
             {
                 numericUpDownWild.Value = 0;
+            }
+        }
+
+        private void RadioButtonLegendaryYokai2_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxLockLegendary.Enabled = radioButtonLegendaryYokai2.Checked;
+            checkBoxRequirmentsLegendaryYokai.Enabled = radioButtonLegendaryYokai2.Checked;
+
+            if (radioButtonLegendaryYokai2.Checked == false)
+            {
+                checkBoxLockLegendary.Checked = false;
+                checkBoxRequirmentsLegendaryYokai.Checked = false;
+            }
+        }
+
+        private void RadioButtonEvolution2_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxCreateNewEvolution.Enabled = radioButtonEvolution2.Checked;
+
+            if (radioButtonEvolution2.Checked == false)
+            {
+                checkBoxCreateNewEvolution.Checked = false;
             }
         }
     }

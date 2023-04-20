@@ -121,6 +121,7 @@ namespace YKWrandomizer
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBoxLegendaryYokai = new System.Windows.Forms.GroupBox();
+            this.checkBoxLockLegendary = new System.Windows.Forms.CheckBox();
             this.checkBoxRequirmentsLegendaryYokai = new System.Windows.Forms.CheckBox();
             this.radioButtonLegendaryYokai2 = new System.Windows.Forms.RadioButton();
             this.radioButtonLegendaryYokai1 = new System.Windows.Forms.RadioButton();
@@ -143,7 +144,6 @@ namespace YKWrandomizer
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkBoxLockLegendary = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -919,6 +919,7 @@ namespace YKWrandomizer
             // checkBoxCreateNewEvolution
             // 
             this.checkBoxCreateNewEvolution.AutoSize = true;
+            this.checkBoxCreateNewEvolution.Enabled = false;
             this.checkBoxCreateNewEvolution.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxCreateNewEvolution.Location = new System.Drawing.Point(98, 50);
             this.checkBoxCreateNewEvolution.Name = "checkBoxCreateNewEvolution";
@@ -937,6 +938,7 @@ namespace YKWrandomizer
             this.radioButtonEvolution2.TabIndex = 7;
             this.radioButtonEvolution2.Text = "Random";
             this.radioButtonEvolution2.UseVisualStyleBackColor = true;
+            this.radioButtonEvolution2.CheckedChanged += new System.EventHandler(this.RadioButtonEvolution2_CheckedChanged);
             // 
             // radioButtonEvolution1
             // 
@@ -1274,9 +1276,22 @@ namespace YKWrandomizer
             this.groupBoxLegendaryYokai.TabStop = false;
             this.groupBoxLegendaryYokai.Text = "Legendary Yo-Kai";
             // 
+            // checkBoxLockLegendary
+            // 
+            this.checkBoxLockLegendary.AutoSize = true;
+            this.checkBoxLockLegendary.Enabled = false;
+            this.checkBoxLockLegendary.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxLockLegendary.Location = new System.Drawing.Point(23, 71);
+            this.checkBoxLockLegendary.Name = "checkBoxLockLegendary";
+            this.checkBoxLockLegendary.Size = new System.Drawing.Size(103, 17);
+            this.checkBoxLockLegendary.TabIndex = 21;
+            this.checkBoxLockLegendary.Text = "Lock Legendary";
+            this.checkBoxLockLegendary.UseVisualStyleBackColor = true;
+            // 
             // checkBoxRequirmentsLegendaryYokai
             // 
             this.checkBoxRequirmentsLegendaryYokai.AutoSize = true;
+            this.checkBoxRequirmentsLegendaryYokai.Enabled = false;
             this.checkBoxRequirmentsLegendaryYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxRequirmentsLegendaryYokai.Location = new System.Drawing.Point(23, 93);
             this.checkBoxRequirmentsLegendaryYokai.Name = "checkBoxRequirmentsLegendaryYokai";
@@ -1295,6 +1310,7 @@ namespace YKWrandomizer
             this.radioButtonLegendaryYokai2.TabIndex = 7;
             this.radioButtonLegendaryYokai2.Text = "Random";
             this.radioButtonLegendaryYokai2.UseVisualStyleBackColor = true;
+            this.radioButtonLegendaryYokai2.CheckedChanged += new System.EventHandler(this.RadioButtonLegendaryYokai2_CheckedChanged);
             // 
             // radioButtonLegendaryYokai1
             // 
@@ -1511,17 +1527,6 @@ namespace YKWrandomizer
             this.label4.TabIndex = 3;
             this.label4.Text = "Randomize...";
             this.label4.Visible = false;
-            // 
-            // checkBoxLockLegendary
-            // 
-            this.checkBoxLockLegendary.AutoSize = true;
-            this.checkBoxLockLegendary.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxLockLegendary.Location = new System.Drawing.Point(23, 71);
-            this.checkBoxLockLegendary.Name = "checkBoxLockLegendary";
-            this.checkBoxLockLegendary.Size = new System.Drawing.Size(103, 17);
-            this.checkBoxLockLegendary.TabIndex = 21;
-            this.checkBoxLockLegendary.Text = "Lock Legendary";
-            this.checkBoxLockLegendary.UseVisualStyleBackColor = true;
             // 
             // RandomizerWindow
             // 
