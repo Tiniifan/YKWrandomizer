@@ -48,7 +48,6 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public void SaveYokais(List<Yokai> yokais, List<Evolution> evolutions)
         {
-
         }
 
         public List<Evolution> GetEvolutions(List<Yokai> yokais)
@@ -63,17 +62,15 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public void SaveFusions(List<Fusion> fusions)
         {
-
         }
 
-        public Dictionary<uint, List<uint>> GetLegendaries()
+        public List<LegendSeal> GetLegendaries()
         {
             return null;
         }
 
-        public void SaveLegendaries(Dictionary<uint, List<uint>> legendaries, bool spoil)
+        public void SaveLegendaries(List<LegendSeal> legendaries, bool spoil)
         {
-
         }
 
         public List<(uint, int)> GetEncounter()
@@ -83,7 +80,6 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public void SaveEncounter(List<(uint, int)> encounters)
         {
-
         }
 
         public List<(uint, int)> GetWorldEncounter(byte[] file)
@@ -91,9 +87,9 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             return null;
         }
 
-        public void SaveWorldEncounter(List<(uint, int)> encounters, byte[] file)
+        public byte[] SaveWorldEncounter(List<(uint, int)> encounters, byte[] file)
         {
-
+            return null;
         }
 
         public List<uint> GetCapsule()
@@ -103,7 +99,6 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public void SaveCapsule(List<uint> capsules)
         {
-
         }
 
         public List<uint> GetShop(string fileName)
@@ -113,7 +108,6 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public void SaveShop(List<uint> capsules, string fileName)
         {
-
         }
 
         public List<uint> GetTreasureBox(byte[] file)
@@ -121,14 +115,13 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             return null;
         }
 
-        public void SaveTreasureBox(List<uint> treasures, byte[] file)
+        public byte[] SaveTreasureBox(List<uint> treasures, byte[] file)
         {
-
+            return null;
         }
 
         public void FixStory()
         {
-
         }
     }
 }

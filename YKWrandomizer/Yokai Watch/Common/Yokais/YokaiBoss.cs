@@ -6,6 +6,9 @@ namespace YKWrandomizer.Yokai_Watch.Common
     {
         public static Dictionary<uint, string> YW1 = new Dictionary<uint, string>
         {
+            {0x6A208E30, "Gargaros" },
+            {0xF329DF8A, "Ogralus" },
+            {0x842EEF1C, "Orcanos" },
             {0xC757AB0B, "Slimamander Bust" },
             {0x5E5EFAB1, "Slimamander Head (1)" },
             {0x2959CA27, "Slimamander Head (2)" },

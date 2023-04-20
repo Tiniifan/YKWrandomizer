@@ -29,6 +29,7 @@ namespace YKWrandomizer
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RandomizerWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomizeSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -142,6 +143,7 @@ namespace YKWrandomizer
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
+            this.checkBoxLockLegendary = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -1260,6 +1262,7 @@ namespace YKWrandomizer
             // 
             // groupBoxLegendaryYokai
             // 
+            this.groupBoxLegendaryYokai.Controls.Add(this.checkBoxLockLegendary);
             this.groupBoxLegendaryYokai.Controls.Add(this.checkBoxRequirmentsLegendaryYokai);
             this.groupBoxLegendaryYokai.Controls.Add(this.radioButtonLegendaryYokai2);
             this.groupBoxLegendaryYokai.Controls.Add(this.radioButtonLegendaryYokai1);
@@ -1275,7 +1278,7 @@ namespace YKWrandomizer
             // 
             this.checkBoxRequirmentsLegendaryYokai.AutoSize = true;
             this.checkBoxRequirmentsLegendaryYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxRequirmentsLegendaryYokai.Location = new System.Drawing.Point(23, 71);
+            this.checkBoxRequirmentsLegendaryYokai.Location = new System.Drawing.Point(23, 93);
             this.checkBoxRequirmentsLegendaryYokai.Name = "checkBoxRequirmentsLegendaryYokai";
             this.checkBoxRequirmentsLegendaryYokai.Size = new System.Drawing.Size(136, 17);
             this.checkBoxRequirmentsLegendaryYokai.TabIndex = 20;
@@ -1509,6 +1512,17 @@ namespace YKWrandomizer
             this.label4.Text = "Randomize...";
             this.label4.Visible = false;
             // 
+            // checkBoxLockLegendary
+            // 
+            this.checkBoxLockLegendary.AutoSize = true;
+            this.checkBoxLockLegendary.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxLockLegendary.Location = new System.Drawing.Point(23, 71);
+            this.checkBoxLockLegendary.Name = "checkBoxLockLegendary";
+            this.checkBoxLockLegendary.Size = new System.Drawing.Size(103, 17);
+            this.checkBoxLockLegendary.TabIndex = 21;
+            this.checkBoxLockLegendary.Text = "Lock Legendary";
+            this.checkBoxLockLegendary.UseVisualStyleBackColor = true;
+            // 
             // RandomizerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1518,6 +1532,7 @@ namespace YKWrandomizer
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "RandomizerWindow";
             this.Text = "YKWrandomizer";
@@ -1707,5 +1722,6 @@ namespace YKWrandomizer
         private System.Windows.Forms.CheckBox checkBoxCreateNewEvolution;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBoxLockLegendary;
     }
 }

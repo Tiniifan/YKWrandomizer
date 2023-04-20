@@ -142,7 +142,7 @@ namespace YKWrandomizer
                 Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
                 progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
+                Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxLockLegendary.Checked ,checkBoxRequirmentsLegendaryYokai.Checked);
                 progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
                 Randomizer.RandomizeYokai(TabControlToDictOption(tabControl2), numericUpDownBossBaseStat.Value);
@@ -175,9 +175,9 @@ namespace YKWrandomizer
             saveFileDialog.Title = "Save Level 5 ARC0 file";
             saveFileDialog.Filter = "Level 5 ARC0 files (*.fa)|*.fa";
             saveFileDialog.InitialDirectory = openFileDialog1.InitialDirectory;
+            label4.Text = "Save";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                label4.Text = "Save";
                 progressBar1.Minimum = 0;
                 progressBar1.Maximum = 100;
                 progressBar1.Value = 0;

@@ -103,11 +103,11 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
         {
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
             public byte[] EmptyBlock1;
-            public bool BaseIsYokai;
+            public bool BaseIsItem;
             public uint BaseID;
-            public bool MaterialIsYokai;
+            public bool MaterialIsItem;
             public uint MaterialID;
-            public bool EvolveToIsYokai;
+            public bool EvolveToIsItem;
             public uint EvolveToID;
             public uint FusionID;
         }
@@ -117,6 +117,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
         {
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x0C)]
             public byte[] EmptyBlock1;
+            public uint SealdID;
             public uint LegendaryParamID;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
             public GameSupport.YokaiSeal[] Seals;

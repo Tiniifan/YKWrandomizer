@@ -152,11 +152,11 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             }
         }
 
-        public void RandomizeLegendary(bool randomize, bool randomizeRequirment)
+        public void RandomizeLegendary(bool randomize, bool lockLegendary, bool randomizeRequirment)
         {
             if (randomize == false) return;
 
-            Dictionary<uint, List<uint>> legendaries = Game.GetLegendaries();
+            List<LegendSeal> legendaries = Game.GetLegendaries();
 
             // Remove Legendary
             foreach (Yokai yokai in Yokais)
@@ -167,16 +167,26 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             // Scoutable Yokai
             List<UInt32> scoutableYokaiID = Yokais.Where(x => x.Statut.IsScoutable == true).Select(i => i.ParamID).ToList();
 
-            // Create New Legendary Yokais
-            Dictionary<uint, List<uint>> newLegendaries = new Dictionary<uint, List<uint>>();
+            // Randomize Legendary Yokais
             for (int i = 0; i < legendaries.Count; i ++)
             {
                 int randomNumber = Seed.Next(0, scoutableYokaiID.Count);
                 uint legendaryID = scoutableYokaiID[randomNumber];
                 scoutableYokaiID.RemoveAt(randomNumber);
 
+                legendaries[i].LegendaryParamID = legendaryID;
+
+                // Update Yokai
+                Yokai yokai = Yokais.FirstOrDefault(x => x.ParamID == legendaryID);
+                yokai.Statut.IsLegendary = true;
+                if (lockLegendary)
+                {
+                    yokai.ScoutableID = 0x00;
+                    yokai.Statut.IsScoutable = false;
+                }
+
                 List<uint> requirmentYokais = new List<uint>();
-                if (randomizeRequirment == true)
+                if (randomizeRequirment)
                 {
                     // Create new Seal Requirment
                     for (int r = 0; r < 8; r++)
@@ -185,16 +195,13 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                         requirmentYokais.Add(scoutableYokaiID[randomNumber]);
                         scoutableYokaiID.RemoveAt(randomNumber);
                     }
-                } else
-                {
-                    requirmentYokais = legendaries.ElementAt(i).Value;
-                }
 
-                newLegendaries.Add(legendaryID, requirmentYokais);
+                    legendaries[i].RequirmentParamID = requirmentYokais.ToArray();
+                }
             }
 
             // Save
-            Game.SaveLegendaries(newLegendaries, true);
+            Game.SaveLegendaries(legendaries, true);
         }
 
         public void RandomizeYokai(Dictionary<string, Option> options, decimal percentageLevel)
@@ -402,7 +409,7 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                                                                 && Fusions.FindIndex(y => y.Material == x.ParamID) == -1
                                                                 ).Select(x => x.ParamID).ToList();
 
-                foreach (Fusion fusion in Fusions.Where(x => x.BaseIsYokai == true))
+                foreach (Fusion fusion in Fusions.Where(x => x.BaseIsItem == false & x.EvolveToIsItem == false))
                 {
                     int randomNumber = Seed.Next(0, scoutableYokaiID.Count);
                     fusion.EvolveTo = scoutableYokaiID[randomNumber];
@@ -418,10 +425,10 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                 YokaiInheritance(oldYokai, newYokai, options);
             }
 
-            // Transmits some data of the base yokai to the new evolution
-            for (int i = 0; i < Fusions.Count; i++)
+            // Transmits some data of the base yokai to the new fusion
+            foreach (Fusion fusion in Fusions.Where(x => x.BaseIsItem == false & x.EvolveToIsItem == false))
             {
-                YokaiInheritance(Yokais.FirstOrDefault(x => Fusions[i].BaseYokai == x.ParamID), Yokais.FirstOrDefault(x => Fusions[i].EvolveTo == x.ParamID), options);
+                YokaiInheritance(Yokais.FirstOrDefault(x => fusion.BaseYokai == x.ParamID), Yokais.FirstOrDefault(x => fusion.EvolveTo == x.ParamID), options);
             }
 
             // Boss Stat
@@ -464,10 +471,10 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             List<UInt32> staticYokaiID = Yokais.Where(x => x.Statut.IsStatic == true).Select(i => i.ParamID).ToList();
 
             // Randomize Encounter
-            foreach((uint, int) encounter in encounters)
+            for (int i = 0; i < encounters.Count; i++)
             {
-                uint yokaiParamID = encounter.Item1;
-                int level = encounter.Item2;
+                uint yokaiParamID = encounters[i].Item1;
+                int level = encounters[i].Item2;
 
                 // Get Yokai
                 Yokai yokai = Yokais.FirstOrDefault(x => x.ParamID == yokaiParamID);
@@ -494,6 +501,8 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                         }
                     }
                 }
+
+                encounters[i] = (yokaiParamID, level);
             }
 
             // Save
@@ -558,10 +567,8 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                     // Randomize Encounter
                     for (int i = 0; i < encounters.Count; i++)
                     {
-                        (uint, int) encounter = encounters[i];
-
-                        uint yokaiParamID = encounter.Item1;
-                        int level = encounter.Item2;
+                        uint yokaiParamID = encounters[i].Item1;
+                        int level = encounters[i].Item2;
 
                         // Get Yokai
                         Yokai yokai = Yokais.FirstOrDefault(x => x.ParamID == yokaiParamID);
@@ -597,10 +604,12 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                                 }
                             }
                         }
+
+                        encounters[i] = (yokaiParamID, level);
                     }
 
                     // Save
-                    Game.SaveWorldEncounter(encounters, randomizedMap);
+                    randomizedMap = Game.SaveWorldEncounter(encounters, randomizedMap);
 
                     // Replace file
                     if (encounters.Count > 0)
@@ -716,7 +725,7 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                     }
 
                     // Save
-                    Game.SaveTreasureBox(treasures, randomizedMap);
+                    randomizedMap = Game.SaveTreasureBox(treasures, randomizedMap);
 
                     // Replace file
                     if (treasures.Count > 0)

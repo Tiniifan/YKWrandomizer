@@ -35,6 +35,9 @@
   <PropertyGroup>
     <StartupObject>YKWrandomizer.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EndianBitConverter, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EndianBitConverter.1.1.0\lib\net45\EndianBitConverter.dll</HintPath>
@@ -89,6 +92,7 @@
     <Compile Include="Yokai Watch\Games\YW3\YW3Support.cs" />
     <Compile Include="Yokai Watch\Logic\Fusion.cs" />
     <Compile Include="Yokai Watch\Logic\Evolution.cs" />
+    <Compile Include="Yokai Watch\Logic\LegendSeal.cs" />
     <Compile Include="Yokai Watch\Logic\Yokai.cs" />
     <Compile Include="Tool\Draw.cs" />
     <Compile Include="Tool\ResourceReader.cs" />
@@ -167,6 +171,7 @@
     <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_rare11.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Icon.ico" />
     <Content Include="LICENSE-APACHE.txt" />
     <Content Include="LICENSE.EndianBitConverter.txt" />
   </ItemGroup>

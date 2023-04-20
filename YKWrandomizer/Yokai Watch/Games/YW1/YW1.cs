@@ -294,9 +294,9 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             }
         }
 
-        public Dictionary<uint, List<uint>> GetLegendaries()
+        public List<LegendSeal> GetLegendaries()
         {
-            Dictionary<uint, List<uint>> legendaries = null;
+            List<LegendSeal> legendaries = new List<LegendSeal>();
 
             using (BinaryDataReader legendconfig = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/legend/legend_config.cfg.bin")))
             {
@@ -304,17 +304,19 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                 legendconfig.Skip(0x08);
                 YW1Support.LegendSeal[] legendSeals = legendconfig.ReadMultipleStruct<YW1Support.LegendSeal>(legendconfig.ReadValue<int>());
 
-                // Create Evolution Object List
-                foreach (YW1Support.LegendSeal legendSeal in legendSeals)
+                // Create Legend Seal Object List
+                legendaries = legendSeals.Select(legendseal => new LegendSeal()
                 {
-                    legendaries.Add(legendSeal.LegendaryParamID, legendSeal.Seals.Select(x => x.ParamID).ToList());
-                }
+                    SealID = legendseal.SealdID,
+                    LegendaryParamID = legendseal.LegendaryParamID,
+                    RequirmentParamID = legendseal.Seals.Select(x => x.ParamID).ToArray(),
+                }).ToList();
             }
 
             return legendaries;
         }
 
-        public void SaveLegendaries(Dictionary<uint, List<uint>> legendaries, bool spoil)
+        public void SaveLegendaries(List<LegendSeal> legendaries, bool spoil)
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -325,7 +327,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         int entryCount = legendconfigReader.ReadValue<int>();
                         long tableOffset = legendconfigReader.ReadValue<int>();
 
-                        legendconfigReader.SeekOf<uint>(0x76687850, 0x10);
+                        legendconfigReader.SeekOf<uint>(0xEA858825, 0x10);
                         legendconfigWriter.Write(legendconfigReader.GetSection(0, (int)legendconfigReader.Position));
                         legendconfigReader.Skip(0x08);
                         int legendSealsCount = legendconfigReader.ReadValue<int>();
@@ -336,15 +338,15 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         legendconfigWriter.Write(legendaries.Count);
 
                         // Write legend
-                        foreach (KeyValuePair<uint, List<uint>> legendary in legendaries)
+                        foreach (LegendSeal legendary in legendaries)
                         {
-                            // Header
                             legendconfigWriter.Write(0x66C81CEA);
                             legendconfigWriter.Write(0x55555513);
                             legendconfigWriter.Write(0xFFFF1555);
+                            legendconfigWriter.Write(legendary.SealID);
+                            legendconfigWriter.Write(legendary.LegendaryParamID);
 
-                            legendconfigWriter.Write(legendary.Key);
-                            foreach (uint seal in legendary.Value)
+                            foreach (uint seal in legendary.RequirmentParamID)
                             {
                                 legendconfigWriter.Write(seal);
                                 legendconfigWriter.Write(Convert.ToInt32(spoil));
@@ -364,7 +366,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         legendconfigWriter.Seek(0x0);
                         entryCount -= legendSealsCount;
                         legendconfigWriter.Write(entryCount + legendaries.Count);
-                        legendconfigWriter.Write(tableOffset);
+                        legendconfigWriter.Write((uint)tableOffset);
                     }
 
                     // Replace File
@@ -384,14 +386,14 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                 YW1Support.Fusion[] yokaiFusions = combineconfig.ReadMultipleStruct<YW1Support.Fusion>(combineconfig.ReadValue<int>());
 
                 // Create Fusion Object List
-                fusions = yokaiFusions.Where(x => x.BaseIsYokai == true).Select(yokaiFusion => new Fusion()
+                fusions = yokaiFusions.Select(yokaiFusion => new Fusion()
                 {
                     BaseYokai = yokaiFusion.BaseID,
-                    BaseIsYokai = yokaiFusion.BaseIsYokai,
+                    BaseIsItem = yokaiFusion.BaseIsItem,
                     Material = yokaiFusion.MaterialID,
-                    MaterialIsYokai = yokaiFusion.MaterialIsYokai,
+                    MaterialIsItem = yokaiFusion.MaterialIsItem,
                     EvolveTo = yokaiFusion.EvolveToID,
-                    EvolveToIsYokai = yokaiFusion.EvolveToIsYokai,
+                    EvolveToIsItem = yokaiFusion.EvolveToIsItem,
                     FusionID = yokaiFusion.FusionID,
                 }).ToList();
             }
@@ -425,11 +427,11 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         {
                             combineconfigWriter.Write(0xF9D0FE0F);
                             combineconfigWriter.Write(0xFF155507);
-                            combineconfigWriter.Write(Convert.ToInt32(fusion.BaseIsYokai));
+                            combineconfigWriter.Write(Convert.ToInt32(fusion.BaseIsItem));
                             combineconfigWriter.Write(fusion.BaseYokai);
-                            combineconfigWriter.Write(Convert.ToInt32(fusion.MaterialIsYokai));
+                            combineconfigWriter.Write(Convert.ToInt32(fusion.MaterialIsItem));
                             combineconfigWriter.Write(fusion.Material);
-                            combineconfigWriter.Write(Convert.ToInt32(fusion.EvolveToIsYokai));
+                            combineconfigWriter.Write(Convert.ToInt32(fusion.EvolveToIsItem));
                             combineconfigWriter.Write(fusion.EvolveTo);
                             combineconfigWriter.Write(fusion.FusionID);
                         }
@@ -445,7 +447,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         combineconfigWriter.Seek(0x0);
                         entryCount -= fusionCount;
                         combineconfigWriter.Write(entryCount + fusions.Count);
-                        combineconfigWriter.Write(tableOffset);
+                        combineconfigWriter.Write((uint)tableOffset);
                     }
 
                     // Replace File
@@ -512,11 +514,11 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         commonencWriter.Seek(0x0);
                         entryCount -= encounterCount;
                         commonencWriter.Write(entryCount + encounterCount);
-                        commonencWriter.Write(tableOffset);
+                        commonencWriter.Write((uint)tableOffset);
                     }
 
                     // Replace File
-                    Game.Directory.GetFolderFromFullPath("/data/res/battle/").Files["common_enc_0.02m.cfgbin"].ByteContent = memoryStream.ToArray();
+                    Game.Directory.GetFolderFromFullPath("/data/res/battle/").Files["common_enc_0.02m.cfg.bin"].ByteContent = memoryStream.ToArray();
                 }
             }
         }
@@ -537,7 +539,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             return encounters;
         }
 
-        public void SaveWorldEncounter(List<(uint, int)> encounters, byte[] file)
+        public byte[] SaveWorldEncounter(List<(uint, int)> encounters, byte[] file)
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -579,11 +581,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         commonencWriter.Seek(0x0);
                         entryCount -= encounterCount;
                         commonencWriter.Write(entryCount + encounterCount);
-                        commonencWriter.Write(tableOffset);
+                        commonencWriter.Write((uint)tableOffset);
                     }
 
-                    // Replace File
-                    file = memoryStream.ToArray();
+                    return memoryStream.ToArray();
                 }
             }
         }
@@ -594,7 +595,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
 
             using (BinaryDataReader commonencReader = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/capsule/capsule_config.cfg.bin")))
             {
-                commonencReader.SeekOf<uint>(0x02C18213, 0x10);
+                commonencReader.SeekOf<uint>(0x61CFF7F4, 0x10);
                 commonencReader.Skip(0x08);
                 YW1Support.CapsuleItem[] capsuleItems = commonencReader.ReadMultipleStruct<YW1Support.CapsuleItem>(commonencReader.ReadValue<int>());
 
@@ -696,7 +697,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             using (BinaryDataReader treasureBoxReader = new BinaryDataReader(file))
             {
                 treasureBoxReader.SeekOf<uint>(0x890AA6BE, 0x10);
-                treasureBoxReader.Skip(0x0C);
+                treasureBoxReader.Skip(0x08);
                 YW1Support.TreasureBoxConfig[] treasureConfigs = treasureBoxReader.ReadMultipleStruct<YW1Support.TreasureBoxConfig>(treasureBoxReader.ReadValue<int>());
 
                 treasures = treasureConfigs.Select(treasure => treasure.ItemID).ToList();
@@ -705,7 +706,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             return treasures;
         }
 
-        public void SaveTreasureBox(List<uint> treasures, byte[] file)
+        public byte[] SaveTreasureBox(List<uint> treasures, byte[] file)
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -716,14 +717,14 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         int entryCount = treasureReader.ReadValue<int>();
                         long tableOffset = treasureReader.ReadValue<int>();
 
-                        treasureReader.SeekOf<uint>(0x5CF8BAE4, 0x10);
+                        treasureReader.SeekOf<uint>(0x890AA6BE, 0x10);
                         treasureWriter.Write(treasureReader.GetSection(0, (int)treasureReader.Position));
                         treasureReader.Skip(0x08);
                         int encounterCount = treasureReader.ReadValue<int>();
                         YW1Support.TreasureBoxConfig[] treasureConfigs = treasureReader.ReadMultipleStruct<YW1Support.TreasureBoxConfig>(encounterCount);
 
                         // Header treasure
-                        treasureWriter.Write(0x5CF8BAE4);
+                        treasureWriter.Write(0x890AA6BE);
                         treasureWriter.Write(0xFFFF0101);
                         treasureWriter.Write(encounterCount);
 
@@ -739,8 +740,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         treasureWriter.Write(treasureReader.GetSection((int)(treasureReader.Length - treasureReader.Position)));
                     }
 
-                    // Replace File
-                    file = memoryStream.ToArray();
+                    return memoryStream.ToArray();
                 }
             }
         }

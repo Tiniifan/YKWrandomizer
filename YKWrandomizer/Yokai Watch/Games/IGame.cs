@@ -34,9 +34,9 @@ namespace YKWrandomizer.Yokai_Watch.Games
 
         void SaveYokais(List<Yokai> yokais, List<Evolution> evolutions);
 
-        Dictionary<uint, List<uint>> GetLegendaries();
+        List<LegendSeal> GetLegendaries();
 
-        void SaveLegendaries(Dictionary<uint, List<uint>> legendaries, bool spoil);
+        void SaveLegendaries(List<LegendSeal> legendaries, bool spoil);
 
         List<Fusion> GetFusions();
 
@@ -48,7 +48,7 @@ namespace YKWrandomizer.Yokai_Watch.Games
 
         List<(uint, int)> GetWorldEncounter(byte[] file);
 
-        void SaveWorldEncounter(List<(uint, int)> encounters, byte[] file);
+        byte[] SaveWorldEncounter(List<(uint, int)> encounters, byte[] file);
 
         List<uint> GetCapsule();
 
@@ -60,7 +60,7 @@ namespace YKWrandomizer.Yokai_Watch.Games
 
         List<uint> GetTreasureBox(byte[] file);
 
-        void SaveTreasureBox(List<uint> treasures, byte[] file);
+        byte[] SaveTreasureBox(List<uint> treasures, byte[] file);
 
         void FixStory();
     }

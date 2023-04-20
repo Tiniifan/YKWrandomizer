@@ -12,7 +12,6 @@ namespace YKWrandomizer.Yokai_Watch.Logic
 
         public Evolution()
         {
-
         }
 
         public Evolution(UInt32 baseYokai, UInt32 evolveTo, int level)

@@ -6,15 +6,15 @@ namespace YKWrandomizer.Yokai_Watch.Logic
     {
         public uint BaseYokai;
 
-        public bool BaseIsYokai;
+        public bool BaseIsItem;
 
         public uint Material;
 
-        public bool MaterialIsYokai;
+        public bool MaterialIsItem;
 
         public uint EvolveTo;
 
-        public bool EvolveToIsYokai;
+        public bool EvolveToIsItem;
 
         public uint FusionID;
 
