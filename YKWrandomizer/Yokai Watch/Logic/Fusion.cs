@@ -18,6 +18,8 @@ namespace YKWrandomizer.Yokai_Watch.Logic
 
         public uint FusionID;
 
+        public bool FusionIsItem;
+
         public Fusion()
         {
 

@@ -361,6 +361,9 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                 }
             }
 
+            // Prevent bug from the story
+            Game.FixYokai(Yokais);
+
             // Randomize Evolution
             if (options["groupBoxEvolution"].Name == "Random")
             {
@@ -446,20 +449,27 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                 }
             }
 
-            // Fix some yokai to avoid bug
-            if (Game is YW1)
-            {
-                // Buhu - Mochismo - Dulluma
-                List<Yokai> poorYokais = Yokais.Where(x => x.ParamID == 0x8443D22D || x.ParamID == 0x86056C74 || x.ParamID == 0xAEACEBD9).ToList();
-                foreach(Yokai poorYokai in poorYokais)
-                {
-                    poorYokai.Rank = 0;
-                }
-            }
-
             // Save
             Game.SaveYokais(Yokais, Evolutions);
             Game.SaveFusions(Fusions);
+        }
+
+        public void RandomizeYokaiSoul(bool randomize)
+        {
+            if (randomize == false) return;
+
+            List<uint> souls = Game.GetSouls();
+            List<uint> soulsTemp = souls.ToList();
+
+            for (int i = 0; i < souls.Count; i++)
+            {
+                int randomIndex = Seed.Next(0, soulsTemp.Count);
+                souls[i] = soulsTemp[randomIndex];
+                soulsTemp.RemoveAt(randomIndex);
+            }
+
+            // Save
+            Game.SaveSouls(souls);
         }
 
         public void RandomizeStatic(bool randomize, decimal percentageLevel)
@@ -541,7 +551,12 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                     // Folder contains data map
                     if (directory.Files.ContainsKey(directory.Name + ".pck"))
                     {
-                        directory.Files[directory.Name + ".pck"].Read();
+                        if (directory.Files[directory.Name + ".pck"].ByteContent == null)
+                        {
+                            directory.Files[directory.Name + ".pck"].Read();
+                        }
+                        
+
                         mapData = new XPCK(directory.Files[directory.Name + ".pck"].ByteContent);
 
                         if (mapData.Directory.Files.ContainsKey(directory.Name + encounterFileName))
@@ -564,56 +579,56 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                 {
                     List<(uint, int)> encounters = Game.GetWorldEncounter(randomizedMap);
 
-                    // Randomize Encounter
-                    for (int i = 0; i < encounters.Count; i++)
+                    if (encounters.Count > 0)
                     {
-                        uint yokaiParamID = encounters[i].Item1;
-                        int level = encounters[i].Item2;
-
-                        // Get Yokai
-                        Yokai yokai = Yokais.FirstOrDefault(x => x.ParamID == yokaiParamID);
-
-                        if (yokai != null)
+                        // Randomize Encounter
+                        for (int i = 0; i < encounters.Count; i++)
                         {
-                            if (yokai.Statut.IsScoutable)
-                            {
-                                if (i < 6)
-                                {
-                                    yokaiParamID = poorYokaiID[Seed.Next(0, poorYokaiID.Count)];
-                                }
-                                else
-                                {
-                                    yokaiParamID = scoutableYokaiID[Seed.Next(0, scoutableYokaiID.Count)];
-                                }
-                            }
-                            else if (yokai.Statut.IsStatic)
-                            {
-                                yokaiParamID = staticYokaiID[Seed.Next(0, staticYokaiID.Count)];
-                            }
+                            uint yokaiParamID = encounters[i].Item1;
+                            int level = encounters[i].Item2;
 
-                            // Add Percentage Level Multiplicator
-                            if (percentageLevel > 0)
+                            // Get Yokai
+                            Yokai yokai = Yokais.FirstOrDefault(x => x.ParamID == yokaiParamID);
+
+                            if (yokai != null)
                             {
-                                if (level > 0)
+                                if (yokai.Statut.IsScoutable)
                                 {
-                                    int newLevel = level + Convert.ToInt32(level * percentageLevel / 100);
-                                    if (newLevel > 99)
+                                    if (i < 6)
                                     {
-                                        newLevel = 99;
+                                        yokaiParamID = poorYokaiID[Seed.Next(0, poorYokaiID.Count)];
+                                    }
+                                    else
+                                    {
+                                        yokaiParamID = scoutableYokaiID[Seed.Next(0, scoutableYokaiID.Count)];
+                                    }
+                                }
+                                else if (yokai.Statut.IsStatic)
+                                {
+                                    yokaiParamID = staticYokaiID[Seed.Next(0, staticYokaiID.Count)];
+                                }
+
+                                // Add Percentage Level Multiplicator
+                                if (percentageLevel > 0)
+                                {
+                                    if (level > 0)
+                                    {
+                                        int newLevel = level + Convert.ToInt32(level * percentageLevel / 100);
+                                        if (newLevel > 99)
+                                        {
+                                            newLevel = 99;
+                                        }
                                     }
                                 }
                             }
+
+                            encounters[i] = (yokaiParamID, level);
                         }
 
-                        encounters[i] = (yokaiParamID, level);
-                    }
+                        // Save
+                        randomizedMap = Game.SaveWorldEncounter(encounters, randomizedMap);
 
-                    // Save
-                    randomizedMap = Game.SaveWorldEncounter(encounters, randomizedMap);
-
-                    // Replace file
-                    if (encounters.Count > 0)
-                    {
+                        // Replace file
                         if (Game is YW2 || Game is YW3)
                         {
                             mapData.Directory.Files[directory.Name + encounterFileName].ByteContent = randomizedMap;
@@ -621,7 +636,7 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
 
                             using (BinaryDataReader reader = new BinaryDataReader(mapData.BaseStream))
                             {
-                                mapData.Directory.Files[directory.Name + encounterFileName].ByteContent = reader.GetSection(0, (int)reader.Length);
+                                directory.Files[directory.Name + ".pck"].ByteContent = reader.GetSection(0, (int)reader.Length);
                             }
 
                             mapData.Close();
@@ -644,16 +659,19 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             {
                 List<uint> shops = Game.GetShop(file.Key);
 
-                for (int i = 0; i < shops.Count; i++)
+                if (shops.Count > 0)
                 {
-                    if (Game.Items.ContainsKey(shops[i]))
+                    for (int i = 0; i < shops.Count; i++)
                     {
-                        shops[i] = Game.Items.ElementAt(Seed.Next(0, Game.Items.Count)).Key;
+                        if (Game.Items.ContainsKey(shops[i]))
+                        {
+                            shops[i] = Game.Items.ElementAt(Seed.Next(0, Game.Items.Count)).Key;
+                        }
                     }
-                }
 
-                // Save
-                Game.SaveShop(shops, file.Key);
+                    // Save
+                    Game.SaveShop(shops, file.Key);
+                }
             }
         }
 
@@ -691,7 +709,11 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                     // Folder contains data map
                     if (directory.Files.ContainsKey(directory.Name + ".pck"))
                     {
-                        directory.Files[directory.Name + ".pck"].Read();
+                        if (directory.Files[directory.Name + ".pck"].ByteContent == null)
+                        {
+                            directory.Files[directory.Name + ".pck"].Read();
+                        }
+
                         mapData = new XPCK(directory.Files[directory.Name + ".pck"].ByteContent);
 
                         if (mapData.Directory.Files.ContainsKey(directory.Name + encounterFileName))
@@ -715,21 +737,20 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                 {
                     List<uint> treasures = Game.GetTreasureBox(randomizedMap);
 
-                    // Randomize treasure
-                    for (int i = 0; i < treasures.Count; i++)
-                    {
-                        if (Game.Items.ContainsKey(treasures[i]))
-                        {
-                            treasures[i] = Game.Items.ElementAt(Seed.Next(0, Game.Items.Count)).Key;
-                        }
-                    }
-
-                    // Save
-                    randomizedMap = Game.SaveTreasureBox(treasures, randomizedMap);
-
-                    // Replace file
                     if (treasures.Count > 0)
                     {
+                        // Randomize treasure
+                        for (int i = 0; i < treasures.Count; i++)
+                        {
+                            if (Game.Items.ContainsKey(treasures[i]))
+                            {
+                                treasures[i] = Game.Items.ElementAt(Seed.Next(0, Game.Items.Count)).Key;
+                            }
+                        }
+
+                        // Save
+                        randomizedMap = Game.SaveTreasureBox(treasures, randomizedMap);
+
                         if (Game is YW2 || Game is YW3)
                         {
                             mapData.Directory.Files[directory.Name + encounterFileName].ByteContent = randomizedMap;
@@ -737,7 +758,7 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
 
                             using (BinaryDataReader reader = new BinaryDataReader(mapData.BaseStream))
                             {
-                                mapData.Directory.Files[directory.Name + encounterFileName].ByteContent = reader.GetSection(0, (int)reader.Length);
+                                directory.Files[directory.Name + ".pck"].ByteContent = reader.GetSection(0, (int)reader.Length);
                             }
 
                             mapData.Close();

@@ -209,14 +209,15 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
 
                         // Reach Evolution
                         charaparamReader.SeekOf<uint>(0x4C6181CB, 0x10);
-                        charaparamWriter.Write(charaparamReader.GetSection((uint)position, (int)charaparamReader.Position));
+                        charaparamWriter.Write(charaparamReader.GetSection((uint)position, (int)(charaparamReader.Position - position)));
                         charaparamReader.Skip(0x08);
                         int evolutionCount = charaparamReader.ReadValue<int>();
+                        YW1Support.Evolution[] evolutionsSkip = charaparamReader.ReadMultipleStruct<YW1Support.Evolution>(evolutionCount);
 
                         // Header Evolution
                         charaparamWriter.Write(0x4C6181CB);
                         charaparamWriter.Write(0xFFFF0101);
-                        charaparamWriter.Write(evolutions.Count - 1);
+                        charaparamWriter.Write(evolutions.Count);
 
                         // Write Evolution
                         foreach (Evolution evolution in evolutions)
@@ -229,8 +230,9 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
 
                         // Write End File
                         position = charaparamReader.Position;
-                        charaparamReader.Seek((uint)tableOffset);
-                        charaparamWriter.Write(charaparamReader.GetSection((uint)position, (int)charaparamReader.Position));
+                        charaparamReader.SeekOf<uint>(0x257EC7C3, 0x10);
+                        charaparamWriter.Write(charaparamReader.GetSection((uint)position, (int)(charaparamReader.Position - position)));
+                        charaparamWriter.Write(0x257EC7C3);
                         charaparamWriter.WriteAlignment();
                         charaparamReader.Seek((uint)tableOffset);
                         tableOffset = charaparamWriter.Position;
@@ -240,7 +242,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         charaparamWriter.Seek(0x0);
                         entryCount -= yokaiParamCount;
                         entryCount -= evolutionCount;
-                        charaparamWriter.Write(entryCount + yokais.Count + evolutions.Count);
+                        charaparamWriter.Write(entryCount + yokaiParamCount + evolutions.Count);
                         charaparamWriter.Write(tableOffset);
                     }
 
@@ -454,6 +456,15 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                     Game.Directory.GetFolderFromFullPath("/data/res/shop/").Files["combine_config.cfg.bin"].ByteContent = memoryStream.ToArray();
                 }
             }
+        }
+
+        public List<uint> GetSouls()
+        {
+            return null;
+        }
+
+        public void SaveSouls(List<uint> souls)
+        {
         }
 
         public List<(uint, int)> GetEncounter()
@@ -784,6 +795,36 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         dullumaMapWriter.Seek(0x3B8);
                         dullumaMapWriter.Write(0xAEACEBD9);
                     }
+                }
+            }
+        }
+
+        public void FixYokai(List<Yokai> yokais)
+        {
+            if (yokais.Any(x => x.ParamID == 0x8443D22D))
+            {
+                Yokai buhu = yokais.Find(x => x.ParamID == 0x8443D22D);
+                if (buhu.Rank > 0x00)
+                {
+                    buhu.Rank = 0x00;
+                }
+            }
+
+            if (yokais.Any(x => x.ParamID == 0xF6913D61))
+            {
+                Yokai mochismo = yokais.Find(x => x.ParamID == 0xF6913D61);
+                if (mochismo.Rank > 0x01)
+                {
+                    mochismo.Rank = 0x01;
+                }
+            }
+
+            if (yokais.Any(x => x.ParamID == 0xAEACEBD9))
+            {
+                Yokai dulluma = yokais.Find(x => x.ParamID == 0xAEACEBD9);
+                if (dulluma.Rank > 0x00)
+                {
+                    dulluma.Rank = 0x00;
                 }
             }
         }

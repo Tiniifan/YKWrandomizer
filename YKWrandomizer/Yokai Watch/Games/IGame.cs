@@ -42,6 +42,10 @@ namespace YKWrandomizer.Yokai_Watch.Games
 
         void SaveFusions(List<Fusion> fusions);
 
+        List<uint> GetSouls();
+
+        void SaveSouls(List<uint> souls);
+
         List<(uint, int)> GetEncounter();
 
         void SaveEncounter(List<(uint, int)> encounters);
@@ -63,5 +67,7 @@ namespace YKWrandomizer.Yokai_Watch.Games
         byte[] SaveTreasureBox(List<uint> treasures, byte[] file);
 
         void FixStory();
+
+        void FixYokai(List<Yokai> yokais);
     }
 }

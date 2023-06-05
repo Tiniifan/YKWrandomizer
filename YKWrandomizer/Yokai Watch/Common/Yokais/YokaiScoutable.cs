@@ -668,7 +668,7 @@ namespace YKWrandomizer.Yokai_Watch.Common
             {0xD32C60E4, "Whinona" },
             {0x6B900781, "Mermadonna" },
             {0x728B36C0, "Mermother" },
-            {0x33F317D7, "Mermadonna (Big)" },
+            {0x33F317D7, "Méganyan" },
             {0x8B4F70B2, "Spoilerina" },
             {0xCB271688, "Poofessor" },
             {0x739B71ED, "Slurpent" },

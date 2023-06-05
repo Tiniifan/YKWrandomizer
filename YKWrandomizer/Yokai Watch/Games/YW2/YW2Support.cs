@@ -98,17 +98,106 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
             }
         }
 
-        public static Dictionary<string, string> AvailableLanguages = new Dictionary<string, string>()
+        public struct Evolution
         {
-            { "English (GB)", "engb"},
-            { "English (US)", "en"},
-            { "Deutsch", "de"},
-            { "Español", "es"},
-            { "Français", "fr"},
-            { "Italiano", "it"},
-            { "Nederlands", "nl"},
-            { "русский язык", "ru"},
-        };
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock1;
+            public int Level;
+            public uint EvolveToID;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct Fusion
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock1;
+            public bool BaseIsItem;
+            public uint BaseID;
+            public bool MaterialIsItem;
+            public uint MaterialID;
+            public bool EvolveToIsItem;
+            public uint EvolveToID;
+            public uint FusionID;
+            public bool fusionIsItem;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct LegendSeal
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x0C)]
+            public byte[] EmptyBlock1;
+            public uint SealdID;
+            public uint LegendaryParamID;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public GameSupport.YokaiSeal[] Seals;
+            public int SealCount;
+            public int EmptyBlock2;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct Encounter
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock1;
+            public uint ParamID;
+            public int Level;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x14)]
+            public byte[] EmptyBlock2;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct WorldEncounter
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock1;
+            public uint ParamID;
+            public int Level;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x14)]
+            public byte[] EmptyBlock2;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct CapsuleItem
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x10)]
+            public byte[] EmptyBlock1;
+            public uint ID;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x20)]
+            public byte[] EmptyBlock2;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct ShopConfig
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x0C)]
+            public byte[] EmptyBlock1;
+            public uint ItemID;
+            public int Price;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x20)]
+            public byte[] EmptyBlock2;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct TreasureBoxConfig
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock1;
+            public uint ItemID;
+            public int Quantity;
+            public int MaximumQuantity;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock2;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct SoulConfig
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x24)]
+            public byte[] EmptyBlock1;
+            public uint YokaiID;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock2;
+        }
     }
 }
 

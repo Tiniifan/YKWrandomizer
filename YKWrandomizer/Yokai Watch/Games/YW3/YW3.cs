@@ -73,6 +73,16 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
         {
         }
 
+        public List<uint> GetSouls()
+        {
+            return null;
+        }
+
+        public void SaveSouls(List<uint> souls)
+        {
+
+        }
+
         public List<(uint, int)> GetEncounter()
         {
             return null;
@@ -121,6 +131,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
         }
 
         public void FixStory()
+        {
+        }
+
+        public void FixYokai(List<Yokai> yokais)
         {
         }
     }
