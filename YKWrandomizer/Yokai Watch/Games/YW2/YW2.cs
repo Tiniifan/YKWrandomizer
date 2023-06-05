@@ -2,15 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using YKWrandomizer.Tool;
 using YKWrandomizer.Level5.Text;
 using YKWrandomizer.Yokai_Watch.Logic;
-using YKWrandomizer.Yokai_Watch.Common;
 using YKWrandomizer.Level5.Archive.ARC0;
-using YKWrandomizer.Level5.Archive.XPCK;
 
 namespace YKWrandomizer.Yokai_Watch.Games.YW2
 {

@@ -81,8 +81,16 @@ namespace YKWrandomizer
                     }
                 } else if (fileName == "yw_a")
                 {
-                    MessageBox.Show("Game not supported to the moment, please wait next update.");
-                    game = null;
+                    string gamePath = openFileDialog1.FileName;
+                    MessageBox.Show("Yo-Kai Watch 3 was detected! You need to open the .fa file containing the data for your language, to continue.");
+                    openFileDialog1.Filter = "Level 5 ARC0 files (*.fa)|*.fa";
+                    openFileDialog1.RestoreDirectory = true;
+
+                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        game = new YW3(gamePath, openFileDialog1.FileName);
+                        openFileDialog1.FileName = gamePath;
+                    }
                 } else
                 {
                     game = null;
@@ -98,6 +106,15 @@ namespace YKWrandomizer
                         groupBoxWeakness.Enabled = false;
                         groupBoxSoul.Enabled = false;
                         groupBoxStrongest.Text = "Attribute damage";
+
+                        // Tempory restriction
+                        groupBoxDrop.Enabled = true;
+                        checkBoxScaleMoney.Enabled = true;
+                        checkBoxScaleEXP.Enabled = true;
+                        groupBoxShop.Enabled = true;
+                        groupBoxTreasureBox.Enabled = true;
+                        groupBoxCrankKai.Enabled = true;
+                        checkBoxUnlockYokai.Enabled = true;
                     } else if (game is YW2)
                     {
                         groupBoxGivenYokai.Enabled = false;
@@ -106,6 +123,15 @@ namespace YKWrandomizer
                         groupBoxWeakness.Enabled = false;
                         groupBoxSoul.Enabled = true;
                         groupBoxStrongest.Text = "Attribute damage";
+
+                        // Tempory restriction
+                        groupBoxDrop.Enabled = true;
+                        checkBoxScaleMoney.Enabled = true;
+                        checkBoxScaleEXP.Enabled = true;
+                        groupBoxShop.Enabled = true;
+                        groupBoxTreasureBox.Enabled = true;
+                        groupBoxCrankKai.Enabled = true;
+                        checkBoxUnlockYokai.Enabled = true;
                     } else if (game is YW3)
                     {
                         groupBoxGivenYokai.Enabled = true;
@@ -114,6 +140,16 @@ namespace YKWrandomizer
                         groupBoxWeakness.Enabled = true;
                         groupBoxSoul.Enabled = true;
                         groupBoxStrongest.Text = "Strongest";
+
+                        // Tempory restriction
+                        groupBoxDrop.Enabled = false;
+                        checkBoxScaleMoney.Enabled = false;
+                        checkBoxScaleEXP.Enabled = false;
+                        groupBoxSoul.Enabled = false;
+                        groupBoxShop.Enabled = false;
+                        groupBoxTreasureBox.Enabled = false;
+                        groupBoxCrankKai.Enabled = false;
+                        checkBoxUnlockYokai.Enabled = false;
                     }
 
                     Randomizer = new Randomizer(game);
@@ -223,7 +259,21 @@ namespace YKWrandomizer
                     Randomizer.Game.Game.Save(saveFileDialog.FileName, progressBar1);
                 }
 
-                MessageBox.Show("Saved!");
+                DialogResult dialogResult = MessageBox.Show("Saved! Do you want to save your random log as .txt file?", "Export random log", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    SaveFileDialog randomSaveLogDialog = new SaveFileDialog();
+                    randomSaveLogDialog.FileName = "random_log.txt";
+                    randomSaveLogDialog.Title = "Save Random Output";
+                    randomSaveLogDialog.Filter = "Text files (*.txt)|*.txt";
+                    randomSaveLogDialog.InitialDirectory = openFileDialog1.InitialDirectory;
+
+                    if (randomSaveLogDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        File.WriteAllText(randomSaveLogDialog.FileName, Randomizer.PrintRandom());
+                        MessageBox.Show("Saved log!");
+                    }
+                }
             }
 
             randomizeSaveToolStripMenuItem.Enabled = true;

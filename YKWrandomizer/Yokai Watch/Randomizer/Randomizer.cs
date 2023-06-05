@@ -1,12 +1,13 @@
 ﻿using System;
-using System.IO;
+using System.Text;
 using System.Linq;
+using System.Reflection;
+using System.Collections;
 using System.Collections.Generic;
 using YKWrandomizer.Tool;
 using YKWrandomizer.Level5.Archive.XPCK;
 using YKWrandomizer.Yokai_Watch.Logic;
 using YKWrandomizer.Yokai_Watch.Games;
-using System.Runtime.InteropServices;
 using YKWrandomizer.Yokai_Watch.Games.YW1;
 using YKWrandomizer.Yokai_Watch.Games.YW2;
 using YKWrandomizer.Yokai_Watch.Games.YW3;
@@ -807,22 +808,16 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             // Randomize Given Yokais
             foreach (KeyValuePair<string, List<uint>> givenYokai in Game.YokaiGiven)
             {
-                using (MemoryStream memoryStream = new MemoryStream())
+                using (BinaryDataWriter givenWriter = new BinaryDataWriter(Game.Game.Directory.GetFileFromFullPath(givenYokai.Key)))
                 {
-                    using (BinaryDataWriter givenWriter = new BinaryDataWriter(memoryStream))
+                    for (int i = 0; i < givenYokai.Value.Count; i++)
                     {
-                        using (BinaryDataReader givenReader = new BinaryDataReader(Game.Game.Directory.GetFileFromFullPath(givenYokai.Key)))
-                        {
-                            givenWriter.Write(givenReader.GetSection(0, (int)givenReader.Length));
-
-                            for (int i = 0; i < givenYokai.Value.Count; i++)
-                            {
-                                givenWriter.Seek(givenYokai.Value[i]);
-                                givenWriter.Write(scoutableYokaiID[Seed.Next(0, scoutableYokaiID.Count)]);
-                            }
-                        }
+                        int randomIndex = Seed.Next(0, scoutableYokaiID.Count);
+                        givenWriter.Seek(givenYokai.Value[i]);
+                        givenWriter.Write(scoutableYokaiID[randomIndex]);
+                        scoutableYokaiID.RemoveAt(randomIndex);
                     }
-                }            
+                }         
             }
         }
 
@@ -831,6 +826,94 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             if (randomize == false) return;
 
             Game.FixStory();
+        }
+
+        private string PrintYokai(Yokai yokai)
+        {
+            Type objectType = yokai.GetType();
+            PropertyInfo[] properties = objectType.GetProperties();
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (PropertyInfo property in properties)
+            {
+                object value = property.GetValue(yokai);
+
+                if (value != null)
+                {
+                    string valueString = "";
+
+                    switch (property.Name)
+                    {
+                        case "Rank":
+                            string tryRank = Common.Ranks.Value.TryGetValue((byte)(int)value, out tryRank) ? tryRank : " ";
+                            valueString = tryRank;
+                            break;
+                        case "Tribe":
+                            string tryTribe = Game.Tribes.TryGetValue((byte)(int)value, out tryTribe) ? tryTribe : " ";
+                            valueString = tryTribe;
+                            break;
+                        case "Strongest":
+                            string tryStrongest = Common.Attribute.Value.TryGetValue((byte)value, out tryStrongest) ? tryStrongest : " ";
+                            valueString = tryStrongest;
+                            break;
+                        case "Weakness":
+                            string tryWeakness = Common.Attribute.Value.TryGetValue((byte)value, out tryWeakness) ? tryWeakness : " ";
+                            valueString = tryWeakness;
+                            break;
+                        case "AttackID":
+                            string tryAttack = Game.Attacks.TryGetValue((uint)value, out tryAttack) ? tryAttack : " ";
+                            valueString = tryAttack;
+                            break;
+                        case "TechniqueID":
+                            string tryTechnique = Game.Techniques.TryGetValue((uint)value, out tryTechnique) ? tryTechnique : " ";
+                            valueString = tryTechnique;
+                            break;
+                        case "InspiritID":
+                            string tryInspirit = Game.Inspirits.TryGetValue((uint)value, out tryInspirit) ? tryInspirit : " ";
+                            valueString = tryInspirit;
+                            break;
+                        case "SoultimateID":
+                            string trySoultimate = Game.Soultimates.TryGetValue((uint)value, out trySoultimate) ? trySoultimate : " ";
+                            valueString = trySoultimate;
+                            break;
+                        case "SkillID":
+                            string trySkill = Game.Skills.TryGetValue((uint)value, out trySkill) ? trySkill : " ";
+                            valueString = trySkill;
+                            break;
+                        case "ScoutableID":
+                            valueString = ((uint)value).ToString("X8");
+                            break;
+                        case "BaseID":
+                            valueString = ((uint)value).ToString("X8");
+                            break;
+                        case "ParamID":
+                            valueString = ((uint)value).ToString("X8");
+                            break;
+                        default:
+                            valueString = value is IList ? string.Join(", ", ((IEnumerable)value).Cast<object>()) : value.ToString();
+                            break;
+
+                    }
+
+                    sb.AppendLine($"- {property.Name}: {valueString}");
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        public string PrintRandom()
+        {
+            StringBuilder sb = new StringBuilder("Random seed: " + Seed.Seed + "\n");
+
+            sb.AppendLine("Yo-kai Information:\n");
+            foreach (Yokai yokai in Yokais)
+            {
+                sb.AppendLine(PrintYokai(yokai));
+            }
+
+            return sb.ToString();
         }
     }
 }

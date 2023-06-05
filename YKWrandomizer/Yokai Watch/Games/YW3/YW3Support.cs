@@ -41,6 +41,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 IsLegendary = yokai.Statut.IsLegendary;
                 Tribe = yokai.Tribe;
                 IsClassic = yokai.Statut.IsClassic;
+                IsMerican = yokai.Statut.IsMerican;
+                IsDeva = yokai.Statut.IsDeva;
+                IsMystery = yokai.Statut.IsMystery;
+                IsTreasure = yokai.Statut.IsTreasure;
             }
         }
 
@@ -84,7 +88,8 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 AttackID = yokai.AttackID;
                 TechniqueID = yokai.TechniqueID;
                 InspiritID = yokai.InspiritID;
-                //AttributesDamage = new GameSupport.Attributes { Fire = yokai.AttributeDamage[0], Ice = yokai.AttributeDamage[1], Earth = yokai.AttributeDamage[2], Ligthning = yokai.AttributeDamage[3], Water = yokai.AttributeDamage[4], Wind = yokai.AttributeDamage[4] };
+                Strongest = yokai.Strongest;
+                Weakness = yokai.Weakness;
                 SoultimateID = yokai.SoultimateID;
                 SkillID = yokai.SkillID;
                 //Money = yokai.Money;
@@ -94,17 +99,68 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 ExperienceCurve = yokai.ExperienceCurve;
                 EvolveOffset = yokai.EvolveOffset;
                 //MedaliumOffset = yokai.MedaliumOffset;
+                WaitTime = yokai.WaitTime;
             }
         }
 
-        public static Dictionary<string, string> AvailableLanguages = new Dictionary<string, string>()
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct Evolution
         {
-            { "English", "en"},
-            { "Deutsch", "de"},
-            { "Español", "es"},
-            { "Français", "fr"},
-            { "Italiano", "it"},
-        };
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock1;
+            public uint EvolveToID;
+            public int Level;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct Fusion
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock1;
+            public bool BaseIsItem;
+            public uint BaseID;
+            public bool MaterialIsItem;
+            public uint MaterialID;
+            public bool EvolveToIsItem;
+            public uint EvolveToID;
+            public uint FusionID;
+            public bool fusionIsItem;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct LegendSeal
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x0C)]
+            public byte[] EmptyBlock1;
+            public uint SealdID;
+            public uint LegendaryParamID;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public GameSupport.YokaiSeal[] Seals;
+            public int SealCount;
+            public int EmptyBlock2;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct Encounter
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock1;
+            public uint ParamID;
+            public int Level;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x18)]
+            public byte[] EmptyBlock2;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct WorldEncounter
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
+            public byte[] EmptyBlock1;
+            public uint ParamID;
+            public int Level;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x18)]
+            public byte[] EmptyBlock2;
+        }
     }
 }
 

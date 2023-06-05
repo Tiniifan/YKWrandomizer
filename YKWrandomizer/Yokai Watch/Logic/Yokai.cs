@@ -1,65 +1,69 @@
 ﻿using System;
+using System.Text;
+using System.Linq;
 using System.Drawing;
+using System.Reflection;
+using System.Collections;
 
 namespace YKWrandomizer.Yokai_Watch.Logic
 {
     public class Yokai
     {
-        public string Name;
+        public string Name { get; set; }
 
-        public string ModelName;
+        public string ModelName { get; set; }
 
-        public int Rank;
+        public int Rank { get; set; }
 
-        public int Tribe;
+        public int Tribe { get; set; }
 
-        public int WaitTime;
+        public int WaitTime { get; set; }
 
-        public int[] MinStat = new int[5];
+        public int[] MinStat { get; set; }
 
-        public int[] MaxStat = new int[5];
+        public int[] MaxStat { get; set; }
 
-        public float[] AttributeDamage = new float[6];
+        public float[] AttributeDamage { get; set; }
 
-        public byte Strongest;
+        public byte Strongest { get; set; }
 
-        public byte Weakness;
+        public byte Weakness { get; set; }
 
-        public UInt32 AttackID;
+        public UInt32 AttackID { get; set; }
 
-        public UInt32 TechniqueID;
+        public UInt32 TechniqueID { get; set; }
 
-        public UInt32 InspiritID;
+        public UInt32 InspiritID { get; set; }
 
-        public UInt32 SoultimateID;
+        public UInt32 SoultimateID { get; set; }
 
-        public UInt32 FoodID;
+        public UInt32 FoodID { get; set; }
 
-        public UInt32 SkillID;
+        public UInt32 SkillID { get; set; }
 
-        public int Money;
+        public int Money { get; set; }
 
-        public int Experience;
+        public int Experience { get; set; }
 
-        public UInt32[] DropID;
+        public UInt32[] DropID { get; set; }
 
-        public int[] DropRate;
+        public int[] DropRate { get; set; }
 
-        public int ExperienceCurve;
+        public int ExperienceCurve { get; set; }
 
-        public int EvolveOffset;
+        public int EvolveOffset { get; set; }
 
-        public int MedaliumOffset;
+        public int MedaliumOffset { get; set; }
 
-        public Point Medal;
+        public Point Medal { get; set; }
 
-        public Statut Statut;
+        public Statut Statut { get; set; }
 
-        public UInt32 ScoutableID;
+        public UInt32 ScoutableID { get; set; }
 
-        public UInt32 BaseID;
+        public UInt32 BaseID { get; set; }
 
-        public UInt32 ParamID;
+        public UInt32 ParamID { get; set; }
 
         public Yokai()
         {
@@ -79,29 +83,55 @@ namespace YKWrandomizer.Yokai_Watch.Logic
 
     public class Statut
     {
-        public bool IsRare;
+        public bool IsRare { get; set; }
 
-        public bool IsLegendary;
+        public bool IsLegendary { get; set; }
 
-        public bool IsClassic;
+        public bool IsClassic { get; set; }
 
-        public bool IsMerican;
+        public bool IsMerican { get; set; }
 
-        public bool IsDeva;
+        public bool IsDeva { get; set; }
 
-        public bool IsMystery;
+        public bool IsMystery { get; set; }
 
-        public bool IsTreasure;
+        public bool IsTreasure { get; set; }
 
-        public bool IsBoss;
+        public bool IsBoss { get; set; }
 
-        public bool IsStatic;
+        public bool IsStatic { get; set; }
 
-        public bool IsScoutable;
+        public bool IsScoutable { get; set; }
 
         public Statut()
         {
 
+        }
+
+        public override string ToString()
+        {
+            Type objectType = typeof(Statut);
+            PropertyInfo[] properties = objectType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+
+            foreach (PropertyInfo property in properties)
+            {
+                if (property.PropertyType == typeof(bool))
+                {
+                    bool value = (bool)property.GetValue(this);
+                    sb.Append($"{property.Name}: {value}, ");
+                }
+            }
+
+            if (sb.Length > 1)
+            {
+                sb.Length -= 2;
+            }
+
+            sb.Append("]");
+            return sb.ToString();
         }
     }
 }
