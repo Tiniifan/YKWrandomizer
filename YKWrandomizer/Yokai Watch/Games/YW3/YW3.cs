@@ -622,6 +622,11 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public void FixYokai(List<Yokai> yokais)
         {
+            if (yokais.Any(x => x.ParamID == 0xFDC725BF))
+            {
+                Yokai treetter = yokais.Find(x => x.ParamID == 0xFDC725BF);
+                treetter.Rank = 0x00;
+            }
         }
     }
 }

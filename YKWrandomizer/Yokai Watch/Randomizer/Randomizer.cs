@@ -242,7 +242,10 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                     if (options["groupBoxBaseStat"].Name == "Swap")
                     {
                         Shuffle(yokai.MinStat);
-                        Shuffle(yokai.MaxStat);
+                        if (yokai.MaxStat != null)
+                        {
+                            Shuffle(yokai.MaxStat);
+                        }
                     }
                     else if (options["groupBoxBaseStat"].Name == "Random")
                     {
@@ -445,7 +448,11 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                     for (int s = 0; s < 5; s++)
                     {
                         boss.MinStat[s] += Convert.ToInt32(percentageLevel * boss.MinStat[s] / 100);
-                        boss.MaxStat[s] += Convert.ToInt32(percentageLevel * boss.MaxStat[s] / 100);
+
+                        if (boss.MaxStat != null)
+                        {
+                            boss.MaxStat[s] += Convert.ToInt32(percentageLevel * boss.MaxStat[s] / 100);
+                        }
                     }
                 }
             }
