@@ -103,7 +103,8 @@ namespace YKWrandomizer.Level5.Archive.ARC0
                 {
                     // Remove first slash from directory name
                     string directoryName = folder.Key.Substring(1, folder.Key.Length - 1);
-                    tableName.Add(Encoding.GetEncoding("Shift-JIS").GetBytes(directoryName + '\0'));
+                    byte[] directoryNameByte = Encoding.GetEncoding("Shift-JIS").GetBytes(directoryName + '\0');
+                    tableName.Add(directoryNameByte);
 
                     var directoryEntry = new ARC0Support.DirectoryEntry();
 
@@ -117,10 +118,10 @@ namespace YKWrandomizer.Level5.Archive.ARC0
                     directoryEntry.FirstFileIndex = (ushort)firstFileIndex;
                     directoryEntry.FileCount = (short)folder.Value.Files.Count();
                     directoryEntry.DirectoryNameStartOffset = tableNameOffset;
-                    directoryEntry.FileNameStartOffset = tableNameOffset + directoryName.Length + 1;
+                    directoryEntry.FileNameStartOffset = tableNameOffset + directoryNameByte.Length;
                     directoryEntries.Add(directoryEntry);
 
-                    tableNameOffset += directoryName.Length + 1;
+                    tableNameOffset += directoryNameByte.Length;
                     firstFileIndex += folder.Value.Files.Count();
                     int nameOffsetInFolder = 0;
 
@@ -129,7 +130,8 @@ namespace YKWrandomizer.Level5.Archive.ARC0
                     Dictionary<string, SubMemoryStream> filesInFolder = folder.Value.Files.OrderBy(file => file.Key).ToDictionary(file => file.Key, file => file.Value);
                     foreach (var file in filesInFolder)
                     {
-                        tableName.Add(Encoding.GetEncoding("Shift-JIS").GetBytes(file.Key + '\0'));
+                        byte[] fileNameByte = Encoding.GetEncoding("Shift-JIS").GetBytes(file.Key + '\0');
+                        tableName.Add(fileNameByte);
 
                         var entryFile = new ARC0Support.FileEntry();
                         entryFile.Crc32 = System.BitConverter.ToUInt32(new Crc32().ComputeHash(Encoding.GetEncoding("Shift-JIS").GetBytes(file.Key)).Reverse().ToArray(), 0);
@@ -148,8 +150,8 @@ namespace YKWrandomizer.Level5.Archive.ARC0
                         fileEntryFromFolder.Add(entryFile);
                         files.Add(entryFile, file.Value);
 
-                        tableNameOffset += file.Key.Length + 1;
-                        nameOffsetInFolder += file.Key.Length + 1;
+                        tableNameOffset += fileNameByte.Length;
+                        nameOffsetInFolder += fileNameByte.Length;
                         fileOffset = (uint)((fileOffset + entryFile.FileSize + 3) & ~3);
                     }
 

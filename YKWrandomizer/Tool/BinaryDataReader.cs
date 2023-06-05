@@ -86,7 +86,6 @@ namespace YKWrandomizer.Tool
 
         public byte[] GetSection(int Size)
         {
-            long temp = _stream.Position;
             byte[] data = new byte[Size];
             _stream.Read(data, 0, data.Length);
             return data;

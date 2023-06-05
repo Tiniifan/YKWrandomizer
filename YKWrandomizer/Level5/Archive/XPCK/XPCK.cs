@@ -60,18 +60,18 @@ namespace YKWrandomizer.Level5.Archive.XPCK
         {
             // No add implemented
 
-            using (BinaryDataWriter writer = new BinaryDataWriter(BaseStream))
+            BinaryDataWriter writer = new BinaryDataWriter(BaseStream);
+
+            foreach (var file in Directory.Files)
             {
-                foreach (var file in Directory.Files)
+                if (file.Value.ByteContent != null)
                 {
-                    if (file.Value.ByteContent != null)
-                    {
-                        writer.BaseStream.Position = file.Value.Offset;
-                        file.Value.CopyTo(writer.BaseStream);
-                    }
+                    writer.BaseStream.Position = file.Value.Offset;
+                    file.Value.CopyTo(writer.BaseStream);
                 }
             }
         }
+
 
         public void Close()
         {

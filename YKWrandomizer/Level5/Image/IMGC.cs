@@ -83,10 +83,16 @@ namespace YKWrandomizer.Level5.Image
                         break;
                 }
 
-                Color[] resultArray = Enumerable.Range(0, imageDataAfterSwizzle.Length / imgFormat.Size)
-                    .Select(i => imageDataAfterSwizzle.Skip(i * imgFormat.Size).Take(imgFormat.Size))
-                    .Select(group => imgFormat.Decode(group.ToArray()))
-                    .ToArray();
+                int pixelCount = width * height;
+                Color[] resultArray = new Color[pixelCount];
+
+                for (int i = 0; i < pixelCount; i++)
+                {
+                    int dataIndex = i * imgFormat.Size;
+                    byte[] group = new byte[imgFormat.Size];
+                    Array.Copy(imageDataAfterSwizzle, dataIndex, group, 0, imgFormat.Size);
+                    resultArray[i] = imgFormat.Decode(group);
+                }
 
                 foreach (var pair in points.Zip(resultArray, Tuple.Create))
                 {

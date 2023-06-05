@@ -61,23 +61,31 @@ namespace YKWrandomizer
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                IGame game;
+                IGame game = null;
                 string fileName = Path.GetFileNameWithoutExtension(openFileDialog1.FileName);
 
-                switch(fileName)
+                if (fileName == "yw1_a")
                 {
-                    case "yw1_a":
-                        game = new YW1(openFileDialog1.FileName);
-                        break;
-                    case "yw2_a":
-                        game = new YW2(openFileDialog1.FileName);
-                        break;
-                    case "yw_a":
-                        game = new YW3(openFileDialog1.FileName);
-                        break;
-                    default:
-                        game = null;
-                        break;
+                    game = new YW1(openFileDialog1.FileName);
+                } else if (fileName == "yw2_a")
+                {
+                    string gamePath = openFileDialog1.FileName;
+                    MessageBox.Show("Yo-Kai Watch 2 was detected! You need to open the .fa file containing the data for your language, to continue.");
+                    openFileDialog1.Filter = "Level 5 ARC0 files (*.fa)|*.fa";
+                    openFileDialog1.RestoreDirectory = true;
+
+                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        game = new YW2(gamePath, openFileDialog1.FileName);
+                        openFileDialog1.FileName = gamePath;
+                    }
+                } else if (fileName == "yw_a")
+                {
+                    MessageBox.Show("Game not supported to the moment, please wait next update.");
+                    game = null;
+                } else
+                {
+                    game = null;
                 }
 
                 if (game != null)
@@ -131,7 +139,7 @@ namespace YKWrandomizer
             label4.Visible = true;
             progressBar1.Visible = true;
 
-            int totalTasks = 10;
+            int totalTasks = 11;
             progressBar1.Minimum = 0;
             progressBar1.Maximum = totalTasks;
             progressBar1.Value = 0;
@@ -140,6 +148,9 @@ namespace YKWrandomizer
             await Task.Run(() =>
             {
                 Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                Randomizer.RandomizeYokaiSoul(radioButtonSoul2.Checked);
                 progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
                 Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxLockLegendary.Checked ,checkBoxRequirmentsLegendaryYokai.Checked);
