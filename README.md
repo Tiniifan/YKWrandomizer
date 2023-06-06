@@ -26,6 +26,7 @@ The Tool is written in C# and the project is Open Source, everyone can contribut
 
 **Supported Region**
 - European ✅
+- American ✅
 
 **Screenshots**
 
