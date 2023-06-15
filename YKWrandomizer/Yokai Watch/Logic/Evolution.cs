@@ -4,11 +4,11 @@ namespace YKWrandomizer.Yokai_Watch.Logic
 {
     public class Evolution
     {
-        public UInt32 BaseYokai;
+        public UInt32 BaseYokai { get; set; }
 
-        public UInt32 EvolveTo;
+        public UInt32 EvolveTo { get; set; }
 
-        public int Level;
+        public int Level { get; set; }
 
         public Evolution()
         {

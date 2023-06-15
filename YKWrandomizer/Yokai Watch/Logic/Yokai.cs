@@ -65,6 +65,10 @@ namespace YKWrandomizer.Yokai_Watch.Logic
 
         public UInt32 ParamID { get; set; }
 
+        public UInt32 BattleType { get; set; }
+
+        public bool ShowInMedallium { get; set; }
+
         public Yokai()
         {
 

@@ -73,16 +73,21 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             public byte[] EmptyBlock2;
             public uint SoultimateID;
             public uint SkillID;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x1C)]
+            public uint Unk5;
+            public uint BattleType;
+            public uint CanIStillBecomeBefriend;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x10)]
             public byte[] EmptyBlock3;
             public uint ScoutableID;
-            public uint Unk5;
-            public int EvolveOffset;
             public uint Unk6;
+            public int EvolveOffset;
+            public uint Unk7;
             public int WaitTime;
 
             public void ReplaceWith(Yokai yokai)
             {
+                ShowInMedallium = yokai.ShowInMedallium;
+                MedalliumOffset = yokai.MedaliumOffset;
                 MinStat = new GameSupport.Stat { HP = yokai.MinStat[0], Strength = yokai.MinStat[1], Spirit = yokai.MinStat[2], Defense = yokai.MinStat[3], Speed = yokai.MinStat[4] };
                 MaxStat = new GameSupport.Stat { HP = yokai.MaxStat[0], Strength = yokai.MaxStat[1], Spirit = yokai.MaxStat[2], Defense = yokai.MaxStat[3], Speed = yokai.MaxStat[4] };
                 AttackID = yokai.AttackID;
@@ -92,6 +97,13 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 Weakness = yokai.Weakness;
                 SoultimateID = yokai.SoultimateID;
                 SkillID = yokai.SkillID;
+                BattleType = yokai.BattleType;
+
+                if (yokai.Statut.IsScoutable)
+                {
+                    CanIStillBecomeBefriend = 0x04;
+                }
+
                 //Money = yokai.Money;
                 //Experience = yokai.Experience;
                 //Drop1 = new GameSupport.Drop { ID = yokai.DropID[0], Rate = yokai.DropRate[0] };

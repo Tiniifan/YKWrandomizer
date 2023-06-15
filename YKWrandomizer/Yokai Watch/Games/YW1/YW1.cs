@@ -14,7 +14,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
 {
     public class YW1 : IGame
     {
-        public string Name => "Yokai Watch 1";
+        public string Name => "Yo-kai Watch 1";
 
         public Dictionary<uint, string> Attacks => Common.Attacks.YW1;
 
@@ -78,7 +78,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         Rank = yokaiConfig.Value.Rank,
                         Tribe = yokaiConfig.Key.Tribe,
                         MinStat = new int[] { yokaiConfig.Key.BaseStat.HP, yokaiConfig.Key.BaseStat.Strength, yokaiConfig.Key.BaseStat.Spirit, yokaiConfig.Key.BaseStat.Defense, yokaiConfig.Key.BaseStat.Speed },
-                        AttributeDamage = new float[] { yokaiConfig.Key.AttributesDamage.Fire, yokaiConfig.Key.AttributesDamage.Ice, yokaiConfig.Key.AttributesDamage.Earth, yokaiConfig.Key.AttributesDamage.Ligthning, yokaiConfig.Key.AttributesDamage.Water, yokaiConfig.Key.AttributesDamage.Wind },
+                        AttributeDamage = yokaiConfig.Key.AttributesDamage.GetAttributes(),
                         AttackID = yokaiConfig.Key.AttackID,
                         TechniqueID = yokaiConfig.Key.TechniqueID,
                         InspiritID = yokaiConfig.Key.InspiritID,
@@ -131,8 +131,8 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         }
                         else if (YokaiUnused.ContainsKey(yokai.ParamID))
                         {
-                            yokai.Name = YokaiUnused[yokai.ParamID];
                             // Let the randomizer determine the type of yokai
+                            yokai.Name = YokaiUnused[yokai.ParamID];
                         }
 
                         return yokai;

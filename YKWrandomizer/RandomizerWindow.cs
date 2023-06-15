@@ -114,7 +114,6 @@ namespace YKWrandomizer
                         groupBoxShop.Enabled = true;
                         groupBoxTreasureBox.Enabled = true;
                         groupBoxCrankKai.Enabled = true;
-                        checkBoxUnlockYokai.Enabled = true;
                     } else if (game is YW2)
                     {
                         groupBoxGivenYokai.Enabled = false;
@@ -131,7 +130,6 @@ namespace YKWrandomizer
                         groupBoxShop.Enabled = true;
                         groupBoxTreasureBox.Enabled = true;
                         groupBoxCrankKai.Enabled = true;
-                        checkBoxUnlockYokai.Enabled = true;
                     } else if (game is YW3)
                     {
                         groupBoxGivenYokai.Enabled = true;
@@ -149,7 +147,6 @@ namespace YKWrandomizer
                         groupBoxShop.Enabled = false;
                         groupBoxTreasureBox.Enabled = false;
                         groupBoxCrankKai.Enabled = false;
-                        checkBoxUnlockYokai.Enabled = false;
                     }
 
                     Randomizer = new Randomizer(game);

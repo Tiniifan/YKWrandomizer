@@ -53,14 +53,63 @@ namespace YKWrandomizer.Yokai_Watch.Games
             public int Speed;
         }
 
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct Attributes
         {
-            public float Fire;
-            public float Ice;
-            public float Earth;
-            public float Ligthning;
-            public float Water;
-            public float Wind;
+            private uint FireUInt;
+            private uint IceUInt;
+            private uint EarthUint;
+            private uint LigthningUInt;
+            private uint WaterUInt;
+            private uint WindUInt;
+
+            private float ConvertToFloat(uint number)
+            {
+                if (number == 0x01)
+                {
+                    return 1.0f;
+                } else
+                {
+                    return System.BitConverter.ToSingle(System.BitConverter.GetBytes(number), 0);
+                }
+            }
+
+
+            private uint ConvertToUInt(float number)
+            {
+                if (number == 1.0)
+                {
+                    return 0x01;
+                }
+                else
+                {
+                    return System.BitConverter.ToUInt32(System.BitConverter.GetBytes(number), 0);
+                }
+            }
+
+            public float[] GetAttributes()
+            {
+                float[] attributes = new float[6];
+
+                attributes[0] = ConvertToFloat(FireUInt);
+                attributes[1] = ConvertToFloat(IceUInt);
+                attributes[2] = ConvertToFloat(EarthUint);
+                attributes[3] = ConvertToFloat(LigthningUInt);
+                attributes[4] = ConvertToFloat(WaterUInt);
+                attributes[5] = ConvertToFloat(WindUInt);
+
+                return attributes;
+            }
+
+            public void SetAttributes(float[] attributes)
+            {
+                FireUInt = ConvertToUInt(attributes[0]);
+                IceUInt = ConvertToUInt(attributes[1]);
+                EarthUint = ConvertToUInt(attributes[2]);
+                LigthningUInt = ConvertToUInt(attributes[3]);
+                WaterUInt = ConvertToUInt(attributes[4]);
+                WindUInt = ConvertToUInt(attributes[5]);
+            }
         }
 
         public struct Drop

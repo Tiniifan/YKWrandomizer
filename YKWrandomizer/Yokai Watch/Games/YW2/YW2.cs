@@ -13,7 +13,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
 {
     public class YW2 : IGame
     {
-        public string Name => "Yokai Watch 2";
+        public string Name => "Yo-kai Watch 2";
 
         public Dictionary<uint, string> Attacks => Common.Attacks.YW2;
 
@@ -28,6 +28,14 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
         public Dictionary<uint, string> Items => Common.Items.YW2;
 
         public Dictionary<int, string> Tribes => Common.Tribes.YW2;
+
+        public Dictionary<uint, string> YokaiScoutable => Common.YokaiScoutable.YW2;
+
+        public Dictionary<uint, string> YokaiStatic => Common.YokaiStatic.YW2;
+
+        public Dictionary<uint, string> YokaiBoss => Common.YokaiBoss.YW2;
+
+        public Dictionary<uint, string> YokaiUnused => Common.YokaiUnused.YW2;
 
         public Dictionary<string, List<uint>> YokaiGiven => null;
 
@@ -79,7 +87,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                         Tribe = yokaiConfig.Value.Tribe,
                         MinStat = new int[] { yokaiConfig.Key.MinStat.HP, yokaiConfig.Key.MinStat.Strength, yokaiConfig.Key.MinStat.Spirit, yokaiConfig.Key.MinStat.Defense, yokaiConfig.Key.MinStat.Speed },
                         MaxStat = new int[] { yokaiConfig.Key.MaxStat.HP, yokaiConfig.Key.MaxStat.Strength, yokaiConfig.Key.MaxStat.Spirit, yokaiConfig.Key.MaxStat.Defense, yokaiConfig.Key.MaxStat.Speed },
-                        AttributeDamage = new float[] { yokaiConfig.Key.AttributesDamage.Fire, yokaiConfig.Key.AttributesDamage.Ice, yokaiConfig.Key.AttributesDamage.Earth, yokaiConfig.Key.AttributesDamage.Ligthning, yokaiConfig.Key.AttributesDamage.Water, yokaiConfig.Key.AttributesDamage.Wind },
+                        AttributeDamage = yokaiConfig.Key.AttributesDamage.GetAttributes(),
                         AttackID = yokaiConfig.Key.AttackID,
                         TechniqueID = yokaiConfig.Key.TechniqueID,
                         InspiritID = yokaiConfig.Key.InspiritID,
@@ -102,7 +110,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                             IsRare = yokaiConfig.Value.IsRare,
                             IsBoss = yokaiConfig.Value.Tribe == 0x09 || yokaiConfig.Value.Tribe == 0x00,
                             IsScoutable = yokaiConfig.Key.ScoutableID != 0x00,
-                            IsStatic = !(yokaiConfig.Key.ScoutableID != 0x00) && (yokaiConfig.Value.Tribe == 0x09 || yokaiConfig.Value.Tribe == 0x00),
+                            IsStatic = yokaiConfig.Key.ScoutableID == 0x00 && !(yokaiConfig.Value.Tribe == 0x09 || yokaiConfig.Value.Tribe == 0x00),
                         },
                     }).ToList();
 
@@ -799,7 +807,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                 baffleboardWriter.Write(0xC5AD7A9D);
                 baffleboardWriter.Seek(0x258);
                 baffleboardWriter.Write(0xC5AD7A9D);
-                baffleboardWriter.Seek(0x278);
+                baffleboardWriter.Seek(0x274);
                 baffleboardWriter.Write(0xC5AD7A9D);
             }
 
@@ -821,30 +829,36 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
             using (BinaryDataWriter fidgephantMapWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t131g00/t131g00.pck")))
             {
                 fidgephantMapWriter.Seek(0x1F74);
-                fidgephantMapWriter.Write(0xA4AF6DC1);
+                fidgephantMapWriter.Write(0xC16DAFA4);
                 fidgephantMapWriter.Seek(0x1F98);
-                fidgephantMapWriter.Write(0xA4AF6DC1);
+                fidgephantMapWriter.Write(0xC16DAFA4);
                 fidgephantMapWriter.Seek(0x1FBC);
-                fidgephantMapWriter.Write(0xA4AF6DC1);
+                fidgephantMapWriter.Write(0xC16DAFA4);
                 fidgephantMapWriter.Seek(0x1FE0);
-                fidgephantMapWriter.Write(0xA4AF6DC1);
+                fidgephantMapWriter.Write(0xC16DAFA4);
                 fidgephantMapWriter.Seek(0x267C);
-                fidgephantMapWriter.Write(0xA4AF6DC1);
+                fidgephantMapWriter.Write(0xC16DAFA4);
                 fidgephantMapWriter.Seek(0x26A0);
-                fidgephantMapWriter.Write(0xA4AF6DC1);
+                fidgephantMapWriter.Write(0xC16DAFA4);
                 fidgephantMapWriter.Seek(0x2778);
-                fidgephantMapWriter.Write(0xA4AF6DC1);
+                fidgephantMapWriter.Write(0xC16DAFA4);
             }
         }
 
         public void FixYokai(List<Yokai> yokais)
         {
-            if (yokais.Any(x => x.ParamID == 0x7EAC3AA7)) {
-                Yokai fidgephant = yokais.Find(x => x.ParamID == 0x7EAC3AA7);
+            if (yokais.Any(x => x.ParamID == 0xC16DAFA4)) {
+                Yokai fidgephant = yokais.Find(x => x.ParamID == 0xC16DAFA4);
                 if (fidgephant.Rank > 0x02)
                 {
                     fidgephant.Rank = 0x02;
                 }
+            }
+
+            if (yokais.Any(x => x.ParamID == 0xAA720DA6))
+            {
+                Yokai Brushido = yokais.Find(x => x.ParamID == 0xAA720DA6);
+                Brushido.Rank = 0x0;
             }
         }
     }

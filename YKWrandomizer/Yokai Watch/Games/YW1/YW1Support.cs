@@ -76,7 +76,11 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                 AttackID = yokai.AttackID;
                 TechniqueID = yokai.TechniqueID;
                 InspiritID = yokai.InspiritID;
-                AttributesDamage = new GameSupport.Attributes { Fire = yokai.AttributeDamage[0], Ice = yokai.AttributeDamage[1], Earth = yokai.AttributeDamage[2], Ligthning = yokai.AttributeDamage[3], Water = yokai.AttributeDamage[4], Wind = yokai.AttributeDamage[4] };
+
+                GameSupport.Attributes attributes = new GameSupport.Attributes();
+                attributes.SetAttributes(yokai.AttributeDamage);
+                AttributesDamage = attributes;
+
                 SoultimateID = yokai.SoultimateID;
                 SkillID = yokai.SkillID;
                 Money = yokai.Money;

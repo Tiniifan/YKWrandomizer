@@ -60,7 +60,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
             public uint SoultimateID;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x08)]
             public byte[] EmptyBlock3;
-            public int ScoutableID;
+            public uint ScoutableID;
             public uint SkillID;
             public int Money;
             public int Experience;
@@ -74,7 +74,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
             public uint Unk5;
             public int EvolveOffset;
             public int MedaliumOffset;
-            public uint Unk6;
+            public uint ShowInMedallium;
             public uint Unk7;
             public uint Unk8;
 
@@ -85,8 +85,13 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                 AttackID = yokai.AttackID;
                 TechniqueID = yokai.TechniqueID;
                 InspiritID = yokai.InspiritID;
-                AttributesDamage = new GameSupport.Attributes { Fire = yokai.AttributeDamage[0], Ice = yokai.AttributeDamage[1], Earth = yokai.AttributeDamage[2], Ligthning = yokai.AttributeDamage[3], Water = yokai.AttributeDamage[4], Wind = yokai.AttributeDamage[4] };
+
+                GameSupport.Attributes attributes = new GameSupport.Attributes();
+                attributes.SetAttributes(yokai.AttributeDamage);
+                AttributesDamage = attributes;
+
                 SoultimateID = yokai.SoultimateID;
+                ScoutableID = yokai.ScoutableID;
                 SkillID = yokai.SkillID;
                 Money = yokai.Money;
                 Experience = yokai.Experience;
@@ -95,6 +100,11 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                 ExperienceCurve = yokai.ExperienceCurve;
                 EvolveOffset = yokai.EvolveOffset;
                 MedaliumOffset = yokai.MedaliumOffset;
+
+                if (yokai.Statut.IsScoutable)
+                {
+                    ShowInMedallium = 1;
+                }
             }
         }
 

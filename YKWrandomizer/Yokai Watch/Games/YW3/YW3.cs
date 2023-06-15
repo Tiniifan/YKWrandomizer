@@ -13,7 +13,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 {
     public class YW3 : IGame
     {
-        public string Name => "Yokai Watch 3";
+        public string Name => "Yo-kai Watch 3";
 
         public Dictionary<uint, string> Attacks => Common.Attacks.YW3;
 
@@ -28,6 +28,14 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
         public Dictionary<uint, string> Items => Common.Items.YW3;
 
         public Dictionary<int, string> Tribes => Common.Tribes.YW3;
+
+        public Dictionary<uint, string> YokaiScoutable => Common.YokaiScoutable.YW3;
+
+        public Dictionary<uint, string> YokaiStatic => Common.YokaiStatic.YW3;
+
+        public Dictionary<uint, string> YokaiBoss => Common.YokaiBoss.YW3;
+
+        public Dictionary<uint, string> YokaiUnused => Common.YokaiUnused.YW3;
 
         public Dictionary<string, List<uint>> YokaiGiven => Common.GivenYokais.YW3;
 
@@ -92,18 +100,20 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                         //DropRate = new int[] { yokaiConfig.Key.Drop1.Rate, yokaiConfig.Key.Drop2.Rate },
                         ExperienceCurve = yokaiConfig.Key.ExperienceCurve,
                         EvolveOffset = yokaiConfig.Key.EvolveOffset,
+                        ShowInMedallium = yokaiConfig.Key.ShowInMedallium,
                         MedaliumOffset = yokaiConfig.Key.MedalliumOffset,
                         Medal = new Point(yokaiConfig.Value.Medal.X, yokaiConfig.Value.Medal.Y),
                         ScoutableID = (uint)yokaiConfig.Key.ScoutableID,
                         BaseID = yokaiConfig.Key.BaseID,
                         ParamID = yokaiConfig.Key.ParamID,
+                        BattleType = yokaiConfig.Key.BattleType,
                         Statut = new Statut
                         {
                             IsLegendary = yokaiConfig.Value.IsLegendary,
                             IsRare = yokaiConfig.Value.IsRare,
                             IsBoss = yokaiConfig.Value.Tribe == 0x09 || yokaiConfig.Value.Tribe == 0x00,
-                            IsScoutable = yokaiConfig.Key.ScoutableID != 0x00,
-                            IsStatic = !(yokaiConfig.Key.ScoutableID != 0x00) && (yokaiConfig.Value.Tribe == 0x09 || yokaiConfig.Value.Tribe == 0x00),
+                            IsScoutable = yokaiConfig.Key.ScoutableID != 0x00 && yokaiConfig.Key.BattleType > 01 && yokaiConfig.Key.ShowInMedallium != false,
+                            IsStatic = yokaiConfig.Key.ScoutableID == 0x00 && !(yokaiConfig.Value.Tribe == 0x09 || yokaiConfig.Value.Tribe == 0x00),
                             IsClassic = yokaiConfig.Value.IsClassic,
                             IsDeva = yokaiConfig.Value.IsDeva,
                             IsMerican = yokaiConfig.Value.IsMerican,
@@ -117,6 +127,25 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                         if (yokai.Name == null)
                         {
                             yokai.Name = "Yokai n°" + index;
+                        }
+
+                        if (YokaiScoutable.ContainsKey(yokai.ParamID))
+                        {
+                            yokai.Statut.IsBoss = false;
+                            yokai.Statut.IsScoutable = true;
+                            yokai.Statut.IsStatic = false;
+                        }
+                        else if (YokaiStatic.ContainsKey(yokai.ParamID))
+                        {
+                            yokai.Statut.IsBoss = false;
+                            yokai.Statut.IsScoutable = false;
+                            yokai.Statut.IsStatic = true;
+                        }
+                        else if (YokaiBoss.ContainsKey(yokai.ParamID))
+                        {
+                            yokai.Statut.IsBoss = true;
+                            yokai.Statut.IsScoutable = false;
+                            yokai.Statut.IsStatic = false;
                         }
 
                         return yokai;
@@ -138,12 +167,14 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 YW3Support.Evolution[] yokaiEvolutions = charaparam.ReadMultipleStruct<YW3Support.Evolution>(charaparam.ReadValue<int>());
 
                 // Create Evolution Object List
-                evolutions = yokaiEvolutions.Select((yokaiEvolution, index) => new Evolution()
-                {
-                    EvolveTo = yokaiEvolution.EvolveToID,
-                    Level = yokaiEvolution.Level,
-                    BaseYokai = yokais.FirstOrDefault(yokai => yokai.EvolveOffset == index).ParamID,
-                }).ToList();
+                evolutions = yokaiEvolutions
+                    .Where((yokaiEvolution, index) => yokais.Any(yokai => yokai.EvolveOffset == index))
+                    .Select((yokaiEvolution, index) => new Evolution()
+                    {
+                        EvolveTo = yokaiEvolution.EvolveToID,
+                        Level = yokaiEvolution.Level,
+                        BaseYokai = yokais.First(yokai => yokai.EvolveOffset == index).ParamID,
+                    }).ToList();
             }
 
             return evolutions;
@@ -366,9 +397,9 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
         {
             List<Fusion> fusions;
 
-            using (BinaryDataReader combineconfig = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/shop/combine_config.cfg.bin")))
+            using (BinaryDataReader combineconfig = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/shop/combine_config_0.03.43.cfg.bin")))
             {
-                combineconfig.SeekOf<uint>(0x9DFA1616, 0x10);
+                combineconfig.SeekOf<uint>(0x8A0AC547, 0x10);
                 combineconfig.Skip(0x08);
                 YW3Support.Fusion[] yokaiFusions = combineconfig.ReadMultipleStruct<YW3Support.Fusion>(combineconfig.ReadValue<int>());
 
@@ -395,18 +426,18 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             {
                 using (BinaryDataWriter combineconfigWriter = new BinaryDataWriter(memoryStream))
                 {
-                    using (BinaryDataReader combineconfigReader = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/shop/combine_config.cfg.bin")))
+                    using (BinaryDataReader combineconfigReader = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/shop/combine_config_0.03.43.cfg.bin")))
                     {
                         int entryCount = combineconfigReader.ReadValue<int>();
                         long tableOffset = combineconfigReader.ReadValue<int>();
 
-                        combineconfigReader.SeekOf<uint>(0x9DFA1616, 0x10);
+                        combineconfigReader.SeekOf<uint>(0x8A0AC547, 0x10);
                         combineconfigWriter.Write(combineconfigReader.GetSection(0, (int)combineconfigReader.Position));
                         combineconfigReader.Skip(0x08);
                         int fusionCount = combineconfigReader.ReadValue<int>();
 
                         // Header fusion
-                        combineconfigWriter.Write(0x9DFA1616);
+                        combineconfigWriter.Write(0x8A0AC547);
                         combineconfigWriter.Write(0xFFFF0101);
                         combineconfigWriter.Write(fusions.Count);
 
@@ -426,7 +457,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                         }
 
                         // Write end of file
-                        combineconfigWriter.Write(0x7950A9EA);
+                        combineconfigWriter.Write(0xF5B85BB3);
                         combineconfigWriter.WriteAlignment();
                         combineconfigReader.Seek((uint)tableOffset);
                         tableOffset = combineconfigWriter.Position;
@@ -440,7 +471,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                     }
 
                     // Replace File
-                    Game.Directory.GetFolderFromFullPath("/data/res/shop/").Files["combine_config.cfg.bin"].ByteContent = memoryStream.ToArray();
+                    Game.Directory.GetFolderFromFullPath("/data/res/shop/").Files["combine_config_0.03.43.cfg.bin"].ByteContent = memoryStream.ToArray();
                 }
             }
         }
@@ -618,6 +649,56 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public void FixStory()
         {
+            // Yo-Net Nummskull
+            using (BinaryDataWriter NummskullQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104d07/t104d07.pck")))
+            {
+                NummskullQuestWriter.Seek(0x6BC);
+                NummskullQuestWriter.Write(0xD8CADD7A);
+            }
+
+            // Yo-Net Snippity Cricket
+            using (BinaryDataWriter cricketQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104d01/t104d01.pck")))
+            {
+                cricketQuestWriter.Seek(0xE7C);
+                cricketQuestWriter.Write(0x5E5EAFD4);
+            }
+
+            // Snaggly Fusion Quest
+            using (BinaryDataWriter snagglyQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t401d01/t401d01.pck")))
+            {
+                snagglyQuestWriter.Seek(0x7C4);
+                snagglyQuestWriter.Write(0x948C1A34);
+                snagglyQuestWriter.Seek(0x7EC);
+                snagglyQuestWriter.Write(0x948C1A34);
+                snagglyQuestWriter.Seek(0x83C);
+                snagglyQuestWriter.Write(0x948C1A34);
+                snagglyQuestWriter.Seek(0x9CC);
+                snagglyQuestWriter.Write(0x948C1A34);
+            }
+
+            // Terrorpotta Fusion Quest
+            using (BinaryDataWriter terrorpottaQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t102d03/t102d03.pck")))
+            {
+                terrorpottaQuestWriter.Seek(0x2428);
+                terrorpottaQuestWriter.Write(0x0059A7DA);
+                terrorpottaQuestWriter.Seek(0x2478);
+                terrorpottaQuestWriter.Write(0x0059A7DA);
+                terrorpottaQuestWriter.Seek(0x24A0);
+                terrorpottaQuestWriter.Write(0x0059A7DA);
+                terrorpottaQuestWriter.Seek(0x26A8);
+                terrorpottaQuestWriter.Write(0x0059A7DA);
+            }
+
+            // Nate Fusion Quest
+            using (BinaryDataWriter nateFusionQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/shop/combine_config_0.03.43.cfg.bin")))
+            {
+                nateFusionQuestWriter.Seek(0x2A8);
+                nateFusionQuestWriter.Write(0xD59E7AE5);
+                nateFusionQuestWriter.Seek(0x2B0);
+                nateFusionQuestWriter.Write(0x948C1A34);
+                nateFusionQuestWriter.Seek(0x2B8);
+                nateFusionQuestWriter.Write(0xF0F52539);
+            }
         }
 
         public void FixYokai(List<Yokai> yokais)

@@ -79,22 +79,39 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             {
                 for (int m = 0; m < 5; m++)
                 {
-                    int minStat = oldYokai.MinStat[m];
-                    int maxStat = oldYokai.MaxStat[m];
-
-                    if (m == 0)
+                    if (Game is YW1)
                     {
-                        minStat += Seed.Next(10, 21) + newYokai.Rank;
-                        maxStat += Seed.Next(10, 21) + newYokai.Rank * 5;
-                    }
-                    else
-                    {
-                        minStat += Seed.Next(5, 11) + newYokai.Rank;
-                        maxStat += Seed.Next(5, 11) + newYokai.Rank * 5;
-                    }
+                        int minStat = oldYokai.MinStat[m];
 
-                    newYokai.MinStat[m] = minStat;
-                    newYokai.MaxStat[m] = maxStat;
+                        if (m == 0)
+                        {
+                            minStat += Seed.Next(10, 21) + newYokai.Rank;
+                        }
+                        else
+                        {
+                            minStat += Seed.Next(5, 11) + newYokai.Rank;
+                        }
+
+                        newYokai.MinStat[m] = minStat;
+                    } else
+                    {
+                        int minStat = oldYokai.MinStat[m];
+                        int maxStat = oldYokai.MaxStat[m];
+
+                        if (m == 0)
+                        {
+                            minStat += Seed.Next(10, 21) + newYokai.Rank;
+                            maxStat += Seed.Next(10, 21) + newYokai.Rank * 5;
+                        }
+                        else
+                        {
+                            minStat += Seed.Next(5, 11) + newYokai.Rank;
+                            maxStat += Seed.Next(5, 11) + newYokai.Rank * 5;
+                        }
+
+                        newYokai.MinStat[m] = minStat;
+                        newYokai.MaxStat[m] = maxStat;
+                    }
                 }
             }
 
@@ -135,20 +152,22 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
 
             foreach (Yokai yokai in yokais)
             {
+                yokai.MedaliumOffset = 1;
                 yokai.Statut.IsScoutable = true;
 
-                if (yokai.MedaliumOffset == 0)
+                if (Game is YW1)
                 {
-                    yokai.MedaliumOffset = 1;
-
-                    if (Game is YW1)
-                    {
-                        yokai.ScoutableID = 0x13345632;
-                    }
-                    else if (Game is YW2)
-                    {
-                        yokai.ScoutableID = 0x00654331;
-                    }
+                    yokai.ScoutableID = 0x13345632;
+                }
+                else if (Game is YW2)
+                {
+                    yokai.ScoutableID = 0x00654331;
+                }
+                else if (Game is YW3)
+                {
+                    yokai.ScoutableID = 0xE2482C00;
+                    yokai.BattleType = 0x02;
+                    yokai.ShowInMedallium = true;
                 }
             }
         }
@@ -225,14 +244,16 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                     {
                         // YKW1 - YKW2
                         int[] attributes = Enumerable.Range(0, 6).ToArray();
-                        int guardAttribute = Seed.Next(0, 6);
-                        int weakAttribute = Seed.Next(0, 6, guardAttribute);
+
+                        int guardIndex = Seed.Next(0, 6);
+                        int weakIndex = Seed.Next(0, 6, guardIndex);
+
                         int guardDamage = Seed.Next(3, 8);
-                        int weakDamage = 20 - guardDamage;
+                        int weakDamage = Seed.Next(13, 18);
 
                         yokai.AttributeDamage = attributes.Select(j =>
-                            j == guardAttribute ? guardDamage * 0.10f :
-                            j == weakAttribute ? weakDamage * 0.10f : 0x00
+                            j == guardIndex ? guardDamage * 0.10f :
+                            j == weakIndex ? weakDamage * 0.10f : 1
                         ).ToArray();
 
                         // YKW3
@@ -256,7 +277,7 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                             int minStat = 0;
                             int maxStat = 0;
 
-                            if (Game.Name == "Yo-Kai Watch 1")
+                            if (Game is YW1)
                             {
                                 if (m == 0)
                                 {
@@ -279,6 +300,7 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
                                 }
 
                                 minStat += yokai.Rank;
+                                yokai.MinStat[m] = minStat;
                             }
                             else
                             {
@@ -311,10 +333,9 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
 
                                 minStat += (int)(bonusRank * 0.01 * minStat);
                                 maxStat += (int)(bonusRank * 0.01 * minStat);
+                                yokai.MinStat[m] = minStat;
+                                yokai.MaxStat[m] = maxStat;
                             }
-
-                            yokai.MinStat[m] = minStat;
-                            yokai.MaxStat[m] = maxStat;
                         }
                     }
 
@@ -910,6 +931,15 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             return sb.ToString();
         }
 
+        private string PrintEvolution(Evolution evolution)
+        {
+            string baseYokaiName = Yokais.FirstOrDefault(x => x.ParamID == evolution.BaseYokai)?.ToString() ?? " ";
+            string evokveToYokaiName = Yokais.FirstOrDefault(x => x.ParamID == evolution.EvolveTo)?.ToString() ?? " ";
+            string level = evolution.Level.ToString();
+
+            return baseYokaiName + " -> (" + level + ") = " + evokveToYokaiName;
+        }
+
         public string PrintRandom()
         {
             StringBuilder sb = new StringBuilder("Random seed: " + Seed.Seed + "\n");
@@ -918,6 +948,12 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             foreach (Yokai yokai in Yokais)
             {
                 sb.AppendLine(PrintYokai(yokai));
+            }
+
+            sb.AppendLine("Evolution Information:\n");
+            foreach (Evolution evolution in Evolutions)
+            {
+                sb.AppendLine(PrintEvolution(evolution));
             }
 
             return sb.ToString();
