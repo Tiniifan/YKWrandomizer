@@ -280,6 +280,9 @@ namespace YKWrandomizer.Yokai_Watch.Common
             {0x89382787},
             {0x4379EE55},
             {0x674AC65B},
+            {0xD992B966},
+            {0x444581DF},
+            {0xFCF9E6BA},
         };
     }
 }

@@ -4,33 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using BitConverter;
 
 namespace YKWrandomizer.Tool
 {
     public class BinaryDataWriter : IDisposable
     {
-        private EndianBitConverter _converter;
         private Stream _stream;
 
         public bool BigEndian { get; set; } = false;
 
-        public long Length { get => _stream.Length; }
+        public long Length => _stream.Length;
 
-        public Stream BaseStream { get => _stream; }
+        public Stream BaseStream => _stream;
 
-        public long Position { get => _stream.Position; }
+        public long Position => _stream.Position;
 
         public BinaryDataWriter(byte[] data)
         {
             _stream = new MemoryStream(data);
-            _converter = BigEndian ? EndianBitConverter.BigEndian : EndianBitConverter.LittleEndian;
         }
 
         public BinaryDataWriter(Stream stream)
         {
             _stream = stream;
-            _converter = BigEndian ? EndianBitConverter.BigEndian : EndianBitConverter.LittleEndian;
         }
 
         public void Dispose()
@@ -38,14 +34,14 @@ namespace YKWrandomizer.Tool
             _stream.Dispose();
         }
 
-        public void Skip(uint Size)
+        public void Skip(uint size)
         {
-            _stream.Seek(Size, SeekOrigin.Current);
+            _stream.Seek(size, SeekOrigin.Current);
         }
 
-        public void Seek(uint Position)
+        public void Seek(uint position)
         {
-            _stream.Seek(Position, SeekOrigin.Begin);
+            _stream.Seek(position, SeekOrigin.Begin);
         }
 
         public void PrintPosition()
@@ -65,32 +61,32 @@ namespace YKWrandomizer.Tool
 
         public void Write(short value)
         {
-            Write(System.BitConverter.GetBytes(value));
+            Write(BitConverter.GetBytes(value));
         }
 
         public void Write(int value)
         {
-            Write(System.BitConverter.GetBytes(value));
+            Write(BitConverter.GetBytes(value));
         }
 
         public void Write(long value)
         {
-            Write(System.BitConverter.GetBytes(value));
+            Write(BitConverter.GetBytes(value));
         }
 
         public void Write(ushort value)
         {
-            Write(System.BitConverter.GetBytes(value));
+            Write(BitConverter.GetBytes(value));
         }
 
         public void Write(uint value)
         {
-            Write(System.BitConverter.GetBytes(value));
+            Write(BitConverter.GetBytes(value));
         }
 
         public void Write(ulong value)
         {
-            Write(System.BitConverter.GetBytes(value));
+            Write(BitConverter.GetBytes(value));
         }
 
         public void WriteAlignment(int alignment = 16, byte alignmentByte = 0x0)

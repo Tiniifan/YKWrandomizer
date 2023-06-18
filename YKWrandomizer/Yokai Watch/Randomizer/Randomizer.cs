@@ -856,6 +856,13 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             Game.FixStory();
         }
 
+        public virtual void ForceUltraFixStory(bool randomize)
+        {
+            if (randomize == false) return;
+
+            Game.ForceUltraFixStory();
+        }
+
         private string PrintYokai(Yokai yokai)
         {
             Type objectType = yokai.GetType();

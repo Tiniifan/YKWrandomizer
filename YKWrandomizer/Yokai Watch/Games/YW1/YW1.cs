@@ -828,5 +828,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                 }
             }
         }
+
+        public void ForceUltraFixStory()
+        {
+
+        }
     }
 }

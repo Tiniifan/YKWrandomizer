@@ -105,6 +105,7 @@ namespace YKWrandomizer
                         checkBoxYoCommunity.Enabled = false;
                         groupBoxWeakness.Enabled = false;
                         groupBoxSoul.Enabled = false;
+                        forceUltraFixStoryCheckBox.Enabled = false;
                         groupBoxStrongest.Text = "Attribute damage";
 
                         // Tempory restriction
@@ -121,6 +122,7 @@ namespace YKWrandomizer
                         checkBoxYoCommunity.Enabled = false;
                         groupBoxWeakness.Enabled = false;
                         groupBoxSoul.Enabled = true;
+                        forceUltraFixStoryCheckBox.Enabled = false;
                         groupBoxStrongest.Text = "Attribute damage";
 
                         // Tempory restriction
@@ -137,6 +139,7 @@ namespace YKWrandomizer
                         checkBoxYoCommunity.Enabled = true;
                         groupBoxWeakness.Enabled = true;
                         groupBoxSoul.Enabled = true;
+                        forceUltraFixStoryCheckBox.Enabled = true;
                         groupBoxStrongest.Text = "Strongest";
 
                         // Tempory restriction
@@ -172,7 +175,7 @@ namespace YKWrandomizer
             label4.Visible = true;
             progressBar1.Visible = true;
 
-            int totalTasks = 11;
+            int totalTasks = 12;
             progressBar1.Minimum = 0;
             progressBar1.Maximum = totalTasks;
             progressBar1.Value = 0;
@@ -211,6 +214,9 @@ namespace YKWrandomizer
                 progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
                 Randomizer.FixStory(checkBoxAvoidBlocked.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                Randomizer.ForceUltraFixStory(forceUltraFixStoryCheckBox.Checked);
                 progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
             });
 
@@ -320,6 +326,11 @@ namespace YKWrandomizer
             {
                 checkBoxCreateNewEvolution.Checked = false;
             }
+        }
+
+        private void ForceUltraFixStoryCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("Warning: you've activated an option that will force certain yokai to appear in their requested area. Please enable this option only if you are blocked by a yo-net quest during the story, otherwise disable this option and let fix story enable.");
         }
     }
 }

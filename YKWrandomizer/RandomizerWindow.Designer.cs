@@ -144,6 +144,7 @@ namespace YKWrandomizer
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
+            this.forceUltraFixStoryCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -1471,6 +1472,7 @@ namespace YKWrandomizer
             // 
             // groupBoxRequestedYokai
             // 
+            this.groupBoxRequestedYokai.Controls.Add(this.forceUltraFixStoryCheckBox);
             this.groupBoxRequestedYokai.Controls.Add(this.checkBoxUnlockYokai);
             this.groupBoxRequestedYokai.Controls.Add(this.checkBoxAvoidBlocked);
             this.groupBoxRequestedYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1527,6 +1529,18 @@ namespace YKWrandomizer
             this.label4.TabIndex = 3;
             this.label4.Text = "Randomize...";
             this.label4.Visible = false;
+            // 
+            // forceUltraFixStoryCheckBox
+            // 
+            this.forceUltraFixStoryCheckBox.AutoSize = true;
+            this.forceUltraFixStoryCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.forceUltraFixStoryCheckBox.Location = new System.Drawing.Point(23, 71);
+            this.forceUltraFixStoryCheckBox.Name = "forceUltraFixStoryCheckBox";
+            this.forceUltraFixStoryCheckBox.Size = new System.Drawing.Size(114, 17);
+            this.forceUltraFixStoryCheckBox.TabIndex = 11;
+            this.forceUltraFixStoryCheckBox.Text = "Force ultra fix story";
+            this.forceUltraFixStoryCheckBox.UseVisualStyleBackColor = true;
+            this.forceUltraFixStoryCheckBox.CheckedChanged += new System.EventHandler(this.ForceUltraFixStoryCheckBox_CheckedChanged);
             // 
             // RandomizerWindow
             // 
@@ -1728,5 +1742,6 @@ namespace YKWrandomizer
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox checkBoxLockLegendary;
+        private System.Windows.Forms.CheckBox forceUltraFixStoryCheckBox;
     }
 }

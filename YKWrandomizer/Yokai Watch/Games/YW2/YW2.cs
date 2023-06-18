@@ -849,9 +849,9 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
         {
             if (yokais.Any(x => x.ParamID == 0xC16DAFA4)) {
                 Yokai fidgephant = yokais.Find(x => x.ParamID == 0xC16DAFA4);
-                if (fidgephant.Rank > 0x02)
+                if (fidgephant.Rank > 0x01)
                 {
-                    fidgephant.Rank = 0x02;
+                    fidgephant.Rank = 0x01;
                 }
             }
 
@@ -860,6 +860,11 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                 Yokai Brushido = yokais.Find(x => x.ParamID == 0xAA720DA6);
                 Brushido.Rank = 0x0;
             }
+        }
+
+        public void ForceUltraFixStory()
+        {
+
         }
     }
 }

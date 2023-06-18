@@ -69,5 +69,7 @@ namespace YKWrandomizer.Yokai_Watch.Games
         void FixStory();
 
         void FixYokai(List<Yokai> yokais);
+
+        void ForceUltraFixStory();
     }
 }

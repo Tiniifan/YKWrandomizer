@@ -1,21 +1,44 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace YKWrandomizer.Yokai_Watch.Randomizer
 {
-    public class RandomNumber : Random
+    public class RandomNumber
     {
         public readonly int Seed;
 
+        private readonly RandomNumberGenerator RNG;
+
         public RandomNumber()
         {
-            Seed = new Random().Next();
+            RNG = RandomNumberGenerator.Create();
+            byte[] seedBytes = new byte[4];
+            RNG.GetBytes(seedBytes);
+            Seed = System.BitConverter.ToInt32(seedBytes, 0);
         }
 
-        public RandomNumber(int seed) : base(seed)
+        public RandomNumber(int seed)
         {
+            RNG = RandomNumberGenerator.Create();
             Seed = seed;
+        }
+
+        public int Next(int max)
+        {
+            byte[] randomNumber = new byte[4];
+            RNG.GetBytes(randomNumber);
+            int result = System.BitConverter.ToInt32(randomNumber, 0);
+            return new Random(Seed ^ result).Next(0, max);
+        }
+
+        public int Next(int min, int max)
+        {
+            byte[] randomNumber = new byte[4];
+            RNG.GetBytes(randomNumber);
+            int result = System.BitConverter.ToInt32(randomNumber, 0);
+            return new Random(Seed ^ result).Next(min, max);
         }
 
         public int Next(int min, int max, int excludeIndex)
@@ -32,16 +55,18 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
 
         public List<int> GetNumbers(int min, int max, int count)
         {
-            List<int> randomList = new List<int>(new int[count]);
+            List<int> randomList = new List<int>();
 
-            for (int i = 0; i < randomList.Count; i++)
+            for (int i = 0; i < count; i++)
             {
                 int randomNumber = Next(min, max);
 
-                while (randomList.IndexOf(randomNumber) == -1)
+                while (randomList.Contains(randomNumber))
                 {
-                    randomList[i] = randomNumber;
+                    randomNumber = Next(min, max);
                 }
+
+                randomList.Add(randomNumber);
             }
 
             return randomList;
@@ -49,16 +74,18 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
 
         public List<int> GetNumbers(int min, int max, int count, List<int> excludeIndex)
         {
-            List<int> randomList = new List<int>(new int[count]);
+            List<int> randomList = new List<int>();
 
-            for (int i = 0; i < randomList.Count; i++)
+            for (int i = 0; i < count; i++)
             {
                 int randomNumber = Next(min, max);
 
-                while (randomList.IndexOf(randomNumber) == -1 && excludeIndex.IndexOf(randomNumber) == -1)
+                while (randomList.Contains(randomNumber) || excludeIndex.Contains(randomNumber))
                 {
-                    randomList[i] = randomNumber;
+                    randomNumber = Next(min, max);
                 }
+
+                randomList.Add(randomNumber);
             }
 
             return randomList;
@@ -71,7 +98,9 @@ namespace YKWrandomizer.Yokai_Watch.Randomizer
             double Next()
             {
                 double u = pool.Sum(p => p);
-                double r = NextDouble() * u;
+                byte[] randomBytes = new byte[8];
+                RNG.GetBytes(randomBytes);
+                double r = System.BitConverter.ToUInt64(randomBytes, 0) / (ulong.MaxValue + 1.0);
 
                 double sum = 0;
                 foreach (double n in pool)

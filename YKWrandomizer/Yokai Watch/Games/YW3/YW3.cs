@@ -654,6 +654,8 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             {
                 NummskullQuestWriter.Seek(0x6BC);
                 NummskullQuestWriter.Write(0xD8CADD7A);
+                NummskullQuestWriter.Seek(0x6E4);
+                NummskullQuestWriter.Write(0xD8CADD7A);
             }
 
             // Yo-Net Snippity Cricket
@@ -661,6 +663,39 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             {
                 cricketQuestWriter.Seek(0xE7C);
                 cricketQuestWriter.Write(0x5E5EAFD4);
+            }
+
+            // Yo-Net Mudmunch
+            using (BinaryDataWriter mudmunchQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t109g00/t109g00.pck")))
+            {
+                mudmunchQuestWriter.Seek(0x1F38);
+                mudmunchQuestWriter.Write(0x9DACFD94);
+                mudmunchQuestWriter.Seek(0x1F60);
+                mudmunchQuestWriter.Write(0x9DACFD94);
+                mudmunchQuestWriter.Seek(0x1F88);
+                mudmunchQuestWriter.Write(0x9DACFD94);
+                mudmunchQuestWriter.Seek(0x1FB0);
+                mudmunchQuestWriter.Write(0x9DACFD94);
+            }
+
+            // Yo-Net Why Naant (1)
+            using (BinaryDataWriter whyNaanttWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104d01/t104d01.pck")))
+            {
+                whyNaanttWriter.Seek(0x75C);
+                whyNaanttWriter.Write(0x8A1714AE);
+                whyNaanttWriter.Seek(0x784);
+                whyNaanttWriter.Write(0x8A1714AE);
+                whyNaanttWriter.Seek(0x7D4);
+                whyNaanttWriter.Write(0x8A1714AE);
+            }
+
+            // Yo-Net Why Naant (2)
+            using (BinaryDataWriter whyNaanttWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104i10/t104i10.pck")))
+            {
+                whyNaanttWriter.Seek(0x864);
+                whyNaanttWriter.Write(0x8A1714AE);
+                whyNaanttWriter.Seek(0x88C);
+                whyNaanttWriter.Write(0x8A1714AE);
             }
 
             // Snaggly Fusion Quest
@@ -707,6 +742,62 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             {
                 Yokai treetter = yokais.Find(x => x.ParamID == 0xFDC725BF);
                 treetter.Rank = 0x00;
+            }
+
+            if (yokais.Any(x => x.ParamID == 0x9DACFD94))
+            {
+                Yokai mudmunch = yokais.Find(x => x.ParamID == 0x9DACFD94);
+                if (mudmunch.Rank > 0x02)
+                {
+                    mudmunch.Rank = 0x02;
+                }
+            }            
+        }
+
+        public void ForceUltraFixStory()
+        {
+            // Yo-Net Nummskull
+            using (BinaryDataWriter nummskullAndWhyNaantQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104d07/t104d07.pck")))
+            {
+                nummskullAndWhyNaantQuestWriter.Seek(0x6B4);
+
+                for (int i = 0; i < 12; i++) {
+                    // Numskull
+                    nummskullAndWhyNaantQuestWriter.Skip(0x08);
+                    nummskullAndWhyNaantQuestWriter.Write(0xD8CADD7A);
+                    nummskullAndWhyNaantQuestWriter.Skip(0x1C);
+
+                    // Why Naant (1)
+                    nummskullAndWhyNaantQuestWriter.Skip(0x08);
+                    nummskullAndWhyNaantQuestWriter.Write(0x8A1714AE);
+                    nummskullAndWhyNaantQuestWriter.Skip(0x1C);
+                }
+            }
+
+            // Yo-Net Snippity Cricket
+            using (BinaryDataWriter cricketQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104d01/t104d01.pck")))
+            {
+                cricketQuestWriter.Seek(0xE74);
+
+                for (int i = 0; i < 0x30; i++)
+                {
+                    cricketQuestWriter.Skip(0x08);
+                    cricketQuestWriter.Write(0x5E5EAFD4);
+                    cricketQuestWriter.Skip(0x1C);
+                }
+            }
+
+            // Yo-Net Why Naant (1)
+            using (BinaryDataWriter whyNaanttWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104i10/t104i10.pck")))
+            {
+                whyNaanttWriter.Seek(0x85C);
+
+                for (int i = 0; i < 0x14; i++)
+                {
+                    whyNaanttWriter.Skip(0x08);
+                    whyNaanttWriter.Write(0x8A1714AE);
+                    whyNaanttWriter.Skip(0x1C);
+                }
             }
         }
     }

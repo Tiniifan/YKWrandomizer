@@ -4,33 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using BitConverter;
 
 namespace YKWrandomizer.Tool
 {
     public class BinaryDataReader : IDisposable
     {
-        private EndianBitConverter _converter;
         private Stream _stream;
 
         public bool BigEndian { get; set; } = false;
 
-        public long Length { get => _stream.Length; }
+        public long Length => _stream.Length;
 
-        public Stream BaseStream { get => _stream; }
+        public Stream BaseStream => _stream;
 
-        public long Position { get => _stream.Position; }
+        public long Position => _stream.Position;
 
         public BinaryDataReader(byte[] data)
         {
             _stream = new MemoryStream(data);
-            _converter = BigEndian ? EndianBitConverter.BigEndian : EndianBitConverter.LittleEndian;
         }
 
         public BinaryDataReader(Stream stream)
         {
             _stream = stream;
-            _converter = BigEndian ? EndianBitConverter.BigEndian : EndianBitConverter.LittleEndian;
         }
 
         public void Dispose()
@@ -40,20 +36,25 @@ namespace YKWrandomizer.Tool
 
         public T ReadValue<T>()
         {
-            byte[] bytes = new byte[Marshal.SizeOf(typeof(T))];
-            _stream.Read(bytes, 0, bytes.Length);
+            int size = Marshal.SizeOf(typeof(T));
+            byte[] bytes = new byte[size];
+            _stream.Read(bytes, 0, size);
 
             if (typeof(T) == typeof(byte))
             {
                 return (T)(object)bytes[0];
             }
 
-            if (_converter.IsLittleEndian && BigEndian)
+            if (BigEndian)
             {
                 Array.Reverse(bytes);
             }
 
-            return (T)typeof(EndianBitConverter).GetMethod("To" + typeof(T).Name).Invoke(_converter, new object[] { bytes, 0 });
+            GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+            T value = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
+            handle.Free();
+
+            return value;
         }
 
         public T[] ReadMultipleValue<T>(int count)
@@ -74,28 +75,29 @@ namespace YKWrandomizer.Tool
             return encoding.GetString(bytes.ToArray());
         }
 
-        public void Skip(uint Size)
+        public void Skip(uint size)
         {
-            _stream.Seek(Size, SeekOrigin.Current);
+            _stream.Seek(size, SeekOrigin.Current);
         }
 
-        public void Seek(uint Position)
+        public void Seek(uint position)
         {
-            _stream.Seek(Position, SeekOrigin.Begin);
+            _stream.Seek(position, SeekOrigin.Begin);
         }
 
-        public byte[] GetSection(int Size)
+        public byte[] GetSection(int size)
         {
-            byte[] data = new byte[Size];
+            long temp = _stream.Position;
+            byte[] data = new byte[size];
             _stream.Read(data, 0, data.Length);
             return data;
         }
 
-        public byte[] GetSection(uint Offset, int Size)
+        public byte[] GetSection(uint offset, int size)
         {
             long temp = _stream.Position;
-            Seek(Offset);
-            byte[] data = new byte[Size];
+            Seek(offset);
+            byte[] data = new byte[size];
             _stream.Read(data, 0, data.Length);
             Seek((uint)temp);
             return data;
@@ -148,7 +150,7 @@ namespace YKWrandomizer.Tool
             byte[] bytes = new byte[size];
             _stream.Read(bytes, 0, size);
 
-            if (_converter.IsLittleEndian && BigEndian)
+            if (BigEndian)
                 Array.Reverse(bytes);
 
             GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
