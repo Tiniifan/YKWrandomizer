@@ -6,7 +6,4 @@ C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomi
 C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomizer.csproj.CoreCompileInputs.cache
 C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomizer.exe
 C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomizer.pdb
-C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\bin\Release\EndianBitConverter.dll
-C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\bin\Release\EndianBitConverter.xml
 C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomizer.csproj.AssemblyReference.cache
-C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomizer.csproj.CopyComplete

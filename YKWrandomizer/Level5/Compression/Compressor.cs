@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using BitConverter;
 
 namespace YKWrandomizer.Level5.Compression
 {
@@ -38,7 +37,7 @@ namespace YKWrandomizer.Level5.Compression
             var sizeMethodBuffer = data.Take(4).ToArray();
             int size = (sizeMethodBuffer[0] >> 3) | (sizeMethodBuffer[1] << 5) |
                                    (sizeMethodBuffer[2] << 13) | (sizeMethodBuffer[3] << 21);
-            ICompression method = GetCompression(EndianBitConverter.LittleEndian.ToUInt32(sizeMethodBuffer, 0) & 0x7);
+            ICompression method = GetCompression(BitConverter.ToUInt32(sizeMethodBuffer, 0) & 0x7);
 
             if (method != null)
             {
