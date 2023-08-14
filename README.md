@@ -30,8 +30,6 @@ The Tool is written in C# and the project is Open Source, everyone can contribut
 
 **Screenshots**
 
-https://i.imgur.com/1e6P844.png
-
 ㅤ | ㅤ
 :-------------------------:|:------------------------:
 ![](https://i.imgur.com/1e6P844.png) |  ![](https://imgur.com/pXfFPHI.png)
