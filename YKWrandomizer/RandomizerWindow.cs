@@ -5,13 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using YKWrandomizer.Tool;
+using YKWrandomizer.Tools;
 using YKWrandomizer.Yokai_Watch.Games;
 using YKWrandomizer.Level5.Archive.ARC0;
+using YKWrandomizer.Yokai_Watch;
 using YKWrandomizer.Yokai_Watch.Games.YW1;
 using YKWrandomizer.Yokai_Watch.Games.YW2;
 using YKWrandomizer.Yokai_Watch.Games.YW3;
-using YKWrandomizer.Yokai_Watch.Randomizer;
+using YKWrandomizer.Yokai_Watch.Games.YWB;
+using YKWrandomizer.Yokai_Watch.Games.YWB2;
 
 namespace YKWrandomizer
 {
@@ -56,120 +58,91 @@ namespace YKWrandomizer
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = "Level 5 ARC0 files (*.fa)|*.fa";
-            openFileDialog1.RestoreDirectory = true;
+            NewProjectWindow newProjectWindow = new NewProjectWindow();
 
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (newProjectWindow.ShowDialog() == DialogResult.OK)
             {
                 IGame game = null;
-                string fileName = Path.GetFileNameWithoutExtension(openFileDialog1.FileName);
 
-                if (fileName == "yw1_a")
+                switch (newProjectWindow.GameCode)
                 {
-                    game = new YW1(openFileDialog1.FileName);
-                } else if (fileName == "yw2_a")
-                {
-                    string gamePath = openFileDialog1.FileName;
-                    MessageBox.Show("Yo-Kai Watch 2 was detected! You need to open the .fa file containing the data for your language, to continue.");
-                    openFileDialog1.Filter = "Level 5 ARC0 files (*.fa)|*.fa";
-                    openFileDialog1.RestoreDirectory = true;
-
-                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                    {
-                        game = new YW2(gamePath, openFileDialog1.FileName);
-                        openFileDialog1.FileName = gamePath;
-                    }
-                } else if (fileName == "yw_a")
-                {
-                    string gamePath = openFileDialog1.FileName;
-                    MessageBox.Show("Yo-Kai Watch 3 was detected! You need to open the .fa file containing the data for your language, to continue.");
-                    openFileDialog1.Filter = "Level 5 ARC0 files (*.fa)|*.fa";
-                    openFileDialog1.RestoreDirectory = true;
-
-                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                    {
-                        game = new YW3(gamePath, openFileDialog1.FileName);
-                        openFileDialog1.FileName = gamePath;
-                    }
-                } else
-                {
-                    game = null;
+                    case "yw1":
+                        game = new YW1(newProjectWindow.RomfsPath, newProjectWindow.LanguageCode);
+                        break;
+                    case "yw2":
+                        game = new YW2(newProjectWindow.RomfsPath, newProjectWindow.LanguageCode);
+                        break;
+                    case "yw3":
+                        game = new YW3(newProjectWindow.RomfsPath, newProjectWindow.LanguageCode);
+                        break;
+                    case "ywb":
+                        game = new YWB(newProjectWindow.RomfsPath, newProjectWindow.LanguageCode);
+                        break;
+                    case "ywb2":
+                        game = new YWB2(newProjectWindow.RomfsPath, newProjectWindow.LanguageCode);
+                        break;
                 }
 
-                if (game != null)
+                if (game is YW1)
                 {
-                    if (game is YW1)
-                    {
-                        groupBoxGivenYokai.Enabled = true;
-                        groupBoxWaitTime.Enabled = false;
-                        checkBoxYoCommunity.Enabled = false;
-                        groupBoxWeakness.Enabled = false;
-                        groupBoxSoul.Enabled = false;
-                        forceUltraFixStoryCheckBox.Enabled = false;
-                        groupBoxStrongest.Text = "Attribute damage";
+                    groupBoxRole.Enabled = false;
+                    groupBoxSoul.Enabled = false;
+                    groupBoxWeakness.Enabled = false;
+                    groupBoxStrongest.Text = "Attribute damage";
+                    groupBoxWaitTime.Enabled = false;
+                    yokaiTabControl.TabPages.RemoveAt(3);
+                                    
 
-                        // Tempory restriction
-                        groupBoxDrop.Enabled = true;
-                        checkBoxScaleMoney.Enabled = true;
-                        checkBoxScaleEXP.Enabled = true;
-                        groupBoxShop.Enabled = true;
-                        groupBoxTreasureBox.Enabled = true;
-                        groupBoxCrankKai.Enabled = true;
-                    } else if (game is YW2)
-                    {
-                        groupBoxGivenYokai.Enabled = false;
-                        groupBoxWaitTime.Enabled = false;
-                        checkBoxYoCommunity.Enabled = false;
-                        groupBoxWeakness.Enabled = false;
-                        groupBoxSoul.Enabled = true;
-                        forceUltraFixStoryCheckBox.Enabled = false;
-                        groupBoxStrongest.Text = "Attribute damage";
-
-                        // Tempory restriction
-                        groupBoxDrop.Enabled = true;
-                        checkBoxScaleMoney.Enabled = true;
-                        checkBoxScaleEXP.Enabled = true;
-                        groupBoxShop.Enabled = true;
-                        groupBoxTreasureBox.Enabled = true;
-                        groupBoxCrankKai.Enabled = true;
-                    } else if (game is YW3)
-                    {
-                        groupBoxGivenYokai.Enabled = true;
-                        groupBoxWaitTime.Enabled = true;
-                        checkBoxYoCommunity.Enabled = true;
-                        groupBoxWeakness.Enabled = true;
-                        groupBoxSoul.Enabled = true;
-                        forceUltraFixStoryCheckBox.Enabled = true;
-                        groupBoxStrongest.Text = "Strongest";
-
-                        // Tempory restriction
-                        groupBoxDrop.Enabled = false;
-                        checkBoxScaleMoney.Enabled = false;
-                        checkBoxScaleEXP.Enabled = false;
-                        groupBoxSoul.Enabled = false;
-                        groupBoxShop.Enabled = false;
-                        groupBoxTreasureBox.Enabled = false;
-                        groupBoxCrankKai.Enabled = false;
-                    }
-
-                    Randomizer = new Randomizer(game);
-                    tabControl1.Enabled = true;
-                    randomizeSaveToolStripMenuItem.Enabled = true;
-                    this.Text = game.Name + " Randomizer";
+                    // Tempory restriction
+                    groupBoxDrop.Enabled = true;
+                    checkBoxScaleMoney.Enabled = true;
+                    checkBoxScaleEXP.Enabled = true;
+                    groupBoxShop.Enabled = true;
+                    groupBoxTreasureBox.Enabled = true;
+                    groupBoxCrankKai.Enabled = true;
                 }
-                else
+                else if (game is YW2)
                 {
-                    tabControl1.Enabled = false;
-                    randomizeSaveToolStripMenuItem.Enabled = false;
-                    this.Text = "YKWrandomizer";
+                    groupBoxGivenYokai.Enabled = false;
+                    groupBoxWaitTime.Enabled = false;
+                    groupBoxWeakness.Enabled = false;
+                    groupBoxSoul.Enabled = true;
+                    groupBoxStrongest.Text = "Attribute damage";
 
-                    MessageBox.Show("Unrecognized game");
-                    return;
+                    // Tempory restriction
+                    groupBoxDrop.Enabled = true;
+                    checkBoxScaleMoney.Enabled = true;
+                    checkBoxScaleEXP.Enabled = true;
+                    groupBoxShop.Enabled = true;
+                    groupBoxTreasureBox.Enabled = true;
+                    groupBoxCrankKai.Enabled = true;
                 }
+                else if (game is YW3)
+                {
+                    groupBoxGivenYokai.Enabled = true;
+                    groupBoxWaitTime.Enabled = true;
+                    groupBoxWeakness.Enabled = true;
+                    groupBoxSoul.Enabled = true;
+                    groupBoxStrongest.Text = "Strongest";
+
+                    // Tempory restriction
+                    groupBoxDrop.Enabled = false;
+                    checkBoxScaleMoney.Enabled = false;
+                    checkBoxScaleEXP.Enabled = false;
+                    groupBoxSoul.Enabled = false;
+                    groupBoxShop.Enabled = false;
+                    groupBoxTreasureBox.Enabled = false;
+                    groupBoxCrankKai.Enabled = false;
+                }
+
+                Randomizer = new Randomizer(game);
+                tabControl1.Enabled = true;
+                randomizeSaveToolStripMenuItem.Enabled = true;
+                this.Text = game.Name + " Randomizer";
             }
         }
 
-        private async void RandomizeSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RandomizeSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             label4.Text = "Randomize";
             label4.Visible = true;
@@ -181,44 +154,49 @@ namespace YKWrandomizer
             progressBar1.Value = 0;
             randomizeSaveToolStripMenuItem.Enabled = false;
 
-            await Task.Run(() =>
-            {
-                Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            Randomizer.SwapBosses(checkBoxSwapBosses.Checked, checkBoxStatScaling.Checked);
+            Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
+            Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
+            Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
 
-                Randomizer.RandomizeYokaiSoul(radioButtonSoul2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //await Task.Run(() =>
+            //{
+            //Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxLockLegendary.Checked ,checkBoxRequirmentsLegendaryYokai.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //Randomizer.RandomizeYokaiSoul(radioButtonSoul2.Checked);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.RandomizeYokai(TabControlToDictOption(tabControl2), numericUpDownBossBaseStat.Value);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxLockLegendary.Checked ,checkBoxRequirmentsLegendaryYokai.Checked);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.RandomizeShop(radioButtonShop2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //Randomizer.RandomizeShop(radioButtonShop2.Checked);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.RandomizeGiven(radioButtonGiven2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.FixStory(checkBoxAvoidBlocked.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //Randomizer.RandomizeGiven(radioButtonGiven2.Checked);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-                Randomizer.ForceUltraFixStory(forceUltraFixStoryCheckBox.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            });
+            //Randomizer.FixStory(checkBoxAvoidBlocked.Checked);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            //Randomizer.ForceUltraFixStory(forceUltraFixStoryCheckBox.Checked);
+            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            //});
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = Path.GetFileName(openFileDialog1.FileName);
@@ -273,7 +251,7 @@ namespace YKWrandomizer
 
                     if (randomSaveLogDialog.ShowDialog() == DialogResult.OK)
                     {
-                        File.WriteAllText(randomSaveLogDialog.FileName, Randomizer.PrintRandom());
+                        //File.WriteAllText(randomSaveLogDialog.FileName, Randomizer.PrintRandom());
                         MessageBox.Show("Saved log!");
                     }
                 }
@@ -303,6 +281,16 @@ namespace YKWrandomizer
             if (numericUpDownWild.Enabled == false)
             {
                 numericUpDownWild.Value = 0;
+            }
+        }
+
+        private void CheckBoxSwapBosses_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxStatScaling.Enabled = checkBoxSwapBosses.Checked;
+
+            if (checkBoxStatScaling.Enabled == false)
+            {
+                checkBoxStatScaling.Checked = false;
             }
         }
 

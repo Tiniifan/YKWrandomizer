@@ -53,8 +53,15 @@
   <ItemGroup>
     <Compile Include="Level5\Archive\ARC0\ARC0.cs" />
     <Compile Include="Level5\Archive\ARC0\ARC0Support.cs" />
+    <Compile Include="Level5\Archive\IArchive.cs" />
     <Compile Include="Level5\Archive\XPCK\XPCK.cs" />
     <Compile Include="Level5\Archive\XPCK\XPCKSupport.cs" />
+    <Compile Include="Level5\Binary\CfgBin.cs" />
+    <Compile Include="Level5\Binary\CfgBinSupport.cs" />
+    <Compile Include="Level5\Binary\Logic\Entry.cs" />
+    <Compile Include="Level5\Binary\Logic\OffsetTextPair.cs" />
+    <Compile Include="Level5\Binary\Logic\Type.cs" />
+    <Compile Include="Level5\Binary\Logic\Variable.cs" />
     <Compile Include="Level5\Compression\Compressor.cs" />
     <Compile Include="Level5\Compression\ETC1\ETC1.cs" />
     <Compile Include="Level5\Compression\ETC1\ETC1Decoder.cs" />
@@ -65,42 +72,42 @@
     <Compile Include="Level5\Compression\LZ10\LZ10.cs" />
     <Compile Include="Level5\Compression\NoCompression\NoCompression.cs" />
     <Compile Include="Level5\Compression\RLE\RLE.cs" />
-    <Compile Include="Level5\Compression\ZLib\Zlib.cs" />
+    <Compile Include="Level5\Compression\Zlib\Zlib.cs" />
     <Compile Include="Level5\Image\Color Formats\ColorFormats.cs" />
     <Compile Include="Level5\Image\Color Formats\IColorFormat.cs" />
     <Compile Include="Level5\Image\IMGC.cs" />
     <Compile Include="Level5\Image\IMGCSupport.cs" />
     <Compile Include="Level5\Image\IMGCSwizzle.cs" />
+    <Compile Include="Level5\Text\Logic\TextConfig.cs" />
     <Compile Include="Level5\Text\T2bþ.cs" />
-    <Compile Include="Level5\Text\T2bþSupport.cs" />
-    <Compile Include="Tool\BinaryDataWriter.cs" />
-    <Compile Include="Tool\Crc32.cs" />
-    <Compile Include="Tool\SubMemoryStream.cs" />
-    <Compile Include="Tool\VirtualDirectory.cs" />
+    <Compile Include="NewProjectWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewProjectWindow.Designer.cs">
+      <DependentUpon>NewProjectWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\BinaryDataWriter.cs" />
+    <Compile Include="Tools\Crc32.cs" />
+    <Compile Include="Tools\SubMemoryStream.cs" />
+    <Compile Include="Tools\VirtualDirectory.cs" />
+    <Compile Include="Yokai Watch\Common\Battles\BossBattles.cs" />
+    <Compile Include="Yokai Watch\Common\Moveset\Attacks.cs" />
+    <Compile Include="Yokai Watch\Common\Moveset\Inspirits.cs" />
+    <Compile Include="Yokai Watch\Common\Moveset\Skills.cs" />
+    <Compile Include="Yokai Watch\Common\Moveset\Soultimates.cs" />
+    <Compile Include="Yokai Watch\Common\Moveset\Techniques.cs" />
+    <Compile Include="Yokai Watch\Common\Type\FoodsType.cs" />
+    <Compile Include="Yokai Watch\Common\Type\Roles.cs" />
+    <Compile Include="Yokai Watch\Common\Type\ScoutablesType.cs" />
+    <Compile Include="Yokai Watch\Common\Type\Speeds.cs" />
     <Compile Include="Yokai Watch\Common\Yokais\YokaiBoss.cs" />
     <Compile Include="Yokai Watch\Common\Yokais\YokaiScoutable.cs" />
     <Compile Include="Yokai Watch\Common\Yokais\YokaiStatic.cs" />
     <Compile Include="Yokai Watch\Common\Yokais\YokaiUnscoutableAutorized.cs" />
     <Compile Include="Yokai Watch\Common\Yokais\YokaiUnused.cs" />
-    <Compile Include="Yokai Watch\Games\GameSupport.cs" />
-    <Compile Include="Yokai Watch\Games\IGame.cs" />
-    <Compile Include="Yokai Watch\Games\YW1\YW1Support.cs" />
-    <Compile Include="Yokai Watch\Games\YW2\YW2Support.cs" />
-    <Compile Include="Yokai Watch\Games\YW3\YW3Support.cs" />
-    <Compile Include="Yokai Watch\Logic\Fusion.cs" />
-    <Compile Include="Yokai Watch\Logic\Evolution.cs" />
-    <Compile Include="Yokai Watch\Logic\LegendSeal.cs" />
-    <Compile Include="Yokai Watch\Logic\Yokai.cs" />
-    <Compile Include="Tool\Draw.cs" />
-    <Compile Include="Tool\ResourceReader.cs" />
-    <Compile Include="Yokai Watch\Common\Items\Items.cs" />
-    <Compile Include="Yokai Watch\Common\Items\Souls.cs" />
+    <Compile Include="Tools\Draw.cs" />
+    <Compile Include="Tools\ResourceReader.cs" />
     <Compile Include="Yokai Watch\Common\Yokais\YokaiGiven.cs" />
-    <Compile Include="Yokai Watch\Common\Moveset\Techniques.cs" />
-    <Compile Include="Yokai Watch\Common\Moveset\Soultimates.cs" />
-    <Compile Include="Yokai Watch\Common\Moveset\Skills.cs" />
-    <Compile Include="Yokai Watch\Common\Moveset\Inspirits.cs" />
-    <Compile Include="Yokai Watch\Common\Moveset\Attacks.cs" />
     <Compile Include="Yokai Watch\Common\Type\ExperienceCurves.cs" />
     <Compile Include="Yokai Watch\Common\Type\Ranks.cs" />
     <Compile Include="Yokai Watch\Common\Type\Attribute.cs" />
@@ -113,18 +120,90 @@
     <Compile Include="RandomizerWindow.Designer.cs">
       <DependentUpon>RandomizerWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tool\Option.cs" />
-    <Compile Include="Tool\BinaryDataReader.cs" />
-    <Compile Include="Yokai Watch\Randomizer\RandomNumber.cs" />
-    <Compile Include="Yokai Watch\Randomizer\Randomizer.cs" />
+    <Compile Include="Tools\Option.cs" />
+    <Compile Include="Tools\BinaryDataReader.cs" />
+    <Compile Include="Tools\RandomNumber.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\CombineConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\CombineConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\EncountConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\Logic\CombineConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\Logic\EncountConfig.cs" />
+    <Compile Include="Yokai Watch\Logic\ICombineConfig.cs" />
+    <Compile Include="Yokai Watch\Randomizer.cs" />
+    <Compile Include="Yokai Watch\Games\GameFile.cs" />
+    <Compile Include="Yokai Watch\Games\GameSupport.cs" />
+    <Compile Include="Yokai Watch\Games\IGame.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\Logic\BattleCommand.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\Logic\Charaability.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\Logic\Charabase.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\Logic\Charaevolve.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\Logic\Charaparam.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\Logic\Charascale.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\Logic\EncountConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\Logic\CombineConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\Logic\Itemconfig.cs" />
     <Compile Include="Yokai Watch\Games\YW1\YW1.cs" />
+    <Compile Include="Yokai Watch\Games\YW1\YW1Support.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\Battlecommand.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\Charaability.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\Charabase.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\Charaevolve.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\Charaparam.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\Charascale.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\EncountConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\Itemconfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\Legendconfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\Skillconfig.cs" />
     <Compile Include="Yokai Watch\Games\YW2\YW2.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\YW2Support.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\BattleCharaparam.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\Battlecommand.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\Charaability.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\Charabase.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\Charaevolve.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\Charaparam.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\Charascale.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\HackslashCharaability.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\HackslashCharaparam.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\HackslashTechnic.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\Itemconfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\Skillbattleconfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\Skillconfig.cs" />
     <Compile Include="Yokai Watch\Games\YW3\YW3.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\YW3Support.cs" />
+    <Compile Include="Yokai Watch\Games\YWB2\YWB2.cs" />
+    <Compile Include="Yokai Watch\Games\YWB2\YWB2Support.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\Logic\Charaability.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\Logic\Charabase.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\Logic\Charaevolve.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\Logic\Charaparam.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\Logic\Charascale.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\Logic\Itemconfig.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\Logic\OrgetimeTechnic.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\YWB.cs" />
+    <Compile Include="Yokai Watch\Games\YWB\YWBSupport.cs" />
+    <Compile Include="Yokai Watch\Logic\IBattleCharaparam.cs" />
+    <Compile Include="Yokai Watch\Logic\IBattleCommand.cs" />
+    <Compile Include="Yokai Watch\Logic\ICharaabilityConfig.cs" />
+    <Compile Include="Yokai Watch\Logic\ICharabase.cs" />
+    <Compile Include="Yokai Watch\Logic\ICharaevolve.cs" />
+    <Compile Include="Yokai Watch\Logic\ICharaparam.cs" />
+    <Compile Include="Yokai Watch\Logic\Icharascale.cs" />
+    <Compile Include="Yokai Watch\Logic\IEncountConfig.cs" />
+    <Compile Include="Yokai Watch\Logic\IHackslashCharaabilityConfig.cs" />
+    <Compile Include="Yokai Watch\Logic\IHackslashCharaparam.cs" />
+    <Compile Include="Yokai Watch\Logic\IHackslashTechnic.cs" />
+    <Compile Include="Yokai Watch\Logic\IItem.cs" />
+    <Compile Include="Yokai Watch\Logic\IOrgetimeTechnic.cs" />
+    <Compile Include="Yokai Watch\Logic\ISkillconfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NewProjectWindow.resx">
+      <DependentUpon>NewProjectWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RandomizerWindow.resx">
       <DependentUpon>RandomizerWindow.cs</DependentUpon>
     </EmbeddedResource>

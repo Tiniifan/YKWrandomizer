@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using YKWrandomizer.Yokai_Watch.Logic;
+using YKWrandomizer.Level5.Text;
 using YKWrandomizer.Level5.Archive.ARC0;
+using YKWrandomizer.Yokai_Watch.Logic;
 
 namespace YKWrandomizer.Yokai_Watch.Games
 {
@@ -18,58 +19,72 @@ namespace YKWrandomizer.Yokai_Watch.Games
 
         Dictionary<uint, string> Skills { get; }
 
-        Dictionary<uint, string> Items { get; }
-
         Dictionary<int, string> Tribes { get; }
 
-        Dictionary<string, List<uint>> YokaiGiven { get; }
+        Dictionary<int, string> FoodsType { get; }
 
-        List<uint> YokaiUnscoutableAutorized { get; }
+        Dictionary<int, string> ScoutablesType { get; }
+
+        Dictionary<string, int> BossBattles { get; }
 
         ARC0 Game { get; set; }
 
-        List<Yokai> GetYokais();
+        ARC0 Language { get; set; }
 
-        List<Evolution> GetEvolutions(List<Yokai> yokais);
+        Dictionary<string, GameFile> Files { get; set; }
 
-        void SaveYokais(List<Yokai> yokais, List<Evolution> evolutions);
+        void Save();
 
-        List<LegendSeal> GetLegendaries();
+        ICharabase[] GetCharacterbase(bool isYokai);
 
-        void SaveLegendaries(List<LegendSeal> legendaries, bool spoil);
+        void SaveCharaBase(ICharabase[] charabases);
 
-        List<Fusion> GetFusions();
+        ICharascale[] GetCharascale();
 
-        void SaveFusions(List<Fusion> fusions);
+        void SaveCharascale(ICharascale[] charascales);
 
-        List<uint> GetSouls();
+        ICharaparam[] GetCharaparam();
 
-        void SaveSouls(List<uint> souls);
+        void SaveCharaparam(ICharaparam[] charaparams);
 
-        List<(uint, int)> GetEncounter();
+        ICharaevolve[] GetCharaevolution();
 
-        void SaveEncounter(List<(uint, int)> encounters);
+        void SaveCharaevolution(ICharaevolve[] charaevolves);
 
-        List<(uint, int)> GetWorldEncounter(byte[] file);
+        IItem[] GetItems(string itemType);
 
-        byte[] SaveWorldEncounter(List<(uint, int)> encounters, byte[] file);
+        ICharaabilityConfig[] GetAbilities();
 
-        List<uint> GetCapsule();
+        ISkillconfig[] GetSkills();
 
-        void SaveCapsule(List<uint> capsules);
+        IBattleCharaparam[] GetBattleCharaparam();
 
-        List<uint> GetShop(string fileName);
+        void SaveBattleCharaparam(IBattleCharaparam[] battleCharaparams);
 
-        void SaveShop(List<uint> capsules, string fileName);
+        IHackslashCharaparam[] GetHackslashCharaparam();
 
-        List<uint> GetTreasureBox(byte[] file);
+        void SaveHackslashCharaparam(IHackslashCharaparam[] hackslashCharaparams);
 
-        byte[] SaveTreasureBox(List<uint> treasures, byte[] file);
+        IHackslashCharaabilityConfig[] GetHackslashAbilities();
 
-        void FixStory();
+        IHackslashTechnic[] GetHackslashSkills();
 
-        void FixYokai(List<Yokai> yokais);
+        IOrgetimeTechnic[] GetOrgetimeTechnics();
 
-        void ForceUltraFixStory();
+        IBattleCommand[] GetBattleCommands();
+
+        string[] GetMapWhoContainsEncounter();
+
+        (IEncountTable[], IEncountChara[]) GetMapEncounter(string mapName);
+
+        void SaveMapEncounter(string mapName, IEncountTable[] encountTables, IEncountChara[] encountCharas);
+
+        ICombineConfig[] GetFusions();
+
+        void SaveFusions(ICombineConfig[] combineConfigs);
+
+        (IEncountTable[], IEncountChara[]) GetStaticEncounters();
+
+        void SaveStaticEncounters(IEncountTable[] encountTables, IEncountChara[] encountCharas);
     }
 }

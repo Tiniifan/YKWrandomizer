@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace YKWrandomizer.Level5.Image.Color_Formats
+namespace YKWrandomizer.Level5.Image
 {
     public interface IColorFormat
     {

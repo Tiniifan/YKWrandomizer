@@ -49,5 +49,20 @@ namespace YKWrandomizer.Yokai_Watch.Common
             {0x0B, "Wandroid" },
             {0x0C, "Boss" },
         };
+
+        public static Dictionary<int, string> YWB = new Dictionary<int, string>()
+        {
+            {0x00, "Boss" },
+            {0x01, "Brave" },
+            {0x02, "Mysterious" },
+            {0x03, "Tough" },
+            {0x04, "Charming" },
+            {0x05, "Heartful" },
+            {0x06, "Shady" },
+            {0x07, "Eerie" },
+            {0x08, "Slippery" },
+            {0x09, "Wicked" },
+            {0x0A, "Enma" },
+        };
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace YKWrandomizer.Level5.Compression.ETC1
+﻿using System;
+using System.Linq;
+
+namespace YKWrandomizer.Level5.Compression.ETC1
 {
     public class ETC1 : ICompression
     {
@@ -33,4 +36,3 @@
         }
     }
 }
-

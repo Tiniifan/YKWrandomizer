@@ -1,11 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
 
 namespace YKWrandomizer.Level5.Image
 {
-    // IMGCSwizzle from Kuriimu: https://github.com/IcySon55/Kuriimu
-
     public class IMGCSwizzle
     {
         MasterSwizzle _zorderTrans;
@@ -28,10 +27,14 @@ namespace YKWrandomizer.Level5.Image
 
         public IEnumerable<Point> GetPointSequence()
         {
-            for (int i = 0; i < Width * Height; i++)
+            int strideWidth = Width;
+            int strideHeight = Height;
+
+            for (int i = 0; i < strideWidth * strideHeight; i++)
             {
-                var point = new Point(i % Width, i / Height);
-                point = Get(point);
+                var point = new Point(i % strideWidth, i / strideWidth);
+                if (_zorderTrans != null)
+                    point = _zorderTrans.Get(point.Y * Width + point.X);
 
                 yield return point;
             }
@@ -85,4 +88,3 @@ namespace YKWrandomizer.Level5.Image
         }
     }
 }
-

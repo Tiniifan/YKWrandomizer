@@ -20,3 +20,4 @@ C:\Users\Tinifan\source\repos\YKWrandomizer\YKWrandomizer\bin\Debug\YKWrandomize
 C:\Users\Tinifan\source\repos\YKWrandomizer\YKWrandomizer\bin\Debug\EndianBitConverter.dll
 C:\Users\Tinifan\source\repos\YKWrandomizer\YKWrandomizer\bin\Debug\EndianBitConverter.xml
 C:\Users\Tinifan\source\repos\YKWrandomizer\YKWrandomizer\obj\Debug\YKWrandomizer.csproj.CopyComplete
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Debug\YKWrandomizer.NewProjectWindow.resources

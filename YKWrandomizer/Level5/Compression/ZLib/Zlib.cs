@@ -2,7 +2,7 @@
 using System.Linq;
 using System.IO.Compression;
 
-namespace YKWrandomizer.Level5.Compression.ZLib
+namespace YKWrandomizer.Level5.Compression.Zlib
 {
     public class Zlib : ICompression
     {
@@ -12,7 +12,7 @@ namespace YKWrandomizer.Level5.Compression.ZLib
                 (byte)((byte)(data.Length << 3) | 1),
                 (byte)(data.Length >> 5),
                 (byte)(data.Length >> 13),
-                (byte)(data.Length >> 21) 
+                (byte)(data.Length >> 21)
             };
 
             using (var output = new MemoryStream())
@@ -39,3 +39,4 @@ namespace YKWrandomizer.Level5.Compression.ZLib
         }
     }
 }
+

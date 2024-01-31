@@ -1,13 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using YKWrandomizer.Tool;
+using YKWrandomizer.Tools;
 using YKWrandomizer.Level5.Compression;
 using YKWrandomizer.Level5.Compression.ETC1;
-using YKWrandomizer.Level5.Image.Color_Formats;
 
 namespace YKWrandomizer.Level5.Image
 {
@@ -19,13 +21,16 @@ namespace YKWrandomizer.Level5.Image
 
             var header = data.ReadStruct<IMGCSupport.Header>();
 
-            byte[] _tileData = Compressor.Decompress(data.GetSection((uint)header.TileOffset, header.TileSize1));
-            byte[] imageData = Compressor.Decompress(data.GetSection((uint)(header.TileOffset + header.TileSize2), header.ImageSize));
-            return DecodeImage(_tileData, imageData, IMGCSupport.ImageFormats[header.ImageFormat], header.Width, header.Height, header.BitDepth);
+            byte[] tileData = Compressor.Decompress(data.GetSection((uint)header.TileOffset, header.TileSize1));
+            byte[] imageData = Compressor.Decompress(data.GetSection((uint) (header.TileOffset + header.TileSize2), header.ImageSize));
+
+            return DecodeImage(tileData, imageData, IMGCSupport.ImageFormats[header.ImageFormat], header.Width, header.Height, header.BitDepth);
         }
 
         private static Bitmap DecodeImage(byte[] tile, byte[] imageData, IColorFormat imgFormat, int width, int height, int bitDepth)
         {
+            byte[] entryStart = null;
+
             using (var table = new BinaryDataReader(tile))
             using (var tex = new BinaryDataReader(imageData))
             {
@@ -36,7 +41,7 @@ namespace YKWrandomizer.Level5.Image
                 var entryLength = 2;
                 if (tmp == 0x453)
                 {
-                    byte[] entryStart = table.GetSection(8);
+                    entryStart = table.ReadMultipleValue<byte>(8);
                     entryLength = 4;
                 }
 
@@ -64,24 +69,19 @@ namespace YKWrandomizer.Level5.Image
                     }
                 }
 
-                IMGCSwizzle imgcSwizzle = new IMGCSwizzle(width, height);
-                var points = imgcSwizzle.GetPointSequence();
-
-                var bmp = new Bitmap(width, height);
-                var data = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-
-                var stride = data.Stride / 4;
-
-                byte[] imageDataAfterSwizzle;
+                byte[] pic;
                 switch (imgFormat.Name)
                 {
                     case "ETC1A4":
-                        imageDataAfterSwizzle = new ETC1(true, width, height).Decompress(ms.ToArray());
+                        pic = new ETC1(true, width, height).Decompress(ms.ToArray());
                         break;
                     default:
-                        imageDataAfterSwizzle = ms.ToArray();
+                        pic = ms.ToArray();
                         break;
                 }
+
+                IMGCSwizzle imgcSwizzle = new IMGCSwizzle(width, height);
+                var points = imgcSwizzle.GetPointSequence();
 
                 int pixelCount = width * height;
                 Color[] resultArray = new Color[pixelCount];
@@ -90,9 +90,12 @@ namespace YKWrandomizer.Level5.Image
                 {
                     int dataIndex = i * imgFormat.Size;
                     byte[] group = new byte[imgFormat.Size];
-                    Array.Copy(imageDataAfterSwizzle, dataIndex, group, 0, imgFormat.Size);
+                    Array.Copy(pic, dataIndex, group, 0, imgFormat.Size);
                     resultArray[i] = imgFormat.Decode(group);
                 }
+
+                var bmp = new Bitmap(width, height);
+                var data = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
                 foreach (var pair in points.Zip(resultArray, Tuple.Create))
                 {
@@ -100,7 +103,7 @@ namespace YKWrandomizer.Level5.Image
                     if (0 <= x && x < width && 0 <= y && y < height)
                     {
                         var color = pair.Item2;
-                        int pixelOffset = y * stride + x;
+                        int pixelOffset = data.Stride * y / 4 + x;
                         int pixelValue = color.ToArgb();
                         Marshal.WriteInt32(data.Scan0 + pixelOffset * 4, pixelValue);
                     }

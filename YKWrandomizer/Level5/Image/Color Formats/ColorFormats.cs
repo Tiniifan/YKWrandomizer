@@ -1,6 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
-namespace YKWrandomizer.Level5.Image.Color_Formats
+namespace YKWrandomizer.Level5.Image
 {
     public class RGBA4 : IColorFormat
     {

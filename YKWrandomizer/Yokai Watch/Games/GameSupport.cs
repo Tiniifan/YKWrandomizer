@@ -1,135 +1,101 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.IO;
+using System.Text;
+using System.Linq;
+using System.Collections.Generic;
+using YKWrandomizer.Tools;
+using YKWrandomizer.Level5.Text;
+using YKWrandomizer.Level5.Binary;
 
 namespace YKWrandomizer.Yokai_Watch.Games
 {
     public static class GameSupport
     {
-        private static char[] PrefixLetter = new char[] { 'x', 'y' };
-
-        public struct Medal
+        public static Dictionary<int, char> PrefixLetter = new Dictionary<int, char>() 
         {
-            public int X;
-            public int Y;
-        }
+            {0, 'c'},
+            {2, '?'},
+            {3, '?'},
+            {4, '?'},
+            {5, 'x'},
+            {6, 'y'},
+            {7, 'z'},
+            {8, '?'},
+            {12, '?'},
+            {17, '?'},
+        };
 
-        public struct Model
+        static string FormatVariant(int x)
         {
-            public int Prefix;
-            public int Number;
-            public int Variant;
-
-            public void ModelFromText(string text)
+            if (x > -1 && x < 10)
             {
-                int prefixIndex = Array.IndexOf(PrefixLetter, text[0]);
-                int number = int.Parse(text.Substring(1, 3));
-                int variant = int.Parse(text.Substring(4, 3));
-
-                Prefix = prefixIndex + 5;
-                Number = System.BitConverter.ToInt32(System.BitConverter.GetBytes(number), 0);
-                Variant = System.BitConverter.ToInt32(System.BitConverter.GetBytes(variant), 0);
+                return $"0{x}0";
             }
-
-            public string GetText()
+            else if (x > 9 && x < 100)
             {
-                return PrefixLetter[Prefix - 5] + Number.ToString("D3") + Variant.ToString("D3");
+                return $"{x}0";
             }
-        }
-
-        public struct Stat
-        {
-            public int HP;
-            public int Strength;
-            public int Spirit;
-            public int Defense;
-            public int Speed;
-        }
-
-        public struct EquipmentStat
-        {
-            public int Strength;
-            public int Spirit;
-            public int Defense;
-            public int Speed;
-        }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct Attributes
-        {
-            private uint FireUInt;
-            private uint IceUInt;
-            private uint EarthUint;
-            private uint LigthningUInt;
-            private uint WaterUInt;
-            private uint WindUInt;
-
-            private float ConvertToFloat(uint number)
+            else if (x > 99 && x < 1000)
             {
-                if (number == 0x01)
-                {
-                    return 1.0f;
-                } else
-                {
-                    return System.BitConverter.ToSingle(System.BitConverter.GetBytes(number), 0);
-                }
+                char[] charArray = x.ToString().ToCharArray();
+                Array.Reverse(charArray);
+                return new string(charArray);
             }
-
-
-            private uint ConvertToUInt(float number)
+            else
             {
-                if (number == 1.0)
-                {
-                    return 0x01;
-                }
-                else
-                {
-                    return System.BitConverter.ToUInt32(System.BitConverter.GetBytes(number), 0);
-                }
-            }
-
-            public float[] GetAttributes()
-            {
-                float[] attributes = new float[6];
-
-                attributes[0] = ConvertToFloat(FireUInt);
-                attributes[1] = ConvertToFloat(IceUInt);
-                attributes[2] = ConvertToFloat(EarthUint);
-                attributes[3] = ConvertToFloat(LigthningUInt);
-                attributes[4] = ConvertToFloat(WaterUInt);
-                attributes[5] = ConvertToFloat(WindUInt);
-
-                return attributes;
-            }
-
-            public void SetAttributes(float[] attributes)
-            {
-                FireUInt = ConvertToUInt(attributes[0]);
-                IceUInt = ConvertToUInt(attributes[1]);
-                EarthUint = ConvertToUInt(attributes[2]);
-                LigthningUInt = ConvertToUInt(attributes[3]);
-                WaterUInt = ConvertToUInt(attributes[4]);
-                WindUInt = ConvertToUInt(attributes[5]);
+                throw new FormatException("Format non valide");
             }
         }
 
-        public struct Drop
+        static int ParseVariant(string str)
         {
-            public uint ID;
-            public int Rate;
+            if (str.Length == 4 && str[0] == '0' && str[3] == '0')
+            {
+                return int.Parse(str[1].ToString());
+            }
+            else if (str.Length == 3 && str[2] == '0')
+            {
+                return int.Parse(str.Substring(0, 2));
+            }
+            else if (str.Length == 3)
+            {
+                char[] charArray = str.ToCharArray();
+                Array.Reverse(charArray);
+                return int.Parse(new string(charArray));
+            }
+            else
+            {
+                throw new FormatException("Format non valide");
+            }
         }
 
-        public struct Quotes
+        public static string GetFileModelText(int prefix, int number, int variant)
         {
-            public uint ID1;
-            public uint ID2;
-            public uint ID3;
-            public uint ID4;
+            return PrefixLetter[prefix] + number.ToString("D3") + FormatVariant(variant);
         }
 
-        public struct YokaiSeal
+        public static (int,int,int) GetFileModelValue(string text)
         {
-            public uint ParamID;
-            public bool Spoil;
+            int prefixIndex = PrefixLetter.FirstOrDefault(x => x.Value == text[0]).Key;
+            int number = int.Parse(text.Substring(1, 3));
+            int variant = ParseVariant(text.Substring(4, 3));
+
+            number = BitConverter.ToInt32(BitConverter.GetBytes(number), 0);
+            variant = BitConverter.ToInt32(BitConverter.GetBytes(variant), 0);
+
+            return (prefixIndex, number, variant);
+        }
+
+        public static void SaveTextFile(GameFile fileName, T2bþ fileData)
+        {
+            VirtualDirectory directory = fileName.File.Directory.GetFolderFromFullPath(Path.GetDirectoryName(fileName.Path).Replace("\\", "/"));
+            directory.Files[Path.GetFileName(fileName.Path)].ByteContent = fileData.Save(false);
+        }
+
+        public static T GetLogic<T>() where T : class, new()
+        {
+            return new T();
         }
     }
 }
+

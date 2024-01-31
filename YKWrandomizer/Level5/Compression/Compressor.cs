@@ -25,7 +25,7 @@ namespace YKWrandomizer.Level5.Compression
                     return new RLE.RLE();
 
                 case 5:
-                    return new ZLib.Zlib();
+                    return new Zlib.Zlib();
 
                 default:
                     throw new NotSupportedException($"Unknown compression method {method}");

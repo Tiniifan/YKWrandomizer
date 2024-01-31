@@ -3,17 +3,19 @@ using System.IO;
 using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using YKWrandomizer.Tool;
+using YKWrandomizer.Tools;
 using YKWrandomizer.Level5.Text;
-using YKWrandomizer.Yokai_Watch.Logic;
 using YKWrandomizer.Level5.Archive.ARC0;
+using YKWrandomizer.Level5.Archive.XPCK;
+using YKWrandomizer.Level5.Binary;
+using YKWrandomizer.Yokai_Watch.Games.YW3.Logic;
+using YKWrandomizer.Yokai_Watch.Logic;
 
 namespace YKWrandomizer.Yokai_Watch.Games.YW3
 {
     public class YW3 : IGame
     {
-        public string Name => "Yo-kai Watch 3";
+        public string Name => "Yo-Kai Watch 3";
 
         public Dictionary<uint, string> Attacks => Common.Attacks.YW3;
 
@@ -25,780 +27,555 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public Dictionary<uint, string> Skills => Common.Skills.YW3;
 
-        public Dictionary<uint, string> Items => Common.Items.YW3;
-
         public Dictionary<int, string> Tribes => Common.Tribes.YW3;
 
-        public Dictionary<uint, string> YokaiScoutable => Common.YokaiScoutable.YW3;
+        public Dictionary<int, string> FoodsType => Common.FoodsType.YW3;
 
-        public Dictionary<uint, string> YokaiStatic => Common.YokaiStatic.YW3;
+        public Dictionary<int, string> ScoutablesType => Common.ScoutablesType.YW3;
 
-        public Dictionary<uint, string> YokaiBoss => Common.YokaiBoss.YW3;
-
-        public Dictionary<uint, string> YokaiUnused => Common.YokaiUnused.YW3;
-
-        public Dictionary<string, List<uint>> YokaiGiven => Common.GivenYokais.YW3;
-
-        public List<uint> YokaiUnscoutableAutorized => Common.YokaiUnscoutableAutorized.YW3;
+        public Dictionary<string, int> BossBattles => Common.Battles.BossBattles.YW1;
 
         public ARC0 Game { get; set; }
 
-        private ARC0 Language { get; set; }
+        public ARC0 Language { get; set; }
 
         public string LanguageCode { get; set; }
 
-        public YW3(string gamePath, string languagePath)
+        private string RomfsPath;
+
+        public Dictionary<string, GameFile> Files { get; set; }
+
+        public YW3(string romfsPath, string language)
         {
-            Game = new ARC0(new FileStream(gamePath, FileMode.Open));
-            Language = new ARC0(new FileStream(languagePath, FileMode.Open));
-            LanguageCode = Regex.Match(languagePath, @"lg_(.*?)\.fa").Groups[1].Value;
+            RomfsPath = romfsPath;
+            LanguageCode = language;
+
+            Game = new ARC0(new FileStream(RomfsPath + @"\yw_a.fa", FileMode.Open));
+            Language = new ARC0(new FileStream(RomfsPath + @"\yw_lg_" + LanguageCode + ".fa", FileMode.Open));
+
+            Files = new Dictionary<string, GameFile>
+            {
+                { "chara_text", new GameFile(Language, "/data/res/text/chara_text_" + LanguageCode + ".cfg.bin") },
+                { "chara_desc_text", new GameFile(Language, "/data/res/text/chara_desc_text_" + LanguageCode + ".cfg.bin") },
+                { "item_text", new GameFile(Language, "/data/res/text/item_text_" + LanguageCode + ".cfg.bin") },
+                { "battle_text", new GameFile(Language, "/data/res/text/battle_text_" + LanguageCode + ".cfg.bin") },
+                { "skill_text", new GameFile(Language, "/data/res/text/skill_text_" + LanguageCode + ".cfg.bin") },
+                { "hackslash_technic_text", new GameFile(Language, "/data/res/text/hackslash/hackslash_technic_text_" + LanguageCode + ".cfg.bin") },
+                { "hackslash_chara_ability_text", new GameFile(Language, "/data/res/text/hackslash/hackslash_chara_ability_text_" + LanguageCode + ".cfg.bin") },
+                { "chara_ability_text", new GameFile(Language, "/data/res/text/chara_ability_text_" + LanguageCode + ".cfg.bin") },
+                { "addmembermenu_text", new GameFile(Language, "/data/res/text/menu/addmembermenu_text_" + LanguageCode + ".cfg.bin") },
+                { "face_icon", new GameFile(Game, "/data/menu/face_icon") },
+                { "item_icon", new GameFile(Game, "/data/menu/item_icon") },
+                { "model", new GameFile(Game, "/data/character") },
+            };
         }
 
-        public List<Yokai> GetYokais()
+        public void Save()
         {
-            List<Yokai> yokais;
+            string tempPath = @"./temp";
 
-            T2bþ yokaiNames = new T2bþ(Language.Directory.GetFileFromFullPath("/data/res/text/chara_text_" + LanguageCode + ".cfg.bin"));
-
-            using (BinaryDataReader charaparam = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/character/chara_param_0.03.25.cfg.bin")))
+            if (!Directory.Exists(tempPath))
             {
-                charaparam.SeekOf<uint>(0xA2D54CD5, 0x10);
-                charaparam.Skip(0x08);
-                YW3Support.Charaparam[] yokaiParams = charaparam.ReadMultipleStruct<YW3Support.Charaparam>(charaparam.ReadValue<int>());
+                Directory.CreateDirectory(tempPath);
+            }
 
-                // Charabase
-                using (BinaryDataReader charabase = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/character/chara_base_0.03.25.cfg.bin")))
+            // Save
+            Game.Save(tempPath + @"\yw_a.fa");
+            Language.Save(tempPath + @"\yw_lg_" + LanguageCode + ".fa");
+
+            // Close File
+            Game.Close();
+            Language.Close();
+
+            // Move
+            string[] sourceFiles = new string[2] { @"./temp/yw_a.fa", @"./temp/yw_lg_" + LanguageCode + ".fa" };
+            string[] destinationFiles = new string[2] { RomfsPath + @"\yw_a.fa", RomfsPath + @"\yw_lg_" + LanguageCode + ".fa" };
+
+            for (int i = 0; i < 2; i++)
+            {
+                if (File.Exists(destinationFiles[i]))
                 {
-                    charabase.SeekOf<uint>(0x76687850, 0x10);
-                    charabase.Skip(0x08);
-                    YW3Support.Charabase[] yokaiBases = charabase.ReadMultipleStruct<YW3Support.Charabase>(charabase.ReadValue<int>());
-
-                    // Link
-                    Dictionary<YW3Support.Charaparam, YW3Support.Charabase> yokaiConfigs = yokaiParams
-                        .Join(yokaiBases, x => x.BaseID, y => y.BaseID, (x, y) => new { Charaparam = x, Charabase = y })
-                        .ToDictionary(z => z.Charaparam, z => z.Charabase);
-
-                    // Create Yokai Object List
-                    yokais = yokaiConfigs.Select(yokaiConfig => new Yokai
-                    {
-                        Name = yokaiNames.GetNounText(yokaiConfig.Value.NameID, 0),
-                        ModelName = yokaiConfig.Value.Model.GetText(),
-                        Rank = yokaiConfig.Value.Rank,
-                        Tribe = yokaiConfig.Value.Tribe,
-                        MinStat = new int[] { yokaiConfig.Key.MinStat.HP, yokaiConfig.Key.MinStat.Strength, yokaiConfig.Key.MinStat.Spirit, yokaiConfig.Key.MinStat.Defense, yokaiConfig.Key.MinStat.Speed },
-                        MaxStat = new int[] { yokaiConfig.Key.MaxStat.HP, yokaiConfig.Key.MaxStat.Strength, yokaiConfig.Key.MaxStat.Spirit, yokaiConfig.Key.MaxStat.Defense, yokaiConfig.Key.MaxStat.Speed },
-                        Strongest = (byte)yokaiConfig.Key.Strongest,
-                        Weakness = (byte)yokaiConfig.Key.Strongest,
-                        AttackID = yokaiConfig.Key.AttackID,
-                        TechniqueID = yokaiConfig.Key.TechniqueID,
-                        InspiritID = yokaiConfig.Key.InspiritID,
-                        SoultimateID = yokaiConfig.Key.SoultimateID,
-                        SkillID = yokaiConfig.Key.SkillID,
-                        //Money = yokaiConfig.Key.Money,
-                        //Experience = yokaiConfig.Key.Experience,
-                        //DropID = new uint[] { yokaiConfig.Key.Drop1.ID, yokaiConfig.Key.Drop2.ID },
-                        //DropRate = new int[] { yokaiConfig.Key.Drop1.Rate, yokaiConfig.Key.Drop2.Rate },
-                        ExperienceCurve = yokaiConfig.Key.ExperienceCurve,
-                        EvolveOffset = yokaiConfig.Key.EvolveOffset,
-                        ShowInMedallium = yokaiConfig.Key.ShowInMedallium,
-                        MedaliumOffset = yokaiConfig.Key.MedalliumOffset,
-                        Medal = new Point(yokaiConfig.Value.Medal.X, yokaiConfig.Value.Medal.Y),
-                        ScoutableID = (uint)yokaiConfig.Key.ScoutableID,
-                        BaseID = yokaiConfig.Key.BaseID,
-                        ParamID = yokaiConfig.Key.ParamID,
-                        BattleType = yokaiConfig.Key.BattleType,
-                        Statut = new Statut
-                        {
-                            IsLegendary = yokaiConfig.Value.IsLegendary,
-                            IsRare = yokaiConfig.Value.IsRare,
-                            IsBoss = yokaiConfig.Value.Tribe == 0x09 || yokaiConfig.Value.Tribe == 0x00,
-                            IsScoutable = yokaiConfig.Key.ScoutableID != 0x00 && yokaiConfig.Key.BattleType > 01 && yokaiConfig.Key.ShowInMedallium != false,
-                            IsStatic = yokaiConfig.Key.ScoutableID == 0x00 && !(yokaiConfig.Value.Tribe == 0x09 || yokaiConfig.Value.Tribe == 0x00),
-                            IsClassic = yokaiConfig.Value.IsClassic,
-                            IsDeva = yokaiConfig.Value.IsDeva,
-                            IsMerican = yokaiConfig.Value.IsMerican,
-                            IsMystery = yokaiConfig.Value.IsMystery,
-                            IsTreasure = yokaiConfig.Value.IsTreasure,
-                        },
-                    }).ToList();
-
-                    yokais = yokais.Select((yokai, index) =>
-                    {
-                        if (yokai.Name == null)
-                        {
-                            yokai.Name = "Yokai n°" + index;
-                        }
-
-                        if (YokaiScoutable.ContainsKey(yokai.ParamID))
-                        {
-                            yokai.Statut.IsBoss = false;
-                            yokai.Statut.IsScoutable = true;
-                            yokai.Statut.IsStatic = false;
-                        }
-                        else if (YokaiStatic.ContainsKey(yokai.ParamID))
-                        {
-                            yokai.Statut.IsBoss = false;
-                            yokai.Statut.IsScoutable = false;
-                            yokai.Statut.IsStatic = true;
-                        }
-                        else if (YokaiBoss.ContainsKey(yokai.ParamID))
-                        {
-                            yokai.Statut.IsBoss = true;
-                            yokai.Statut.IsScoutable = false;
-                            yokai.Statut.IsStatic = false;
-                        }
-
-                        return yokai;
-                    }).ToList();
+                    File.Delete(destinationFiles[i]);
                 }
+
+                File.Move(sourceFiles[i], destinationFiles[i]);
             }
 
-            return yokais;
+            // Re Open
+            Game = new ARC0(new FileStream(RomfsPath + @"\yw_a.fa", FileMode.Open));
+            Language = new ARC0(new FileStream(RomfsPath + @"\yw_lg_" + LanguageCode + ".fa", FileMode.Open));
         }
 
-        public List<Evolution> GetEvolutions(List<Yokai> yokais)
+        public ICharabase[] GetCharacterbase(bool isYokai)
         {
-            List<Evolution> evolutions;
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastcharabase = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_base")).OrderByDescending(x => x).First();
 
-            using (BinaryDataReader charaparam = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/character/chara_param_0.03.25.cfg.bin")))
+            CfgBin charaBaseFile = new CfgBin();
+            charaBaseFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastcharabase));
+
+            if (isYokai)
             {
-                charaparam.SeekOf<uint>(0x568635E4, 0x10);
-                charaparam.Skip(0x08);
-                YW3Support.Evolution[] yokaiEvolutions = charaparam.ReadMultipleStruct<YW3Support.Evolution>(charaparam.ReadValue<int>());
-
-                // Create Evolution Object List
-                evolutions = yokaiEvolutions
-                    .Where((yokaiEvolution, index) => yokais.Any(yokai => yokai.EvolveOffset == index))
-                    .Select((yokaiEvolution, index) => new Evolution()
-                    {
-                        EvolveTo = yokaiEvolution.EvolveToID,
-                        Level = yokaiEvolution.Level,
-                        BaseYokai = yokais.First(yokai => yokai.EvolveOffset == index).ParamID,
-                    }).ToList();
+                return charaBaseFile.Entries
+                .Where(x => x.GetName() == "CHARA_BASE_YOKAI_INFO_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<YokaiCharabase>())
+                .ToArray();
             }
-
-            return evolutions;
+            else
+            {
+                return charaBaseFile.Entries
+                    .Where(x => x.GetName() == "CHARA_BASE_INFO_BEGIN")
+                    .SelectMany(x => x.Children)
+                    .Select(x => x.ToClass<NPCCharabase>())
+                    .ToArray();
+            }
         }
 
-        public void SaveYokais(List<Yokai> yokais, List<Evolution> evolutions)
+        public void SaveCharaBase(ICharabase[] charabases)
         {
-            // Charaparam
-            using (MemoryStream memoryStream = new MemoryStream())
+            NPCCharabase[] npcCharabases = charabases.OfType<NPCCharabase>().ToArray();
+            YokaiCharabase[] yokaiCharabases = charabases.OfType<YokaiCharabase>().ToArray();
+
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastcharabase = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_base")).OrderByDescending(x => x).First();
+
+            CfgBin charaBaseFile = new CfgBin();
+            charaBaseFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastcharabase));
+
+            charaBaseFile.ReplaceEntry("CHARA_BASE_INFO_BEGIN", "CHARA_BASE_INFO_", npcCharabases);
+            charaBaseFile.ReplaceEntry("CHARA_BASE_YOKAI_INFO_BEGIN", "CHARA_BASE_YOKAI_INFO_", yokaiCharabases);
+
+            Game.Directory.GetFolderFromFullPath("/data/res/character").Files[lastcharabase].ByteContent = charaBaseFile.Save();
+        }
+
+        public ICharascale[] GetCharascale()
+        {
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastCharascale = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_scale")).OrderByDescending(x => x).First();
+
+            CfgBin charaScaleFile = new CfgBin();
+            charaScaleFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastCharascale));
+
+            return charaScaleFile.Entries
+                .Where(x => x.GetName() == "CHARA_SCALE_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<Charascale>())
+                .ToArray();
+        }
+
+        public void SaveCharascale(ICharascale[] charascales)
+        {
+            Charascale[] formatCharascales = charascales.OfType<Charascale>().ToArray();
+
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastCharascale = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_scale")).OrderByDescending(x => x).First();
+
+            CfgBin charaparamFile = new CfgBin();
+            charaparamFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastCharascale));
+
+            charaparamFile.ReplaceEntry("CHARA_SCALE_INFO_LIST_BEG", "CHARA_SCALE_INFO_", formatCharascales);
+
+            Game.Directory.GetFolderFromFullPath("/data/res/character").Files[lastCharascale].ByteContent = charaparamFile.Save();
+        }
+
+        public ICharaparam[] GetCharaparam()
+        {
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastCharaparam = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_param")).OrderByDescending(x => x).First();
+
+            CfgBin charaparamFile = new CfgBin();
+            charaparamFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastCharaparam));
+
+            return charaparamFile.Entries
+                .Where(x => x.GetName() == "CHARA_PARAM_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<Charaparam>())
+                .ToArray();
+        }
+
+        public void SaveCharaparam(ICharaparam[] charaparams)
+        {
+            Charaparam[] formatCharaparams = charaparams.OfType<Charaparam>().ToArray();
+
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastCharaparam = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_param")).OrderByDescending(x => x).First();
+
+            CfgBin charaparamFile = new CfgBin();
+            charaparamFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastCharaparam));
+
+            charaparamFile.ReplaceEntry("CHARA_PARAM_INFO_LIST_BEG", "CHARA_PARAM_INFO_", formatCharaparams);
+
+            Game.Directory.GetFolderFromFullPath("/data/res/character").Files[lastCharaparam].ByteContent = charaparamFile.Save();
+        }
+
+        public ICharaevolve[] GetCharaevolution()
+        {
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastCharaparam = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_param")).OrderByDescending(x => x).First();
+
+            CfgBin charaparamFile = new CfgBin();
+            charaparamFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastCharaparam));
+
+            return charaparamFile.Entries
+                .Where(x => x.GetName() == "CHARA_EVOLVE_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<Charaevolve>())
+                .ToArray();
+        }
+
+        public void SaveCharaevolution(ICharaevolve[] charaevolutions)
+        {
+            Charaevolve[] formatCharaevolutions = charaevolutions.OfType<Charaevolve>().ToArray();
+
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastCharaparam = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_param")).OrderByDescending(x => x).First();
+
+            CfgBin charaparamFile = new CfgBin();
+            charaparamFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastCharaparam));
+
+            charaparamFile.ReplaceEntry("CHARA_EVOLVE_INFO_LIST_BEG", "CHARA_EVOLVE_INFO_", formatCharaevolutions);
+
+            Game.Directory.GetFolderFromFullPath("/data/res/character").Files[lastCharaparam].ByteContent = charaparamFile.Save();
+        }
+
+        public IItem[] GetItems(string itemType)
+        {
+            VirtualDirectory itemFolder = Game.Directory.GetFolderFromFullPath("data/res/item");
+            string lastItemconfig = itemFolder.Files.Keys.Where(x => x.StartsWith("item_config")).OrderByDescending(x => x).First();
+
+            CfgBin itemconfigFile = new CfgBin();
+            itemconfigFile.Open(Game.Directory.GetFileFromFullPath("data/res/item/" + lastItemconfig));
+
+            switch (itemType)
             {
-                using (BinaryDataWriter charaparamWriter = new BinaryDataWriter(memoryStream))
-                {
-                    using (BinaryDataReader charaparamReader = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/character/chara_param_0.03.25.cfg.bin")))
+                case "all":
+                    string[] itemTypes = { "ITEM_CONSUME_LIST_BEG", "ITEM_CREATURE_LIST_BEG", "ITEM_HACKSLASH_BATTLE_LIST_BEG", "ITEM_FLAG_MANAGE_LIST_BEG", "ITEM_HIDDEN_TREASURE_LIST_BEG", "ITEM_SOUL_LIST_BEG", "ITEM_EQUIPMENT_LIST_BEG" };
+
+                    return itemconfigFile.Entries
+                    .Where(x =>
                     {
-                        int entryCount = charaparamReader.ReadValue<int>();
-                        long tableOffset = charaparamReader.ReadValue<int>();
-
-                        charaparamReader.SeekOf<uint>(0xA2D54CD5, 0x10);
-                        charaparamWriter.Write(charaparamReader.GetSection(0, (int)charaparamReader.Position));
-                        charaparamReader.Skip(0x08);
-                        int yokaiParamCount = charaparamReader.ReadValue<int>();
-
-                        // Header Param
-                        charaparamWriter.Write(0xA2D54CD5);
-                        charaparamWriter.Write(0xFFFF0101);
-                        charaparamWriter.Write(yokaiParamCount);
-
-                        // Write Param
-                        for (int i = 0; i < yokaiParamCount; i++)
+                        if (itemTypes.Contains(x.GetName()))
                         {
-                            // Get Yokai Param
-                            YW3Support.Charaparam yokaiParam = charaparamReader.ReadStruct<YW3Support.Charaparam>();
+                            itemType = x.GetName();
+                            return true;
+                        }
 
-                            // Try to find Yokai Param
-                            Yokai yokai = yokais.FirstOrDefault(x => x.ParamID == yokaiParam.ParamID);
-                            if (yokai != null)
+                        return false;
+                    })
+                    .SelectMany(x => x.Children)
+                        .Where(x =>
+                        {
+                            if (itemType == "ITEM_SOUL_LIST_BEG")
                             {
-                                // Replace
-                                yokaiParam.ReplaceWith(yokai);
+                                return x.GetName() == "ITEM_SOUL";
+                            } else if (itemType == "ITEM_EQUIPMENT_LIST_BEG")
+                            {
+                                return x.GetName() == "ITEM_EQUIPMENT";
                             }
 
-                            // Write 
-                            charaparamWriter.WriteStruct<YW3Support.Charaparam>(yokaiParam);
-                        }
-
-                        long position = charaparamReader.Position;
-
-                        // Reach Evolution
-                        charaparamReader.SeekOf<uint>(0x568635E4, 0x10);
-                        charaparamWriter.Write(charaparamReader.GetSection((uint)position, (int)(charaparamReader.Position - position)));
-                        charaparamReader.Skip(0x08);
-                        int evolutionCount = charaparamReader.ReadValue<int>();
-                        YW3Support.Evolution[] evolutionsSkip = charaparamReader.ReadMultipleStruct<YW3Support.Evolution>(evolutionCount);
-
-                        // Header Evolution
-                        charaparamWriter.Write(0x568635E4);
-                        charaparamWriter.Write(0xFFFF0101);
-                        charaparamWriter.Write(evolutions.Count);
-
-                        // Write Evolution
-                        foreach (Evolution evolution in evolutions)
-                        {
-                            charaparamWriter.Write(0x1448C0EF);
-                            charaparamWriter.Write(0xFFFF0502);
-                            charaparamWriter.Write(evolution.EvolveTo);
-                            charaparamWriter.Write(evolution.Level);
-                        }
-
-                        // Write End File
-                        position = charaparamReader.Position;
-                        charaparamReader.SeekOf<uint>(0xA8E69AE2, 0x10);
-                        charaparamWriter.Write(charaparamReader.GetSection((uint)position, (int)(charaparamReader.Position - position)));
-                        charaparamWriter.Write(0xA8E69AE2);
-                        charaparamWriter.WriteAlignment();
-                        charaparamReader.Seek((uint)tableOffset);
-                        tableOffset = charaparamWriter.Position;
-                        charaparamWriter.Write(charaparamReader.GetSection((int)(charaparamReader.Length - charaparamReader.Position)));
-
-                        // Edit Header file
-                        charaparamWriter.Seek(0x0);
-                        entryCount -= yokaiParamCount;
-                        entryCount -= evolutionCount;
-                        charaparamWriter.Write(entryCount + yokaiParamCount + evolutions.Count);
-                        charaparamWriter.Write((int)tableOffset);
-                    }
-
-                    // Replace File
-                    Game.Directory.GetFolderFromFullPath("/data/res/character/").Files["chara_param_0.03.25.cfg.bin"].ByteContent = memoryStream.ToArray();
-                }
+                            return true;
+                        })
+                        .Select(x => x.ToClass<Item>())
+                    .ToArray();
+                default:
+                    return new IItem[] { };
             }
+        }
 
-            // Charabase
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                using (BinaryDataWriter charabaseWriter = new BinaryDataWriter(memoryStream))
+        public ICharaabilityConfig[] GetAbilities()
+        {
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/skill");
+            string lastskillFile = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_ability")).OrderByDescending(x => x).First();
+
+            CfgBin charaabilityConfig = new CfgBin();
+            charaabilityConfig.Open(Game.Directory.GetFileFromFullPath("/data/res/skill/" + lastskillFile));
+
+            return charaabilityConfig.Entries
+                .Where(x => x.GetName() == "CHARA_ABILITY_CONFIG_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                    .Where(x => x.GetName() == "CHARA_ABILITY_CONFIG_INFO")
+                    .Select(x => x.ToClass<CharaabilityConfig>())
+                .ToArray();
+        }
+
+        public ISkillconfig[] GetSkills()
+        {
+            VirtualDirectory skillFolder = Game.Directory.GetFolderFromFullPath("data/res/skill");
+            string lastCharaparam = skillFolder.Files.Keys.Where(x => x.StartsWith("skill_config")).OrderByDescending(x => x).First();
+
+            CfgBin charaparamFile = new CfgBin();
+            charaparamFile.Open(Game.Directory.GetFileFromFullPath("/data/res/skill/" + lastCharaparam));
+
+            return charaparamFile.Entries
+                .Where(x => x.GetName() == "SKILL_CONFIG_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<Skillconfig>())
+                .ToArray();
+        }
+
+        public IBattleCharaparam[] GetBattleCharaparam()
+        {
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastBattleCharaparam = characterFolder.Files.Keys.Where(x => x.StartsWith("battle_chara_param")).OrderByDescending(x => x).First();
+
+            CfgBin battleCharaparamFile = new CfgBin();
+            battleCharaparamFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastBattleCharaparam));
+
+            return battleCharaparamFile.Entries
+                .Where(x => x.GetName() == "BATTLE_CHARA_PARAM_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<BattleCharaparam>())
+                .ToArray();
+        }
+
+        public void SaveBattleCharaparam(IBattleCharaparam[] battleCharaparams)
+        {
+            BattleCharaparam[] formatBattleCharaparam = battleCharaparams.OfType<BattleCharaparam>().ToArray();
+
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastBattleCharaparam = characterFolder.Files.Keys.Where(x => x.StartsWith("battle_chara_param")).OrderByDescending(x => x).First();
+
+            CfgBin battleCharaparamFile = new CfgBin();
+            battleCharaparamFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastBattleCharaparam));
+
+            battleCharaparamFile.ReplaceEntry("BATTLE_CHARA_PARAM_INFO_LIST_BEG", "BATTLE_CHARA_PARAM_INFO_", formatBattleCharaparam);
+
+            Game.Directory.GetFolderFromFullPath("/data/res/character").Files[lastBattleCharaparam].ByteContent = battleCharaparamFile.Save();
+        }
+
+        public IHackslashCharaparam[] GetHackslashCharaparam()
+        {
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastHackslashCharaparam = characterFolder.Files.Keys.Where(x => x.StartsWith("hackslash_chara_param")).OrderByDescending(x => x).First();
+
+            CfgBin hackslashCharaparamFile = new CfgBin();
+            hackslashCharaparamFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastHackslashCharaparam));
+
+            return hackslashCharaparamFile.Entries
+                .Where(x => x.GetName() == "HACKSLASH_CHARA_PARAM_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<HackslashCharaparam>())
+                .ToArray();
+        }
+
+        public void SaveHackslashCharaparam(IHackslashCharaparam[] hackslashCharaparams)
+        {
+            HackslashCharaparam[] formatHackslashCharaparams = hackslashCharaparams.OfType<HackslashCharaparam>().ToArray();
+
+            VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
+            string lastHackslashCharaparam = characterFolder.Files.Keys.Where(x => x.StartsWith("hackslash_chara_param")).OrderByDescending(x => x).First();
+
+            CfgBin hackslashCharaparamFile = new CfgBin();
+            hackslashCharaparamFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastHackslashCharaparam));
+
+            hackslashCharaparamFile.ReplaceEntry("HACKSLASH_CHARA_PARAM_INFO_LIST_BEG", "HACKSLASH_CHARA_PARAM_INFO_", formatHackslashCharaparams);
+
+            Game.Directory.GetFolderFromFullPath("/data/res/character").Files[lastHackslashCharaparam].ByteContent = hackslashCharaparamFile.Save();
+        }
+
+        public IHackslashCharaabilityConfig[] GetHackslashAbilities()
+        {
+            VirtualDirectory hackslashFolder = Game.Directory.GetFolderFromFullPath("data/res/hackslash");
+            string lastHackslashCharaability = hackslashFolder.Files.Keys.Where(x => x.StartsWith("hackslash_chara_ability")).OrderByDescending(x => x).First();
+
+            CfgBin hackslashCharaabilityFile = new CfgBin();
+            hackslashCharaabilityFile.Open(Game.Directory.GetFileFromFullPath("/data/res/hackslash/" + lastHackslashCharaability));
+
+            return hackslashCharaabilityFile.Entries
+                .Where(x => x.GetName() == "CHARA_ABILITY_CONFIG_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<HackslashCharaability>())
+                .ToArray();
+        }
+
+        public IHackslashTechnic[] GetHackslashSkills()
+        {
+            VirtualDirectory hackslashFolder = Game.Directory.GetFolderFromFullPath("data/res/hackslash");
+            string lastHackslashTechnic = hackslashFolder.Files.Keys.Where(x => x.StartsWith("hackslash_technic") && x.Contains("menu") == false).OrderByDescending(x => x).First();
+
+            CfgBin hackslashTechnicFile = new CfgBin();
+            hackslashTechnicFile.Open(Game.Directory.GetFileFromFullPath("/data/res/hackslash/" + lastHackslashTechnic));
+
+            return hackslashTechnicFile.Entries
+                .Where(x => x.GetName() == "HACKSLASH_TECHNIC_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<HackslashTechnic>())
+                .ToArray();
+        }
+
+        public IOrgetimeTechnic[] GetOrgetimeTechnics()
+        {
+            return new IOrgetimeTechnic[0];
+        }
+
+        public IBattleCommand[] GetBattleCommands()
+        {
+            List<IBattleCommand> ouput = new List<IBattleCommand>();
+
+            ouput.AddRange(GetBattleCommandsOnly());
+            ouput.AddRange(GetSkillBattleCommands());
+
+            return ouput.ToArray();
+        }
+
+        private IBattleCommand[] GetBattleCommandsOnly()
+        {
+            VirtualDirectory battleFolder = Game.Directory.GetFolderFromFullPath("data/res/battle");
+            string lastBattleCommand = battleFolder.Files.Keys.Where(x => x.StartsWith("battle_command") && x.Contains("link") == false).OrderByDescending(x => x).First();
+
+            CfgBin battlecommandConfig = new CfgBin();
+            battlecommandConfig.Open(Game.Directory.GetFileFromFullPath("/data/res/battle/" + lastBattleCommand));
+
+            return battlecommandConfig.Entries
+                .Where(x => x.GetName() == "BATTLE_COMMAND_INFO_BEGIN")
+                .SelectMany(x => x.Children)
+                    .Where(x => x.GetName() == "BATTLE_COMMAND_INFO")
+                    .Select(x => x.ToClass<Battlecommand>())
+                .ToArray();
+        }
+
+        private IBattleCommand[] GetSkillBattleCommands()
+        {
+            VirtualDirectory skillBattleFolder = Game.Directory.GetFolderFromFullPath("data/res/skill");
+            string lastSkillBattleCommand = skillBattleFolder.Files.Keys.Where(x => x.StartsWith("skill_btl_config")).OrderByDescending(x => x).First();
+
+            CfgBin skillBattlecommandConfig = new CfgBin();
+            skillBattlecommandConfig.Open(Game.Directory.GetFileFromFullPath("/data/res/skill/" + lastSkillBattleCommand));
+
+            return skillBattlecommandConfig.Entries
+                .Where(x => x.GetName() == "SKILL_CONFIG_BTL_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                    .Where(x => x.GetName() == "SKILL_CONFIG_BTL_INFO")
+                    .Select(x => x.ToClass<SkillBattleConfig>())
+                .ToArray();
+        }
+
+        public string[] GetMapWhoContainsEncounter()
+        {
+            VirtualDirectory mapEncounterFolder = Game.Directory.GetFolderFromFullPath("/data/res/map");
+
+            return mapEncounterFolder.Folders
+                .Where(folder =>
                 {
-                    using (BinaryDataReader charabaseReader = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/character/chara_base_0.03.25.cfg.bin")))
+                    SubMemoryStream pckFile = folder.Files.FirstOrDefault(x => x.Key == folder.Name + ".pck").Value;
+
+                    if (pckFile != null)
                     {
-                        charabaseReader.SeekOf<uint>(0x76687850, 0x10);
-                        charabaseWriter.Write(charabaseReader.GetSection(0, (int)charabaseReader.Position));
-                        charabaseReader.Skip(0x08);
-                        int yokaiBaseCount = charabaseReader.ReadValue<int>();
+                        pckFile.Read();
 
-                        // Header Param
-                        charabaseWriter.Write(0x76687850);
-                        charabaseWriter.Write(0xFFFF0101);
-                        charabaseWriter.Write(yokaiBaseCount);
+                        XPCK mapArchive = new XPCK(pckFile.ByteContent);
 
-                        // Write Param
-                        for (int i = 0; i < yokaiBaseCount; i++)
+                        if (mapArchive.Directory.Files.Any(file => file.Key.StartsWith(folder.Name + "_enc_")))
                         {
-                            // Get Yokai Param
-                            YW3Support.Charabase yokaiBase = charabaseReader.ReadStruct<YW3Support.Charabase>();
-
-                            // Try to find Yokai Base
-                            Yokai yokai = yokais.FirstOrDefault(x => x.BaseID == yokaiBase.BaseID);
-                            if (yokai != null)
-                            {
-                                // Replace
-                                yokaiBase.ReplaceWith(yokai);
-                            }
-
-                            // Write 
-                            charabaseWriter.WriteStruct<YW3Support.Charabase>(yokaiBase);
+                            return true;
                         }
-
-                        // Write end of file
-                        charabaseWriter.Write(charabaseReader.GetSection((int)(charabaseReader.Length - charabaseReader.Position)));
                     }
 
-                    // Replace File
-                    Game.Directory.GetFolderFromFullPath("/data/res/character/").Files["chara_base_0.03.25.cfg.bin"].ByteContent = memoryStream.ToArray();
-                }
-            }
+                    return false;
+                })
+                .Select(folder => folder.Name)
+                .ToArray();
         }
 
-        public List<LegendSeal> GetLegendaries()
+        public (IEncountTable[], IEncountChara[]) GetMapEncounter(string mapName)
         {
-            List<LegendSeal> legendaries = new List<LegendSeal>();
+            VirtualDirectory mapFolder = Game.Directory.GetFolderFromFullPath(Files["map_encounter"].Path);
+            XPCK mapArchive = new XPCK(mapFolder.GetFolder(mapName).Files[mapName + ".pck"].ByteContent);
+            string lastEncountConfigFile = mapArchive.Directory.Files.Keys.Where(x => x.StartsWith(mapName + "_enc_") && !x.Contains("_enc_pos")).OrderByDescending(x => x).First();
 
-            using (BinaryDataReader legendconfig = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/character/legend_config_0.01.cfg.bin")))
-            {
-                legendconfig.SeekOf<uint>(0x835F55C0, 0x10);
-                legendconfig.Skip(0x08);
-                YW3Support.LegendSeal[] legendSeals = legendconfig.ReadMultipleStruct<YW3Support.LegendSeal>(legendconfig.ReadValue<int>());
+            CfgBin encountConfig = new CfgBin();
+            mapArchive.Directory.Files[lastEncountConfigFile].Read();
+            encountConfig.Open(mapArchive.Directory.Files[lastEncountConfigFile].ByteContent);
 
-                // Create Legend Seal Object List
-                legendaries = legendSeals.Select(legendseal => new LegendSeal()
-                {
-                    SealID = legendseal.SealdID,
-                    LegendaryParamID = legendseal.LegendaryParamID,
-                    RequirmentParamID = legendseal.Seals.Select(x => x.ParamID).ToArray(),
-                }).ToList();
-            }
+            IEncountTable[] encountTable = encountConfig.Entries
+                .Where(x => x.GetName() == "ENCOUNT_TABLE_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<EncountTable>())
+                .ToArray();
 
-            return legendaries;
+            IEncountChara[] encountChara = encountConfig.Entries
+                .Where(x => x.GetName() == "ENCOUNT_CHARA_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<EncountChara>())
+                .ToArray();
+
+            return (encountTable, encountChara);
         }
 
-        public void SaveLegendaries(List<LegendSeal> legendaries, bool spoil)
-        {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                using (BinaryDataWriter legendconfigWriter = new BinaryDataWriter(memoryStream))
-                {
-                    using (BinaryDataReader legendconfigReader = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/character/legend_config_0.01.cfg.bin")))
-                    {
-                        int entryCount = legendconfigReader.ReadValue<int>();
-                        long tableOffset = legendconfigReader.ReadValue<int>();
-
-                        legendconfigReader.SeekOf<uint>(0x835F55C0, 0x10);
-                        legendconfigWriter.Write(legendconfigReader.GetSection(0, (int)legendconfigReader.Position));
-                        legendconfigReader.Skip(0x08);
-                        int legendSealsCount = legendconfigReader.ReadValue<int>();
-
-                        // Header legend
-                        legendconfigWriter.Write(0x835F55C0);
-                        legendconfigWriter.Write(0xFFFF0101);
-                        legendconfigWriter.Write(legendaries.Count);
-
-                        // Write legend
-                        foreach (LegendSeal legendary in legendaries)
-                        {
-                            legendconfigWriter.Write(0x66C81CEA);
-                            legendconfigWriter.Write(0x55555514);
-                            legendconfigWriter.Write(0xFFFF5555);
-                            legendconfigWriter.Write(legendary.SealID);
-                            legendconfigWriter.Write(legendary.LegendaryParamID);
-
-                            foreach (uint seal in legendary.RequirmentParamID)
-                            {
-                                legendconfigWriter.Write(seal);
-                                legendconfigWriter.Write(Convert.ToInt32(spoil));
-                            }
-
-                            legendconfigWriter.Write(0x08);
-                            legendconfigWriter.Write(0x00);
-                        }
-
-                        // Write end of file
-                        legendconfigWriter.Write(0xD03C0AA2);
-                        legendconfigWriter.WriteAlignment();
-                        legendconfigReader.Seek((uint)tableOffset);
-                        tableOffset = legendconfigWriter.Position;
-                        legendconfigWriter.Write(legendconfigReader.GetSection((int)(legendconfigReader.Length - legendconfigReader.Position)));
-
-                        // Edit Header file
-                        legendconfigWriter.Seek(0x0);
-                        entryCount -= legendSealsCount;
-                        legendconfigWriter.Write(entryCount + legendaries.Count);
-                        legendconfigWriter.Write((uint)tableOffset);
-                    }
-
-                    // Replace File
-                    Game.Directory.GetFolderFromFullPath("/data/res/character/").Files["legend_config_0.01.cfg.bin"].ByteContent = memoryStream.ToArray();
-                }
-            }
-        }
-
-        public List<Fusion> GetFusions()
-        {
-            List<Fusion> fusions;
-
-            using (BinaryDataReader combineconfig = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/shop/combine_config_0.03.43.cfg.bin")))
-            {
-                combineconfig.SeekOf<uint>(0x8A0AC547, 0x10);
-                combineconfig.Skip(0x08);
-                YW3Support.Fusion[] yokaiFusions = combineconfig.ReadMultipleStruct<YW3Support.Fusion>(combineconfig.ReadValue<int>());
-
-                // Create Fusion Object List
-                fusions = yokaiFusions.Select(yokaiFusion => new Fusion()
-                {
-                    BaseYokai = yokaiFusion.BaseID,
-                    BaseIsItem = yokaiFusion.BaseIsItem,
-                    Material = yokaiFusion.MaterialID,
-                    MaterialIsItem = yokaiFusion.MaterialIsItem,
-                    EvolveTo = yokaiFusion.EvolveToID,
-                    EvolveToIsItem = yokaiFusion.EvolveToIsItem,
-                    FusionID = yokaiFusion.FusionID,
-                    FusionIsItem = yokaiFusion.fusionIsItem,
-                }).ToList();
-            }
-
-            return fusions;
-        }
-
-        public void SaveFusions(List<Fusion> fusions)
-        {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                using (BinaryDataWriter combineconfigWriter = new BinaryDataWriter(memoryStream))
-                {
-                    using (BinaryDataReader combineconfigReader = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/shop/combine_config_0.03.43.cfg.bin")))
-                    {
-                        int entryCount = combineconfigReader.ReadValue<int>();
-                        long tableOffset = combineconfigReader.ReadValue<int>();
-
-                        combineconfigReader.SeekOf<uint>(0x8A0AC547, 0x10);
-                        combineconfigWriter.Write(combineconfigReader.GetSection(0, (int)combineconfigReader.Position));
-                        combineconfigReader.Skip(0x08);
-                        int fusionCount = combineconfigReader.ReadValue<int>();
-
-                        // Header fusion
-                        combineconfigWriter.Write(0x8A0AC547);
-                        combineconfigWriter.Write(0xFFFF0101);
-                        combineconfigWriter.Write(fusions.Count);
-
-                        // Write fusion
-                        foreach (Fusion fusion in fusions)
-                        {
-                            combineconfigWriter.Write(0xF9D0FE0F);
-                            combineconfigWriter.Write(0xFF555508);
-                            combineconfigWriter.Write(Convert.ToInt32(fusion.BaseIsItem));
-                            combineconfigWriter.Write(fusion.BaseYokai);
-                            combineconfigWriter.Write(Convert.ToInt32(fusion.MaterialIsItem));
-                            combineconfigWriter.Write(fusion.Material);
-                            combineconfigWriter.Write(Convert.ToInt32(fusion.EvolveToIsItem));
-                            combineconfigWriter.Write(fusion.EvolveTo);
-                            combineconfigWriter.Write(fusion.FusionID);
-                            combineconfigWriter.Write(Convert.ToInt32(fusion.FusionIsItem));
-                        }
-
-                        // Write end of file
-                        combineconfigWriter.Write(0xF5B85BB3);
-                        combineconfigWriter.WriteAlignment();
-                        combineconfigReader.Seek((uint)tableOffset);
-                        tableOffset = combineconfigWriter.Position;
-                        combineconfigWriter.Write(combineconfigReader.GetSection((int)(combineconfigReader.Length - combineconfigReader.Position)));
-
-                        // Edit Header file
-                        combineconfigWriter.Seek(0x0);
-                        entryCount -= fusionCount;
-                        combineconfigWriter.Write(entryCount + fusions.Count);
-                        combineconfigWriter.Write((uint)tableOffset);
-                    }
-
-                    // Replace File
-                    Game.Directory.GetFolderFromFullPath("/data/res/shop/").Files["combine_config_0.03.43.cfg.bin"].ByteContent = memoryStream.ToArray();
-                }
-            }
-        }
-
-        public List<uint> GetSouls()
-        {
-            return null;
-        }
-
-        public void SaveSouls(List<uint> souls)
+        public void SaveMapEncounter(string mapName, IEncountTable[] encountTables, IEncountChara[] encountCharas)
         {
 
         }
 
-        public List<(uint, int)> GetEncounter()
+        public ICombineConfig[] GetFusions()
         {
-            List<(uint, int)> encounters;
+            VirtualDirectory shopFolder = Game.Directory.GetFolderFromFullPath("data/res/shop");
+            string lastCombineConfig = shopFolder.Files.Keys.Where(x => x.StartsWith("combine_config")).OrderByDescending(x => x).First();
 
-            using (BinaryDataReader commonencReader = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/battle/common_enc_0.01.cfg.bin")))
-            {
-                commonencReader.SeekOf<uint>(0x5CF8BAE4, 0x10);
-                commonencReader.Skip(0x08);
-                YW3Support.Encounter[] encounterData = commonencReader.ReadMultipleStruct<YW3Support.Encounter>(commonencReader.ReadValue<int>());
+            CfgBin combineConfigFile = new CfgBin();
+            combineConfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/shop/" + lastCombineConfig));
 
-                encounters = encounterData.Select(encounter => (encounter.ParamID, encounter.Level)).ToList();
-            }
-
-            return encounters;
+            return combineConfigFile.Entries
+                .Where(x => x.GetName() == "COMBINE_INFO_LIST_BEG")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<CombineConfig>())
+                .ToArray();
         }
 
-        public void SaveEncounter(List<(uint, int)> encounters)
+        public void SaveFusions(ICombineConfig[] combineConfigs)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                using (BinaryDataWriter commonencWriter = new BinaryDataWriter(memoryStream))
-                {
-                    using (BinaryDataReader commonencReader = new BinaryDataReader(Game.Directory.GetFileFromFullPath("/data/res/battle/common_enc_0.01.cfg.bin")))
-                    {
-                        int entryCount = commonencReader.ReadValue<int>();
-                        long tableOffset = commonencReader.ReadValue<int>();
+            CombineConfig[] formatCombineConfigs = combineConfigs.OfType<CombineConfig>().ToArray();
 
-                        commonencReader.SeekOf<uint>(0x5CF8BAE4, 0x10);
-                        commonencWriter.Write(commonencReader.GetSection(0, (int)commonencReader.Position));
-                        commonencReader.Skip(0x08);
-                        int encounterCount = commonencReader.ReadValue<int>();
-                        YW3Support.Encounter[] encounterData = commonencReader.ReadMultipleStruct<YW3Support.Encounter>(encounterCount);
+            VirtualDirectory shopFolder = Game.Directory.GetFolderFromFullPath("data/res/shop");
+            string lastCombineConfig = shopFolder.Files.Keys.Where(x => x.StartsWith("combine_config")).OrderByDescending(x => x).First();
 
-                        // Header encounter
-                        commonencWriter.Write(0x5CF8BAE4);
-                        commonencWriter.Write(0xFFFF0101);
-                        commonencWriter.Write(encounterCount);
+            CfgBin combineConfigFile = new CfgBin();
+            combineConfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/shop/" + lastCombineConfig));
 
-                        // Write encounter
-                        for (int i = 0; i < encounterCount; i++)
-                        {
-                            YW3Support.Encounter encounter = encounterData[i];
-                            encounter.ParamID = encounters[i].Item1;
-                            encounter.Level = encounters[i].Item2;
-                            commonencWriter.WriteStruct(encounter);
-                        }
+            combineConfigFile.ReplaceEntry("COMBINE_INFO_LIST_BEG", "COMBINE_INFO_", formatCombineConfigs);
 
-                        // Write end of file
-                        commonencWriter.Write(0xCE654EF7);
-                        commonencWriter.WriteAlignment();
-                        commonencReader.Seek((uint)tableOffset);
-                        tableOffset = commonencWriter.Position;
-                        commonencWriter.Write(commonencReader.GetSection((int)(commonencReader.Length - commonencReader.Position)));
-
-                        // Edit Header file
-                        commonencWriter.Seek(0x0);
-                        entryCount -= encounterCount;
-                        commonencWriter.Write(entryCount + encounterCount);
-                        commonencWriter.Write((uint)tableOffset);
-                    }
-
-                    // Replace File
-                    Game.Directory.GetFolderFromFullPath("/data/res/battle/").Files["common_enc_0.01.cfg.bin"].ByteContent = memoryStream.ToArray();
-                }
-            }
+            Game.Directory.GetFolderFromFullPath("/data/res/shop").Files[lastCombineConfig].ByteContent = combineConfigFile.Save();
         }
 
-        public List<(uint, int)> GetWorldEncounter(byte[] file)
+        public (IEncountTable[], IEncountChara[]) GetStaticEncounters()
         {
-            List<(uint, int)> encounters;
+            VirtualDirectory battleFolder = Game.Directory.GetFolderFromFullPath("data/res/battle");
+            string lastEncounter = battleFolder.Files.Keys.Where(x => x.StartsWith("common_enc")).OrderByDescending(x => x).First();
 
-            using (BinaryDataReader commonencReader = new BinaryDataReader(file))
-            {
-                commonencReader.SeekOf<uint>(0x5CF8BAE4, 0x10);
-                commonencReader.Skip(0x08);
-                YW3Support.WorldEncounter[] encounterData = commonencReader.ReadMultipleStruct<YW3Support.WorldEncounter>(commonencReader.ReadValue<int>());
+            CfgBin encountConfig = new CfgBin();
+            encountConfig.Open(Game.Directory.GetFileFromFullPath("/data/res/battle/" + lastEncounter));
 
-                encounters = encounterData.Select(encounter => (encounter.ParamID, encounter.Level)).ToList();
-            }
+            IEncountTable[] encountTable = encountConfig.Entries
+                .Where(x => x.GetName() == "ENCOUNT_TABLE_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<EncountTable>())
+                .ToArray();
 
-            return encounters;
+            IEncountChara[] encountChara = encountConfig.Entries
+                .Where(x => x.GetName() == "ENCOUNT_CHARA_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<EncountChara>())
+                .ToArray();
+
+            return (encountTable, encountChara);
         }
 
-        public byte[] SaveWorldEncounter(List<(uint, int)> encounters, byte[] file)
+        public void SaveStaticEncounters(IEncountTable[] encountTables, IEncountChara[] encountCharas)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                using (BinaryDataWriter commonencWriter = new BinaryDataWriter(memoryStream))
-                {
-                    using (BinaryDataReader commonencReader = new BinaryDataReader(file))
-                    {
-                        int entryCount = commonencReader.ReadValue<int>();
-                        long tableOffset = commonencReader.ReadValue<int>();
+            EncountTable[] formatEncountTables = encountTables.OfType<EncountTable>().ToArray();
+            EncountChara[] formatEncountCharas = encountCharas.OfType<EncountChara>().ToArray();
 
-                        commonencReader.SeekOf<uint>(0x5CF8BAE4, 0x10);
-                        commonencWriter.Write(commonencReader.GetSection(0, (int)commonencReader.Position));
-                        commonencReader.Skip(0x08);
-                        int encounterCount = commonencReader.ReadValue<int>();
-                        YW3Support.Encounter[] encounterData = commonencReader.ReadMultipleStruct<YW3Support.Encounter>(encounterCount);
+            VirtualDirectory battleFolder = Game.Directory.GetFolderFromFullPath("data/res/battle");
+            string lastEncounter = battleFolder.Files.Keys.Where(x => x.StartsWith("common_enc")).OrderByDescending(x => x).First();
 
-                        // Header fusion
-                        commonencWriter.Write(0x5CF8BAE4);
-                        commonencWriter.Write(0xFFFF0101);
-                        commonencWriter.Write(encounterCount);
+            CfgBin encountConfig = new CfgBin();
+            encountConfig.Open(Game.Directory.GetFileFromFullPath("/data/res/battle/" + lastEncounter));
 
-                        // Write encounter
-                        for (int i = 0; i < encounters.Count; i++)
-                        {
-                            YW3Support.Encounter encounter = encounterData[i];
-                            encounter.ParamID = encounters[i].Item1;
-                            encounter.Level = encounters[i].Item2;
-                            commonencWriter.WriteStruct(encounter);
-                        }
+            encountConfig.ReplaceEntry("ENCOUNT_TABLE_BEGIN", "ENCOUNT_TABLE_INFO_", encountTables);
+            encountConfig.ReplaceEntry("ENCOUNT_CHARA_BEGIN", "ENCOUNT_CHARA_INFO_", encountCharas);
 
-                        // Write end of file
-                        commonencWriter.Write(0xCE654EF7);
-                        commonencWriter.WriteAlignment();
-                        commonencReader.Seek((uint)tableOffset);
-                        tableOffset = commonencWriter.Position;
-                        commonencWriter.Write(commonencReader.GetSection((int)(commonencReader.Length - commonencReader.Position)));
-
-                        // Edit Header file
-                        commonencWriter.Seek(0x0);
-                        entryCount -= encounterCount;
-                        commonencWriter.Write(entryCount + encounterCount);
-                        commonencWriter.Write((uint)tableOffset);
-                    }
-
-                    return memoryStream.ToArray();
-                }
-            }
-        }
-
-        public List<uint> GetCapsule()
-        {
-            return null;
-        }
-
-        public void SaveCapsule(List<uint> capsules)
-        {
-        }
-
-        public List<uint> GetShop(string fileName)
-        {
-            return null;
-        }
-
-        public void SaveShop(List<uint> capsules, string fileName)
-        {
-        }
-
-        public List<uint> GetTreasureBox(byte[] file)
-        {
-            return null;
-        }
-
-        public byte[] SaveTreasureBox(List<uint> treasures, byte[] file)
-        {
-            return null;
-        }
-
-        public void FixStory()
-        {
-            // Yo-Net Nummskull
-            using (BinaryDataWriter NummskullQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104d07/t104d07.pck")))
-            {
-                NummskullQuestWriter.Seek(0x6BC);
-                NummskullQuestWriter.Write(0xD8CADD7A);
-                NummskullQuestWriter.Seek(0x6E4);
-                NummskullQuestWriter.Write(0xD8CADD7A);
-            }
-
-            // Yo-Net Snippity Cricket
-            using (BinaryDataWriter cricketQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104d01/t104d01.pck")))
-            {
-                cricketQuestWriter.Seek(0xE7C);
-                cricketQuestWriter.Write(0x5E5EAFD4);
-            }
-
-            // Yo-Net Mudmunch
-            using (BinaryDataWriter mudmunchQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t109g00/t109g00.pck")))
-            {
-                mudmunchQuestWriter.Seek(0x1F38);
-                mudmunchQuestWriter.Write(0x9DACFD94);
-                mudmunchQuestWriter.Seek(0x1F60);
-                mudmunchQuestWriter.Write(0x9DACFD94);
-                mudmunchQuestWriter.Seek(0x1F88);
-                mudmunchQuestWriter.Write(0x9DACFD94);
-                mudmunchQuestWriter.Seek(0x1FB0);
-                mudmunchQuestWriter.Write(0x9DACFD94);
-            }
-
-            // Yo-Net Why Naant (1)
-            using (BinaryDataWriter whyNaanttWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104d01/t104d01.pck")))
-            {
-                whyNaanttWriter.Seek(0x75C);
-                whyNaanttWriter.Write(0x8A1714AE);
-                whyNaanttWriter.Seek(0x784);
-                whyNaanttWriter.Write(0x8A1714AE);
-                whyNaanttWriter.Seek(0x7D4);
-                whyNaanttWriter.Write(0x8A1714AE);
-            }
-
-            // Yo-Net Why Naant (2)
-            using (BinaryDataWriter whyNaanttWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104i10/t104i10.pck")))
-            {
-                whyNaanttWriter.Seek(0x864);
-                whyNaanttWriter.Write(0x8A1714AE);
-                whyNaanttWriter.Seek(0x88C);
-                whyNaanttWriter.Write(0x8A1714AE);
-            }
-
-            // Snaggly Fusion Quest
-            using (BinaryDataWriter snagglyQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t401d01/t401d01.pck")))
-            {
-                snagglyQuestWriter.Seek(0x7C4);
-                snagglyQuestWriter.Write(0x948C1A34);
-                snagglyQuestWriter.Seek(0x7EC);
-                snagglyQuestWriter.Write(0x948C1A34);
-                snagglyQuestWriter.Seek(0x83C);
-                snagglyQuestWriter.Write(0x948C1A34);
-                snagglyQuestWriter.Seek(0x9CC);
-                snagglyQuestWriter.Write(0x948C1A34);
-            }
-
-            // Terrorpotta Fusion Quest
-            using (BinaryDataWriter terrorpottaQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t102d03/t102d03.pck")))
-            {
-                terrorpottaQuestWriter.Seek(0x2428);
-                terrorpottaQuestWriter.Write(0x0059A7DA);
-                terrorpottaQuestWriter.Seek(0x2478);
-                terrorpottaQuestWriter.Write(0x0059A7DA);
-                terrorpottaQuestWriter.Seek(0x24A0);
-                terrorpottaQuestWriter.Write(0x0059A7DA);
-                terrorpottaQuestWriter.Seek(0x26A8);
-                terrorpottaQuestWriter.Write(0x0059A7DA);
-            }
-
-            // Nate Fusion Quest
-            using (BinaryDataWriter nateFusionQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/shop/combine_config_0.03.43.cfg.bin")))
-            {
-                nateFusionQuestWriter.Seek(0x2A8);
-                nateFusionQuestWriter.Write(0xD59E7AE5);
-                nateFusionQuestWriter.Seek(0x2B0);
-                nateFusionQuestWriter.Write(0x948C1A34);
-                nateFusionQuestWriter.Seek(0x2B8);
-                nateFusionQuestWriter.Write(0xF0F52539);
-            }
-        }
-
-        public void FixYokai(List<Yokai> yokais)
-        {
-            if (yokais.Any(x => x.ParamID == 0xFDC725BF))
-            {
-                Yokai treetter = yokais.Find(x => x.ParamID == 0xFDC725BF);
-                treetter.Rank = 0x00;
-            }
-
-            if (yokais.Any(x => x.ParamID == 0x9DACFD94))
-            {
-                Yokai mudmunch = yokais.Find(x => x.ParamID == 0x9DACFD94);
-                if (mudmunch.Rank > 0x02)
-                {
-                    mudmunch.Rank = 0x02;
-                }
-            }            
-        }
-
-        public void ForceUltraFixStory()
-        {
-            // Yo-Net Nummskull
-            using (BinaryDataWriter nummskullAndWhyNaantQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104d07/t104d07.pck")))
-            {
-                nummskullAndWhyNaantQuestWriter.Seek(0x6B4);
-
-                for (int i = 0; i < 12; i++) {
-                    // Numskull
-                    nummskullAndWhyNaantQuestWriter.Skip(0x08);
-                    nummskullAndWhyNaantQuestWriter.Write(0xD8CADD7A);
-                    nummskullAndWhyNaantQuestWriter.Skip(0x1C);
-
-                    // Why Naant (1)
-                    nummskullAndWhyNaantQuestWriter.Skip(0x08);
-                    nummskullAndWhyNaantQuestWriter.Write(0x8A1714AE);
-                    nummskullAndWhyNaantQuestWriter.Skip(0x1C);
-                }
-            }
-
-            // Yo-Net Snippity Cricket
-            using (BinaryDataWriter cricketQuestWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104d01/t104d01.pck")))
-            {
-                cricketQuestWriter.Seek(0xE74);
-
-                for (int i = 0; i < 0x30; i++)
-                {
-                    cricketQuestWriter.Skip(0x08);
-                    cricketQuestWriter.Write(0x5E5EAFD4);
-                    cricketQuestWriter.Skip(0x1C);
-                }
-            }
-
-            // Yo-Net Why Naant (1)
-            using (BinaryDataWriter whyNaanttWriter = new BinaryDataWriter(Game.Directory.GetFileFromFullPath("/data/res/map/t104i10/t104i10.pck")))
-            {
-                whyNaanttWriter.Seek(0x85C);
-
-                for (int i = 0; i < 0x14; i++)
-                {
-                    whyNaanttWriter.Skip(0x08);
-                    whyNaanttWriter.Write(0x8A1714AE);
-                    whyNaanttWriter.Skip(0x1C);
-                }
-            }
+            Game.Directory.GetFolderFromFullPath("/data/res/battle").Files[lastEncounter].ByteContent = encountConfig.Save();
         }
     }
 }

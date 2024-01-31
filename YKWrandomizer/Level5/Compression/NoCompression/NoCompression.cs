@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace YKWrandomizer.Level5.Compression.NoCompression
 {

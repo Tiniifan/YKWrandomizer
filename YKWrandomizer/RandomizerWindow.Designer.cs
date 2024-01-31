@@ -35,23 +35,26 @@ namespace YKWrandomizer
             this.randomizeSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.yokaiTabControl = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.groupBoxWaitTime = new System.Windows.Forms.GroupBox();
-            this.radioButtonWaitTime3 = new System.Windows.Forms.RadioButton();
-            this.radioButtonWaitTime2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonWaitTime1 = new System.Windows.Forms.RadioButton();
-            this.groupBoxBaseStat = new System.Windows.Forms.GroupBox();
-            this.radioButtonBaseStat3 = new System.Windows.Forms.RadioButton();
-            this.radioButtonBaseStat2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonBaseStat1 = new System.Windows.Forms.RadioButton();
-            this.groupBoxDrop = new System.Windows.Forms.GroupBox();
-            this.radioButtonDrop2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonDrop1 = new System.Windows.Forms.RadioButton();
-            this.groupBoxRarity = new System.Windows.Forms.GroupBox();
-            this.radioButtonRarity3 = new System.Windows.Forms.RadioButton();
-            this.radioButtonRarity2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonRarity1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxBaseMiscellaneous = new System.Windows.Forms.GroupBox();
+            this.checkBoxSwapModel = new System.Windows.Forms.CheckBox();
+            this.groupBoxHatedFood = new System.Windows.Forms.GroupBox();
+            this.radioButtonHatedFood3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonHatedFood2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonHatedFood1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxFavFood = new System.Windows.Forms.GroupBox();
+            this.radioButtonFavFood3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonFavFood2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonFavFood1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxStatus = new System.Windows.Forms.GroupBox();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.groupBoxRole = new System.Windows.Forms.GroupBox();
+            this.radioButtonRole3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonRole2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonRole1 = new System.Windows.Forms.RadioButton();
             this.groupBoxRank = new System.Windows.Forms.GroupBox();
             this.radioButtonRank3 = new System.Windows.Forms.RadioButton();
             this.radioButtonRank2 = new System.Windows.Forms.RadioButton();
@@ -60,30 +63,11 @@ namespace YKWrandomizer
             this.radioButtonTribe3 = new System.Windows.Forms.RadioButton();
             this.radioButtonTribe2 = new System.Windows.Forms.RadioButton();
             this.radioButtonTribe1 = new System.Windows.Forms.RadioButton();
-            this.groupBoxExperience = new System.Windows.Forms.GroupBox();
-            this.radioButtonExperience2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonExperience1 = new System.Windows.Forms.RadioButton();
-            this.groupBoxStrongest = new System.Windows.Forms.GroupBox();
-            this.radioButtonStrongest3 = new System.Windows.Forms.RadioButton();
-            this.radioButtonStrongest2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonStrongest1 = new System.Windows.Forms.RadioButton();
-            this.groupBoxWeakness = new System.Windows.Forms.GroupBox();
-            this.radioButtonWeakness3 = new System.Windows.Forms.RadioButton();
-            this.radioButtonWeakness2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonWeakness1 = new System.Windows.Forms.RadioButton();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.groupBoxMiscellaneous = new System.Windows.Forms.GroupBox();
-            this.checkBoxYoCommunity = new System.Windows.Forms.CheckBox();
-            this.checkBoxScaleEXP = new System.Windows.Forms.CheckBox();
-            this.checkBoxScaleMoney = new System.Windows.Forms.CheckBox();
-            this.groupBoxAttack = new System.Windows.Forms.GroupBox();
-            this.radioButtonAttack3 = new System.Windows.Forms.RadioButton();
-            this.radioButtonAttack2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonAttack1 = new System.Windows.Forms.RadioButton();
-            this.groupBoxTechnique = new System.Windows.Forms.GroupBox();
-            this.radioButtonTechnique3 = new System.Windows.Forms.RadioButton();
-            this.radioButtonTechnique2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonTechnique1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxBaseStat = new System.Windows.Forms.GroupBox();
+            this.radioButtonBaseStat3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonBaseStat2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonBaseStat1 = new System.Windows.Forms.RadioButton();
             this.groupBoxFusion = new System.Windows.Forms.GroupBox();
             this.radioButtonFusion2 = new System.Windows.Forms.RadioButton();
             this.radioButtonFusion1 = new System.Windows.Forms.RadioButton();
@@ -94,18 +78,71 @@ namespace YKWrandomizer
             this.checkBoxCreateNewEvolution = new System.Windows.Forms.CheckBox();
             this.radioButtonEvolution2 = new System.Windows.Forms.RadioButton();
             this.radioButtonEvolution1 = new System.Windows.Forms.RadioButton();
-            this.groupBoxSkill = new System.Windows.Forms.GroupBox();
-            this.radioButtonSkill2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonSkill1 = new System.Windows.Forms.RadioButton();
-            this.groupBoxSoultimateMove = new System.Windows.Forms.GroupBox();
-            this.radioButtonSoultimateMove3 = new System.Windows.Forms.RadioButton();
-            this.radioButtonSoultimateMove2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonSoultimateMove1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxWeakness = new System.Windows.Forms.GroupBox();
+            this.radioButtonWeakness3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonWeakness2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonWeakness1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxStrongest = new System.Windows.Forms.GroupBox();
+            this.radioButtonStrongest3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonStrongest2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonStrongest1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxWaitTime = new System.Windows.Forms.GroupBox();
+            this.radioButtonWaitTime3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonWaitTime2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonWaitTime1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxDrop = new System.Windows.Forms.GroupBox();
+            this.radioButtonDrop2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonDrop1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxExperience = new System.Windows.Forms.GroupBox();
+            this.radioButtonExperience2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonExperience1 = new System.Windows.Forms.RadioButton();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.groupBoxMiscellaneous = new System.Windows.Forms.GroupBox();
+            this.checkBoxScaleEXP = new System.Windows.Forms.CheckBox();
+            this.checkBoxScaleMoney = new System.Windows.Forms.CheckBox();
+            this.groupBoxAttack = new System.Windows.Forms.GroupBox();
+            this.radioButtonAttack3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonAttack2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonAttack1 = new System.Windows.Forms.RadioButton();
             this.groupBoxInspirit = new System.Windows.Forms.GroupBox();
             this.radioButtonInspirit3 = new System.Windows.Forms.RadioButton();
             this.radioButtonInspirit2 = new System.Windows.Forms.RadioButton();
             this.radioButtonInspirit1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxSoultimateMove = new System.Windows.Forms.GroupBox();
+            this.radioButtonSoultimateMove3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonSoultimateMove2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonSoultimateMove1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxSkill = new System.Windows.Forms.GroupBox();
+            this.radioButtonSkill2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonSkill1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxTechnique = new System.Windows.Forms.GroupBox();
+            this.radioButtonTechnique3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonTechnique2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonTechnique1 = new System.Windows.Forms.RadioButton();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.groupBoxBlasterTA = new System.Windows.Forms.GroupBox();
+            this.radioButton13 = new System.Windows.Forms.RadioButton();
+            this.radioButton14 = new System.Windows.Forms.RadioButton();
+            this.radioButton15 = new System.Windows.Forms.RadioButton();
+            this.groupBoxBlasterTY = new System.Windows.Forms.GroupBox();
+            this.radioButton16 = new System.Windows.Forms.RadioButton();
+            this.radioButton17 = new System.Windows.Forms.RadioButton();
+            this.radioButton18 = new System.Windows.Forms.RadioButton();
+            this.groupBoxBlasterTSoultimate = new System.Windows.Forms.GroupBox();
+            this.radioButton19 = new System.Windows.Forms.RadioButton();
+            this.radioButton20 = new System.Windows.Forms.RadioButton();
+            this.radioButton21 = new System.Windows.Forms.RadioButton();
+            this.groupBoxBlasterTAbility = new System.Windows.Forms.GroupBox();
+            this.radioButton22 = new System.Windows.Forms.RadioButton();
+            this.radioButton23 = new System.Windows.Forms.RadioButton();
+            this.groupBoxBlasterTX = new System.Windows.Forms.GroupBox();
+            this.radioButton24 = new System.Windows.Forms.RadioButton();
+            this.radioButton25 = new System.Windows.Forms.RadioButton();
+            this.radioButton26 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBoxWildMiscellaneous = new System.Windows.Forms.GroupBox();
+            this.checkBoxStatScaling = new System.Windows.Forms.CheckBox();
+            this.checkBoxSwapBosses = new System.Windows.Forms.CheckBox();
             this.groupBoxBossBaseStat = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDownBossBaseStat = new System.Windows.Forms.NumericUpDown();
@@ -144,32 +181,43 @@ namespace YKWrandomizer
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
-            this.forceUltraFixStoryCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabControl2.SuspendLayout();
+            this.yokaiTabControl.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.groupBoxWaitTime.SuspendLayout();
-            this.groupBoxBaseStat.SuspendLayout();
-            this.groupBoxDrop.SuspendLayout();
-            this.groupBoxRarity.SuspendLayout();
+            this.groupBoxBaseMiscellaneous.SuspendLayout();
+            this.groupBoxHatedFood.SuspendLayout();
+            this.groupBoxFavFood.SuspendLayout();
+            this.groupBoxStatus.SuspendLayout();
+            this.groupBoxRole.SuspendLayout();
             this.groupBoxRank.SuspendLayout();
             this.groupBoxTribe.SuspendLayout();
-            this.groupBoxExperience.SuspendLayout();
-            this.groupBoxStrongest.SuspendLayout();
-            this.groupBoxWeakness.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            this.groupBoxMiscellaneous.SuspendLayout();
-            this.groupBoxAttack.SuspendLayout();
-            this.groupBoxTechnique.SuspendLayout();
+            this.groupBoxBaseStat.SuspendLayout();
             this.groupBoxFusion.SuspendLayout();
             this.groupBoxSoul.SuspendLayout();
             this.groupBoxEvolution.SuspendLayout();
-            this.groupBoxSkill.SuspendLayout();
-            this.groupBoxSoultimateMove.SuspendLayout();
+            this.groupBoxWeakness.SuspendLayout();
+            this.groupBoxStrongest.SuspendLayout();
+            this.groupBoxWaitTime.SuspendLayout();
+            this.groupBoxDrop.SuspendLayout();
+            this.groupBoxExperience.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            this.groupBoxMiscellaneous.SuspendLayout();
+            this.groupBoxAttack.SuspendLayout();
             this.groupBoxInspirit.SuspendLayout();
+            this.groupBoxSoultimateMove.SuspendLayout();
+            this.groupBoxSkill.SuspendLayout();
+            this.groupBoxTechnique.SuspendLayout();
+            this.tabPage7.SuspendLayout();
+            this.groupBoxBlasterTA.SuspendLayout();
+            this.groupBoxBlasterTY.SuspendLayout();
+            this.groupBoxBlasterTSoultimate.SuspendLayout();
+            this.groupBoxBlasterTAbility.SuspendLayout();
+            this.groupBoxBlasterTX.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBoxWildMiscellaneous.SuspendLayout();
             this.groupBoxBossBaseStat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBossBaseStat)).BeginInit();
             this.groupBoxStatic.SuspendLayout();
@@ -192,7 +240,7 @@ namespace YKWrandomizer
             this.randomizeSaveToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(643, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(642, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -220,228 +268,262 @@ namespace YKWrandomizer
             this.tabControl1.Location = new System.Drawing.Point(12, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(624, 450);
+            this.tabControl1.Size = new System.Drawing.Size(620, 449);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.tabControl2);
+            this.tabPage1.Controls.Add(this.yokaiTabControl);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(616, 424);
+            this.tabPage1.Size = new System.Drawing.Size(612, 423);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Yokai";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabControl2
+            // yokaiTabControl
             // 
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Location = new System.Drawing.Point(8, 6);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(602, 413);
-            this.tabControl2.TabIndex = 16;
+            this.yokaiTabControl.Controls.Add(this.tabPage4);
+            this.yokaiTabControl.Controls.Add(this.tabPage5);
+            this.yokaiTabControl.Controls.Add(this.tabPage6);
+            this.yokaiTabControl.Controls.Add(this.tabPage7);
+            this.yokaiTabControl.Location = new System.Drawing.Point(8, 6);
+            this.yokaiTabControl.Name = "yokaiTabControl";
+            this.yokaiTabControl.SelectedIndex = 0;
+            this.yokaiTabControl.Size = new System.Drawing.Size(601, 410);
+            this.yokaiTabControl.TabIndex = 16;
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.groupBoxWaitTime);
-            this.tabPage4.Controls.Add(this.groupBoxBaseStat);
-            this.tabPage4.Controls.Add(this.groupBoxDrop);
-            this.tabPage4.Controls.Add(this.groupBoxRarity);
+            this.tabPage4.Controls.Add(this.groupBoxBaseMiscellaneous);
+            this.tabPage4.Controls.Add(this.groupBoxHatedFood);
+            this.tabPage4.Controls.Add(this.groupBoxFavFood);
+            this.tabPage4.Controls.Add(this.groupBoxStatus);
+            this.tabPage4.Controls.Add(this.groupBoxRole);
             this.tabPage4.Controls.Add(this.groupBoxRank);
             this.tabPage4.Controls.Add(this.groupBoxTribe);
-            this.tabPage4.Controls.Add(this.groupBoxExperience);
-            this.tabPage4.Controls.Add(this.groupBoxStrongest);
-            this.tabPage4.Controls.Add(this.groupBoxWeakness);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(594, 387);
+            this.tabPage4.Size = new System.Drawing.Size(593, 384);
             this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "Traits (1)";
+            this.tabPage4.Text = "Base";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // groupBoxWaitTime
+            // groupBoxBaseMiscellaneous
             // 
-            this.groupBoxWaitTime.Controls.Add(this.radioButtonWaitTime3);
-            this.groupBoxWaitTime.Controls.Add(this.radioButtonWaitTime2);
-            this.groupBoxWaitTime.Controls.Add(this.radioButtonWaitTime1);
-            this.groupBoxWaitTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxWaitTime.Location = new System.Drawing.Point(398, 259);
-            this.groupBoxWaitTime.Name = "groupBoxWaitTime";
-            this.groupBoxWaitTime.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxWaitTime.TabIndex = 26;
-            this.groupBoxWaitTime.TabStop = false;
-            this.groupBoxWaitTime.Text = "Wait Time";
+            this.groupBoxBaseMiscellaneous.Controls.Add(this.checkBoxSwapModel);
+            this.groupBoxBaseMiscellaneous.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxBaseMiscellaneous.Location = new System.Drawing.Point(12, 259);
+            this.groupBoxBaseMiscellaneous.Name = "groupBoxBaseMiscellaneous";
+            this.groupBoxBaseMiscellaneous.Size = new System.Drawing.Size(573, 116);
+            this.groupBoxBaseMiscellaneous.TabIndex = 30;
+            this.groupBoxBaseMiscellaneous.TabStop = false;
+            this.groupBoxBaseMiscellaneous.Text = "Miscellaneous";
             // 
-            // radioButtonWaitTime3
+            // checkBoxSwapModel
             // 
-            this.radioButtonWaitTime3.AutoSize = true;
-            this.radioButtonWaitTime3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonWaitTime3.Location = new System.Drawing.Point(18, 73);
-            this.radioButtonWaitTime3.Name = "radioButtonWaitTime3";
-            this.radioButtonWaitTime3.Size = new System.Drawing.Size(124, 17);
-            this.radioButtonWaitTime3.TabIndex = 8;
-            this.radioButtonWaitTime3.Text = "Random (completely)";
-            this.radioButtonWaitTime3.UseVisualStyleBackColor = true;
+            this.checkBoxSwapModel.AutoSize = true;
+            this.checkBoxSwapModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxSwapModel.Location = new System.Drawing.Point(18, 28);
+            this.checkBoxSwapModel.Name = "checkBoxSwapModel";
+            this.checkBoxSwapModel.Size = new System.Drawing.Size(85, 17);
+            this.checkBoxSwapModel.TabIndex = 11;
+            this.checkBoxSwapModel.Text = "Swap Model";
+            this.checkBoxSwapModel.UseVisualStyleBackColor = true;
             // 
-            // radioButtonWaitTime2
+            // groupBoxHatedFood
             // 
-            this.radioButtonWaitTime2.AutoSize = true;
-            this.radioButtonWaitTime2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonWaitTime2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonWaitTime2.Name = "radioButtonWaitTime2";
-            this.radioButtonWaitTime2.Size = new System.Drawing.Size(152, 17);
-            this.radioButtonWaitTime2.TabIndex = 7;
-            this.radioButtonWaitTime2.Text = "Random (follow evolutions)";
-            this.radioButtonWaitTime2.UseVisualStyleBackColor = true;
+            this.groupBoxHatedFood.Controls.Add(this.radioButtonHatedFood3);
+            this.groupBoxHatedFood.Controls.Add(this.radioButtonHatedFood2);
+            this.groupBoxHatedFood.Controls.Add(this.radioButtonHatedFood1);
+            this.groupBoxHatedFood.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxHatedFood.Location = new System.Drawing.Point(398, 137);
+            this.groupBoxHatedFood.Name = "groupBoxHatedFood";
+            this.groupBoxHatedFood.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxHatedFood.TabIndex = 29;
+            this.groupBoxHatedFood.TabStop = false;
+            this.groupBoxHatedFood.Text = "Yokai Hated Food";
             // 
-            // radioButtonWaitTime1
+            // radioButtonHatedFood3
             // 
-            this.radioButtonWaitTime1.AutoSize = true;
-            this.radioButtonWaitTime1.Checked = true;
-            this.radioButtonWaitTime1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonWaitTime1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonWaitTime1.Name = "radioButtonWaitTime1";
-            this.radioButtonWaitTime1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonWaitTime1.TabIndex = 6;
-            this.radioButtonWaitTime1.TabStop = true;
-            this.radioButtonWaitTime1.Text = "Unchanged";
-            this.radioButtonWaitTime1.UseVisualStyleBackColor = true;
+            this.radioButtonHatedFood3.AutoSize = true;
+            this.radioButtonHatedFood3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonHatedFood3.Location = new System.Drawing.Point(18, 73);
+            this.radioButtonHatedFood3.Name = "radioButtonHatedFood3";
+            this.radioButtonHatedFood3.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonHatedFood3.TabIndex = 8;
+            this.radioButtonHatedFood3.Text = "Random (completely)";
+            this.radioButtonHatedFood3.UseVisualStyleBackColor = true;
             // 
-            // groupBoxBaseStat
+            // radioButtonHatedFood2
             // 
-            this.groupBoxBaseStat.Controls.Add(this.radioButtonBaseStat3);
-            this.groupBoxBaseStat.Controls.Add(this.radioButtonBaseStat2);
-            this.groupBoxBaseStat.Controls.Add(this.radioButtonBaseStat1);
-            this.groupBoxBaseStat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxBaseStat.Location = new System.Drawing.Point(398, 137);
-            this.groupBoxBaseStat.Name = "groupBoxBaseStat";
-            this.groupBoxBaseStat.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxBaseStat.TabIndex = 21;
-            this.groupBoxBaseStat.TabStop = false;
-            this.groupBoxBaseStat.Text = "Yokai Base Stat";
+            this.radioButtonHatedFood2.AutoSize = true;
+            this.radioButtonHatedFood2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonHatedFood2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonHatedFood2.Name = "radioButtonHatedFood2";
+            this.radioButtonHatedFood2.Size = new System.Drawing.Size(152, 17);
+            this.radioButtonHatedFood2.TabIndex = 7;
+            this.radioButtonHatedFood2.Text = "Random (follow evolutions)";
+            this.radioButtonHatedFood2.UseVisualStyleBackColor = true;
             // 
-            // radioButtonBaseStat3
+            // radioButtonHatedFood1
             // 
-            this.radioButtonBaseStat3.AutoSize = true;
-            this.radioButtonBaseStat3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonBaseStat3.Location = new System.Drawing.Point(18, 73);
-            this.radioButtonBaseStat3.Name = "radioButtonBaseStat3";
-            this.radioButtonBaseStat3.Size = new System.Drawing.Size(65, 17);
-            this.radioButtonBaseStat3.TabIndex = 2;
-            this.radioButtonBaseStat3.Text = "Random";
-            this.radioButtonBaseStat3.UseVisualStyleBackColor = true;
+            this.radioButtonHatedFood1.AutoSize = true;
+            this.radioButtonHatedFood1.Checked = true;
+            this.radioButtonHatedFood1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonHatedFood1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonHatedFood1.Name = "radioButtonHatedFood1";
+            this.radioButtonHatedFood1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonHatedFood1.TabIndex = 6;
+            this.radioButtonHatedFood1.TabStop = true;
+            this.radioButtonHatedFood1.Text = "Unchanged";
+            this.radioButtonHatedFood1.UseVisualStyleBackColor = true;
             // 
-            // radioButtonBaseStat2
+            // groupBoxFavFood
             // 
-            this.radioButtonBaseStat2.AutoSize = true;
-            this.radioButtonBaseStat2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonBaseStat2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonBaseStat2.Name = "radioButtonBaseStat2";
-            this.radioButtonBaseStat2.Size = new System.Drawing.Size(58, 17);
-            this.radioButtonBaseStat2.TabIndex = 1;
-            this.radioButtonBaseStat2.Text = "Shuffle";
-            this.radioButtonBaseStat2.UseVisualStyleBackColor = true;
+            this.groupBoxFavFood.Controls.Add(this.radioButtonFavFood3);
+            this.groupBoxFavFood.Controls.Add(this.radioButtonFavFood2);
+            this.groupBoxFavFood.Controls.Add(this.radioButtonFavFood1);
+            this.groupBoxFavFood.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxFavFood.Location = new System.Drawing.Point(205, 137);
+            this.groupBoxFavFood.Name = "groupBoxFavFood";
+            this.groupBoxFavFood.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxFavFood.TabIndex = 28;
+            this.groupBoxFavFood.TabStop = false;
+            this.groupBoxFavFood.Text = "Yokai Favorite Food";
             // 
-            // radioButtonBaseStat1
+            // radioButtonFavFood3
             // 
-            this.radioButtonBaseStat1.AutoSize = true;
-            this.radioButtonBaseStat1.Checked = true;
-            this.radioButtonBaseStat1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonBaseStat1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonBaseStat1.Name = "radioButtonBaseStat1";
-            this.radioButtonBaseStat1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonBaseStat1.TabIndex = 0;
-            this.radioButtonBaseStat1.TabStop = true;
-            this.radioButtonBaseStat1.Text = "Unchanged";
-            this.radioButtonBaseStat1.UseVisualStyleBackColor = true;
+            this.radioButtonFavFood3.AutoSize = true;
+            this.radioButtonFavFood3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonFavFood3.Location = new System.Drawing.Point(18, 73);
+            this.radioButtonFavFood3.Name = "radioButtonFavFood3";
+            this.radioButtonFavFood3.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonFavFood3.TabIndex = 8;
+            this.radioButtonFavFood3.Text = "Random (completely)";
+            this.radioButtonFavFood3.UseVisualStyleBackColor = true;
             // 
-            // groupBoxDrop
+            // radioButtonFavFood2
             // 
-            this.groupBoxDrop.Controls.Add(this.radioButtonDrop2);
-            this.groupBoxDrop.Controls.Add(this.radioButtonDrop1);
-            this.groupBoxDrop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxDrop.Location = new System.Drawing.Point(12, 259);
-            this.groupBoxDrop.Name = "groupBoxDrop";
-            this.groupBoxDrop.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxDrop.TabIndex = 20;
-            this.groupBoxDrop.TabStop = false;
-            this.groupBoxDrop.Text = "Yokai Drop";
+            this.radioButtonFavFood2.AutoSize = true;
+            this.radioButtonFavFood2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonFavFood2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonFavFood2.Name = "radioButtonFavFood2";
+            this.radioButtonFavFood2.Size = new System.Drawing.Size(152, 17);
+            this.radioButtonFavFood2.TabIndex = 7;
+            this.radioButtonFavFood2.Text = "Random (follow evolutions)";
+            this.radioButtonFavFood2.UseVisualStyleBackColor = true;
             // 
-            // radioButtonDrop2
+            // radioButtonFavFood1
             // 
-            this.radioButtonDrop2.AutoSize = true;
-            this.radioButtonDrop2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonDrop2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonDrop2.Name = "radioButtonDrop2";
-            this.radioButtonDrop2.Size = new System.Drawing.Size(124, 17);
-            this.radioButtonDrop2.TabIndex = 7;
-            this.radioButtonDrop2.Text = "Random (completely)";
-            this.radioButtonDrop2.UseVisualStyleBackColor = true;
+            this.radioButtonFavFood1.AutoSize = true;
+            this.radioButtonFavFood1.Checked = true;
+            this.radioButtonFavFood1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonFavFood1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonFavFood1.Name = "radioButtonFavFood1";
+            this.radioButtonFavFood1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonFavFood1.TabIndex = 6;
+            this.radioButtonFavFood1.TabStop = true;
+            this.radioButtonFavFood1.Text = "Unchanged";
+            this.radioButtonFavFood1.UseVisualStyleBackColor = true;
             // 
-            // radioButtonDrop1
+            // groupBoxStatus
             // 
-            this.radioButtonDrop1.AutoSize = true;
-            this.radioButtonDrop1.Checked = true;
-            this.radioButtonDrop1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonDrop1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonDrop1.Name = "radioButtonDrop1";
-            this.radioButtonDrop1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonDrop1.TabIndex = 6;
-            this.radioButtonDrop1.TabStop = true;
-            this.radioButtonDrop1.Text = "Unchanged";
-            this.radioButtonDrop1.UseVisualStyleBackColor = true;
+            this.groupBoxStatus.Controls.Add(this.radioButton4);
+            this.groupBoxStatus.Controls.Add(this.radioButton5);
+            this.groupBoxStatus.Controls.Add(this.radioButton6);
+            this.groupBoxStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxStatus.Location = new System.Drawing.Point(12, 137);
+            this.groupBoxStatus.Name = "groupBoxStatus";
+            this.groupBoxStatus.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxStatus.TabIndex = 27;
+            this.groupBoxStatus.TabStop = false;
+            this.groupBoxStatus.Text = "Yokai Status";
             // 
-            // groupBoxRarity
+            // radioButton4
             // 
-            this.groupBoxRarity.Controls.Add(this.radioButtonRarity3);
-            this.groupBoxRarity.Controls.Add(this.radioButtonRarity2);
-            this.groupBoxRarity.Controls.Add(this.radioButtonRarity1);
-            this.groupBoxRarity.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxRarity.Location = new System.Drawing.Point(398, 15);
-            this.groupBoxRarity.Name = "groupBoxRarity";
-            this.groupBoxRarity.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxRarity.TabIndex = 19;
-            this.groupBoxRarity.TabStop = false;
-            this.groupBoxRarity.Text = "Yokai Rarity";
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton4.Location = new System.Drawing.Point(18, 73);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(124, 17);
+            this.radioButton4.TabIndex = 8;
+            this.radioButton4.Text = "Random (completely)";
+            this.radioButton4.UseVisualStyleBackColor = true;
             // 
-            // radioButtonRarity3
+            // radioButton5
             // 
-            this.radioButtonRarity3.AutoSize = true;
-            this.radioButtonRarity3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonRarity3.Location = new System.Drawing.Point(18, 73);
-            this.radioButtonRarity3.Name = "radioButtonRarity3";
-            this.radioButtonRarity3.Size = new System.Drawing.Size(124, 17);
-            this.radioButtonRarity3.TabIndex = 8;
-            this.radioButtonRarity3.Text = "Random (completely)";
-            this.radioButtonRarity3.UseVisualStyleBackColor = true;
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton5.Location = new System.Drawing.Point(18, 50);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(152, 17);
+            this.radioButton5.TabIndex = 7;
+            this.radioButton5.Text = "Random (follow evolutions)";
+            this.radioButton5.UseVisualStyleBackColor = true;
             // 
-            // radioButtonRarity2
+            // radioButton6
             // 
-            this.radioButtonRarity2.AutoSize = true;
-            this.radioButtonRarity2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonRarity2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonRarity2.Name = "radioButtonRarity2";
-            this.radioButtonRarity2.Size = new System.Drawing.Size(152, 17);
-            this.radioButtonRarity2.TabIndex = 7;
-            this.radioButtonRarity2.Text = "Random (follow evolutions)";
-            this.radioButtonRarity2.UseVisualStyleBackColor = true;
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Checked = true;
+            this.radioButton6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton6.Location = new System.Drawing.Point(18, 27);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(81, 17);
+            this.radioButton6.TabIndex = 6;
+            this.radioButton6.TabStop = true;
+            this.radioButton6.Text = "Unchanged";
+            this.radioButton6.UseVisualStyleBackColor = true;
             // 
-            // radioButtonRarity1
+            // groupBoxRole
             // 
-            this.radioButtonRarity1.AutoSize = true;
-            this.radioButtonRarity1.Checked = true;
-            this.radioButtonRarity1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonRarity1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonRarity1.Name = "radioButtonRarity1";
-            this.radioButtonRarity1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonRarity1.TabIndex = 6;
-            this.radioButtonRarity1.TabStop = true;
-            this.radioButtonRarity1.Text = "Unchanged";
-            this.radioButtonRarity1.UseVisualStyleBackColor = true;
+            this.groupBoxRole.Controls.Add(this.radioButtonRole3);
+            this.groupBoxRole.Controls.Add(this.radioButtonRole2);
+            this.groupBoxRole.Controls.Add(this.radioButtonRole1);
+            this.groupBoxRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxRole.Location = new System.Drawing.Point(398, 15);
+            this.groupBoxRole.Name = "groupBoxRole";
+            this.groupBoxRole.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxRole.TabIndex = 20;
+            this.groupBoxRole.TabStop = false;
+            this.groupBoxRole.Text = "Yokai Role";
+            // 
+            // radioButtonRole3
+            // 
+            this.radioButtonRole3.AutoSize = true;
+            this.radioButtonRole3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonRole3.Location = new System.Drawing.Point(18, 73);
+            this.radioButtonRole3.Name = "radioButtonRole3";
+            this.radioButtonRole3.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonRole3.TabIndex = 8;
+            this.radioButtonRole3.Text = "Random (completely)";
+            this.radioButtonRole3.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonRole2
+            // 
+            this.radioButtonRole2.AutoSize = true;
+            this.radioButtonRole2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonRole2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonRole2.Name = "radioButtonRole2";
+            this.radioButtonRole2.Size = new System.Drawing.Size(152, 17);
+            this.radioButtonRole2.TabIndex = 7;
+            this.radioButtonRole2.Text = "Random (follow evolutions)";
+            this.radioButtonRole2.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonRole1
+            // 
+            this.radioButtonRole1.AutoSize = true;
+            this.radioButtonRole1.Checked = true;
+            this.radioButtonRole1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonRole1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonRole1.Name = "radioButtonRole1";
+            this.radioButtonRole1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonRole1.TabIndex = 6;
+            this.radioButtonRole1.TabStop = true;
+            this.radioButtonRole1.Text = "Unchanged";
+            this.radioButtonRole1.UseVisualStyleBackColor = true;
             // 
             // groupBoxRank
             // 
@@ -539,298 +621,72 @@ namespace YKWrandomizer
             this.radioButtonTribe1.Text = "Unchanged";
             this.radioButtonTribe1.UseVisualStyleBackColor = true;
             // 
-            // groupBoxExperience
-            // 
-            this.groupBoxExperience.Controls.Add(this.radioButtonExperience2);
-            this.groupBoxExperience.Controls.Add(this.radioButtonExperience1);
-            this.groupBoxExperience.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxExperience.Location = new System.Drawing.Point(205, 259);
-            this.groupBoxExperience.Name = "groupBoxExperience";
-            this.groupBoxExperience.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxExperience.TabIndex = 13;
-            this.groupBoxExperience.TabStop = false;
-            this.groupBoxExperience.Text = "Experience Curve";
-            // 
-            // radioButtonExperience2
-            // 
-            this.radioButtonExperience2.AutoSize = true;
-            this.radioButtonExperience2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonExperience2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonExperience2.Name = "radioButtonExperience2";
-            this.radioButtonExperience2.Size = new System.Drawing.Size(124, 17);
-            this.radioButtonExperience2.TabIndex = 7;
-            this.radioButtonExperience2.Text = "Random (completely)";
-            this.radioButtonExperience2.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonExperience1
-            // 
-            this.radioButtonExperience1.AutoSize = true;
-            this.radioButtonExperience1.Checked = true;
-            this.radioButtonExperience1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonExperience1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonExperience1.Name = "radioButtonExperience1";
-            this.radioButtonExperience1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonExperience1.TabIndex = 6;
-            this.radioButtonExperience1.TabStop = true;
-            this.radioButtonExperience1.Text = "Unchanged";
-            this.radioButtonExperience1.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxStrongest
-            // 
-            this.groupBoxStrongest.Controls.Add(this.radioButtonStrongest3);
-            this.groupBoxStrongest.Controls.Add(this.radioButtonStrongest2);
-            this.groupBoxStrongest.Controls.Add(this.radioButtonStrongest1);
-            this.groupBoxStrongest.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxStrongest.Location = new System.Drawing.Point(12, 137);
-            this.groupBoxStrongest.Name = "groupBoxStrongest";
-            this.groupBoxStrongest.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxStrongest.TabIndex = 14;
-            this.groupBoxStrongest.TabStop = false;
-            this.groupBoxStrongest.Text = "Strongest";
-            // 
-            // radioButtonStrongest3
-            // 
-            this.radioButtonStrongest3.AutoSize = true;
-            this.radioButtonStrongest3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonStrongest3.Location = new System.Drawing.Point(18, 73);
-            this.radioButtonStrongest3.Name = "radioButtonStrongest3";
-            this.radioButtonStrongest3.Size = new System.Drawing.Size(124, 17);
-            this.radioButtonStrongest3.TabIndex = 8;
-            this.radioButtonStrongest3.Text = "Random (completely)";
-            this.radioButtonStrongest3.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonStrongest2
-            // 
-            this.radioButtonStrongest2.AutoSize = true;
-            this.radioButtonStrongest2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonStrongest2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonStrongest2.Name = "radioButtonStrongest2";
-            this.radioButtonStrongest2.Size = new System.Drawing.Size(152, 17);
-            this.radioButtonStrongest2.TabIndex = 7;
-            this.radioButtonStrongest2.Text = "Random (follow evolutions)";
-            this.radioButtonStrongest2.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonStrongest1
-            // 
-            this.radioButtonStrongest1.AutoSize = true;
-            this.radioButtonStrongest1.Checked = true;
-            this.radioButtonStrongest1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonStrongest1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonStrongest1.Name = "radioButtonStrongest1";
-            this.radioButtonStrongest1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonStrongest1.TabIndex = 6;
-            this.radioButtonStrongest1.TabStop = true;
-            this.radioButtonStrongest1.Text = "Unchanged";
-            this.radioButtonStrongest1.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxWeakness
-            // 
-            this.groupBoxWeakness.Controls.Add(this.radioButtonWeakness3);
-            this.groupBoxWeakness.Controls.Add(this.radioButtonWeakness2);
-            this.groupBoxWeakness.Controls.Add(this.radioButtonWeakness1);
-            this.groupBoxWeakness.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxWeakness.Location = new System.Drawing.Point(205, 137);
-            this.groupBoxWeakness.Name = "groupBoxWeakness";
-            this.groupBoxWeakness.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxWeakness.TabIndex = 15;
-            this.groupBoxWeakness.TabStop = false;
-            this.groupBoxWeakness.Text = "Weakness";
-            // 
-            // radioButtonWeakness3
-            // 
-            this.radioButtonWeakness3.AutoSize = true;
-            this.radioButtonWeakness3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonWeakness3.Location = new System.Drawing.Point(18, 73);
-            this.radioButtonWeakness3.Name = "radioButtonWeakness3";
-            this.radioButtonWeakness3.Size = new System.Drawing.Size(124, 17);
-            this.radioButtonWeakness3.TabIndex = 8;
-            this.radioButtonWeakness3.Text = "Random (completely)";
-            this.radioButtonWeakness3.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonWeakness2
-            // 
-            this.radioButtonWeakness2.AutoSize = true;
-            this.radioButtonWeakness2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonWeakness2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonWeakness2.Name = "radioButtonWeakness2";
-            this.radioButtonWeakness2.Size = new System.Drawing.Size(152, 17);
-            this.radioButtonWeakness2.TabIndex = 7;
-            this.radioButtonWeakness2.Text = "Random (follow evolutions)";
-            this.radioButtonWeakness2.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonWeakness1
-            // 
-            this.radioButtonWeakness1.AutoSize = true;
-            this.radioButtonWeakness1.Checked = true;
-            this.radioButtonWeakness1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonWeakness1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonWeakness1.Name = "radioButtonWeakness1";
-            this.radioButtonWeakness1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonWeakness1.TabIndex = 6;
-            this.radioButtonWeakness1.TabStop = true;
-            this.radioButtonWeakness1.Text = "Unchanged";
-            this.radioButtonWeakness1.UseVisualStyleBackColor = true;
-            // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.groupBoxMiscellaneous);
-            this.tabPage5.Controls.Add(this.groupBoxAttack);
-            this.tabPage5.Controls.Add(this.groupBoxTechnique);
+            this.tabPage5.Controls.Add(this.groupBoxBaseStat);
             this.tabPage5.Controls.Add(this.groupBoxFusion);
             this.tabPage5.Controls.Add(this.groupBoxSoul);
             this.tabPage5.Controls.Add(this.groupBoxEvolution);
-            this.tabPage5.Controls.Add(this.groupBoxSkill);
-            this.tabPage5.Controls.Add(this.groupBoxSoultimateMove);
-            this.tabPage5.Controls.Add(this.groupBoxInspirit);
+            this.tabPage5.Controls.Add(this.groupBoxWeakness);
+            this.tabPage5.Controls.Add(this.groupBoxStrongest);
+            this.tabPage5.Controls.Add(this.groupBoxWaitTime);
+            this.tabPage5.Controls.Add(this.groupBoxDrop);
+            this.tabPage5.Controls.Add(this.groupBoxExperience);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(594, 387);
+            this.tabPage5.Size = new System.Drawing.Size(593, 384);
             this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "Traits (2)";
+            this.tabPage5.Text = "Param (1)";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // groupBoxMiscellaneous
+            // groupBoxBaseStat
             // 
-            this.groupBoxMiscellaneous.Controls.Add(this.checkBoxYoCommunity);
-            this.groupBoxMiscellaneous.Controls.Add(this.checkBoxScaleEXP);
-            this.groupBoxMiscellaneous.Controls.Add(this.checkBoxScaleMoney);
-            this.groupBoxMiscellaneous.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxMiscellaneous.Location = new System.Drawing.Point(398, 259);
-            this.groupBoxMiscellaneous.Name = "groupBoxMiscellaneous";
-            this.groupBoxMiscellaneous.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxMiscellaneous.TabIndex = 35;
-            this.groupBoxMiscellaneous.TabStop = false;
-            this.groupBoxMiscellaneous.Text = "Miscellaneous";
+            this.groupBoxBaseStat.Controls.Add(this.radioButtonBaseStat3);
+            this.groupBoxBaseStat.Controls.Add(this.radioButtonBaseStat2);
+            this.groupBoxBaseStat.Controls.Add(this.radioButtonBaseStat1);
+            this.groupBoxBaseStat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxBaseStat.Location = new System.Drawing.Point(398, 137);
+            this.groupBoxBaseStat.Name = "groupBoxBaseStat";
+            this.groupBoxBaseStat.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxBaseStat.TabIndex = 21;
+            this.groupBoxBaseStat.TabStop = false;
+            this.groupBoxBaseStat.Text = "Yokai Base Stat";
             // 
-            // checkBoxYoCommunity
+            // radioButtonBaseStat3
             // 
-            this.checkBoxYoCommunity.AutoSize = true;
-            this.checkBoxYoCommunity.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxYoCommunity.Location = new System.Drawing.Point(23, 76);
-            this.checkBoxYoCommunity.Name = "checkBoxYoCommunity";
-            this.checkBoxYoCommunity.Size = new System.Drawing.Size(149, 17);
-            this.checkBoxYoCommunity.TabIndex = 18;
-            this.checkBoxYoCommunity.Text = "Randomize Yo-Community";
-            this.checkBoxYoCommunity.UseVisualStyleBackColor = true;
+            this.radioButtonBaseStat3.AutoSize = true;
+            this.radioButtonBaseStat3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonBaseStat3.Location = new System.Drawing.Point(18, 73);
+            this.radioButtonBaseStat3.Name = "radioButtonBaseStat3";
+            this.radioButtonBaseStat3.Size = new System.Drawing.Size(65, 17);
+            this.radioButtonBaseStat3.TabIndex = 2;
+            this.radioButtonBaseStat3.Text = "Random";
+            this.radioButtonBaseStat3.UseVisualStyleBackColor = true;
             // 
-            // checkBoxScaleEXP
+            // radioButtonBaseStat2
             // 
-            this.checkBoxScaleEXP.AutoSize = true;
-            this.checkBoxScaleEXP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxScaleEXP.Location = new System.Drawing.Point(23, 53);
-            this.checkBoxScaleEXP.Name = "checkBoxScaleEXP";
-            this.checkBoxScaleEXP.Size = new System.Drawing.Size(109, 17);
-            this.checkBoxScaleEXP.TabIndex = 17;
-            this.checkBoxScaleEXP.Text = "Scale Experience";
-            this.checkBoxScaleEXP.UseVisualStyleBackColor = true;
+            this.radioButtonBaseStat2.AutoSize = true;
+            this.radioButtonBaseStat2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonBaseStat2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonBaseStat2.Name = "radioButtonBaseStat2";
+            this.radioButtonBaseStat2.Size = new System.Drawing.Size(58, 17);
+            this.radioButtonBaseStat2.TabIndex = 1;
+            this.radioButtonBaseStat2.Text = "Shuffle";
+            this.radioButtonBaseStat2.UseVisualStyleBackColor = true;
             // 
-            // checkBoxScaleMoney
+            // radioButtonBaseStat1
             // 
-            this.checkBoxScaleMoney.AutoSize = true;
-            this.checkBoxScaleMoney.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxScaleMoney.Location = new System.Drawing.Point(23, 30);
-            this.checkBoxScaleMoney.Name = "checkBoxScaleMoney";
-            this.checkBoxScaleMoney.Size = new System.Drawing.Size(88, 17);
-            this.checkBoxScaleMoney.TabIndex = 10;
-            this.checkBoxScaleMoney.Text = "Scale Money";
-            this.checkBoxScaleMoney.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxAttack
-            // 
-            this.groupBoxAttack.Controls.Add(this.radioButtonAttack3);
-            this.groupBoxAttack.Controls.Add(this.radioButtonAttack2);
-            this.groupBoxAttack.Controls.Add(this.radioButtonAttack1);
-            this.groupBoxAttack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxAttack.Location = new System.Drawing.Point(12, 137);
-            this.groupBoxAttack.Name = "groupBoxAttack";
-            this.groupBoxAttack.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxAttack.TabIndex = 32;
-            this.groupBoxAttack.TabStop = false;
-            this.groupBoxAttack.Text = "Yokai Attack";
-            // 
-            // radioButtonAttack3
-            // 
-            this.radioButtonAttack3.AutoSize = true;
-            this.radioButtonAttack3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonAttack3.Location = new System.Drawing.Point(18, 73);
-            this.radioButtonAttack3.Name = "radioButtonAttack3";
-            this.radioButtonAttack3.Size = new System.Drawing.Size(124, 17);
-            this.radioButtonAttack3.TabIndex = 8;
-            this.radioButtonAttack3.Text = "Random (completely)";
-            this.radioButtonAttack3.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonAttack2
-            // 
-            this.radioButtonAttack2.AutoSize = true;
-            this.radioButtonAttack2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonAttack2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonAttack2.Name = "radioButtonAttack2";
-            this.radioButtonAttack2.Size = new System.Drawing.Size(152, 17);
-            this.radioButtonAttack2.TabIndex = 7;
-            this.radioButtonAttack2.Text = "Random (follow evolutions)";
-            this.radioButtonAttack2.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonAttack1
-            // 
-            this.radioButtonAttack1.AutoSize = true;
-            this.radioButtonAttack1.Checked = true;
-            this.radioButtonAttack1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonAttack1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonAttack1.Name = "radioButtonAttack1";
-            this.radioButtonAttack1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonAttack1.TabIndex = 6;
-            this.radioButtonAttack1.TabStop = true;
-            this.radioButtonAttack1.Text = "Unchanged";
-            this.radioButtonAttack1.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxTechnique
-            // 
-            this.groupBoxTechnique.Controls.Add(this.radioButtonTechnique3);
-            this.groupBoxTechnique.Controls.Add(this.radioButtonTechnique2);
-            this.groupBoxTechnique.Controls.Add(this.radioButtonTechnique1);
-            this.groupBoxTechnique.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxTechnique.Location = new System.Drawing.Point(205, 137);
-            this.groupBoxTechnique.Name = "groupBoxTechnique";
-            this.groupBoxTechnique.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxTechnique.TabIndex = 33;
-            this.groupBoxTechnique.TabStop = false;
-            this.groupBoxTechnique.Text = "Yokai Technique";
-            // 
-            // radioButtonTechnique3
-            // 
-            this.radioButtonTechnique3.AutoSize = true;
-            this.radioButtonTechnique3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonTechnique3.Location = new System.Drawing.Point(18, 73);
-            this.radioButtonTechnique3.Name = "radioButtonTechnique3";
-            this.radioButtonTechnique3.Size = new System.Drawing.Size(124, 17);
-            this.radioButtonTechnique3.TabIndex = 8;
-            this.radioButtonTechnique3.Text = "Random (completely)";
-            this.radioButtonTechnique3.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonTechnique2
-            // 
-            this.radioButtonTechnique2.AutoSize = true;
-            this.radioButtonTechnique2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonTechnique2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonTechnique2.Name = "radioButtonTechnique2";
-            this.radioButtonTechnique2.Size = new System.Drawing.Size(152, 17);
-            this.radioButtonTechnique2.TabIndex = 7;
-            this.radioButtonTechnique2.Text = "Random (follow evolutions)";
-            this.radioButtonTechnique2.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonTechnique1
-            // 
-            this.radioButtonTechnique1.AutoSize = true;
-            this.radioButtonTechnique1.Checked = true;
-            this.radioButtonTechnique1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonTechnique1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonTechnique1.Name = "radioButtonTechnique1";
-            this.radioButtonTechnique1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonTechnique1.TabIndex = 6;
-            this.radioButtonTechnique1.TabStop = true;
-            this.radioButtonTechnique1.Text = "Unchanged";
-            this.radioButtonTechnique1.UseVisualStyleBackColor = true;
+            this.radioButtonBaseStat1.AutoSize = true;
+            this.radioButtonBaseStat1.Checked = true;
+            this.radioButtonBaseStat1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonBaseStat1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonBaseStat1.Name = "radioButtonBaseStat1";
+            this.radioButtonBaseStat1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonBaseStat1.TabIndex = 0;
+            this.radioButtonBaseStat1.TabStop = true;
+            this.radioButtonBaseStat1.Text = "Unchanged";
+            this.radioButtonBaseStat1.UseVisualStyleBackColor = true;
             // 
             // groupBoxFusion
             // 
@@ -922,7 +778,7 @@ namespace YKWrandomizer
             this.checkBoxCreateNewEvolution.AutoSize = true;
             this.checkBoxCreateNewEvolution.Enabled = false;
             this.checkBoxCreateNewEvolution.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxCreateNewEvolution.Location = new System.Drawing.Point(98, 50);
+            this.checkBoxCreateNewEvolution.Location = new System.Drawing.Point(98, 28);
             this.checkBoxCreateNewEvolution.Name = "checkBoxCreateNewEvolution";
             this.checkBoxCreateNewEvolution.Size = new System.Drawing.Size(89, 17);
             this.checkBoxCreateNewEvolution.TabIndex = 11;
@@ -954,89 +810,319 @@ namespace YKWrandomizer
             this.radioButtonEvolution1.Text = "Unchanged";
             this.radioButtonEvolution1.UseVisualStyleBackColor = true;
             // 
-            // groupBoxSkill
+            // groupBoxWeakness
             // 
-            this.groupBoxSkill.Controls.Add(this.radioButtonSkill2);
-            this.groupBoxSkill.Controls.Add(this.radioButtonSkill1);
-            this.groupBoxSkill.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxSkill.Location = new System.Drawing.Point(205, 259);
-            this.groupBoxSkill.Name = "groupBoxSkill";
-            this.groupBoxSkill.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxSkill.TabIndex = 10;
-            this.groupBoxSkill.TabStop = false;
-            this.groupBoxSkill.Text = "Yokai Skill";
+            this.groupBoxWeakness.Controls.Add(this.radioButtonWeakness3);
+            this.groupBoxWeakness.Controls.Add(this.radioButtonWeakness2);
+            this.groupBoxWeakness.Controls.Add(this.radioButtonWeakness1);
+            this.groupBoxWeakness.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxWeakness.Location = new System.Drawing.Point(205, 137);
+            this.groupBoxWeakness.Name = "groupBoxWeakness";
+            this.groupBoxWeakness.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxWeakness.TabIndex = 15;
+            this.groupBoxWeakness.TabStop = false;
+            this.groupBoxWeakness.Text = "Weakness";
             // 
-            // radioButtonSkill2
+            // radioButtonWeakness3
             // 
-            this.radioButtonSkill2.AutoSize = true;
-            this.radioButtonSkill2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonSkill2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonSkill2.Name = "radioButtonSkill2";
-            this.radioButtonSkill2.Size = new System.Drawing.Size(124, 17);
-            this.radioButtonSkill2.TabIndex = 7;
-            this.radioButtonSkill2.Text = "Random (completely)";
-            this.radioButtonSkill2.UseVisualStyleBackColor = true;
+            this.radioButtonWeakness3.AutoSize = true;
+            this.radioButtonWeakness3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonWeakness3.Location = new System.Drawing.Point(18, 73);
+            this.radioButtonWeakness3.Name = "radioButtonWeakness3";
+            this.radioButtonWeakness3.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonWeakness3.TabIndex = 8;
+            this.radioButtonWeakness3.Text = "Random (completely)";
+            this.radioButtonWeakness3.UseVisualStyleBackColor = true;
             // 
-            // radioButtonSkill1
+            // radioButtonWeakness2
             // 
-            this.radioButtonSkill1.AutoSize = true;
-            this.radioButtonSkill1.Checked = true;
-            this.radioButtonSkill1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonSkill1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonSkill1.Name = "radioButtonSkill1";
-            this.radioButtonSkill1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonSkill1.TabIndex = 6;
-            this.radioButtonSkill1.TabStop = true;
-            this.radioButtonSkill1.Text = "Unchanged";
-            this.radioButtonSkill1.UseVisualStyleBackColor = true;
+            this.radioButtonWeakness2.AutoSize = true;
+            this.radioButtonWeakness2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonWeakness2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonWeakness2.Name = "radioButtonWeakness2";
+            this.radioButtonWeakness2.Size = new System.Drawing.Size(152, 17);
+            this.radioButtonWeakness2.TabIndex = 7;
+            this.radioButtonWeakness2.Text = "Random (follow evolutions)";
+            this.radioButtonWeakness2.UseVisualStyleBackColor = true;
             // 
-            // groupBoxSoultimateMove
+            // radioButtonWeakness1
             // 
-            this.groupBoxSoultimateMove.Controls.Add(this.radioButtonSoultimateMove3);
-            this.groupBoxSoultimateMove.Controls.Add(this.radioButtonSoultimateMove2);
-            this.groupBoxSoultimateMove.Controls.Add(this.radioButtonSoultimateMove1);
-            this.groupBoxSoultimateMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxSoultimateMove.Location = new System.Drawing.Point(12, 259);
-            this.groupBoxSoultimateMove.Name = "groupBoxSoultimateMove";
-            this.groupBoxSoultimateMove.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxSoultimateMove.TabIndex = 14;
-            this.groupBoxSoultimateMove.TabStop = false;
-            this.groupBoxSoultimateMove.Text = "Yokai Soultimate Move";
+            this.radioButtonWeakness1.AutoSize = true;
+            this.radioButtonWeakness1.Checked = true;
+            this.radioButtonWeakness1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonWeakness1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonWeakness1.Name = "radioButtonWeakness1";
+            this.radioButtonWeakness1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonWeakness1.TabIndex = 6;
+            this.radioButtonWeakness1.TabStop = true;
+            this.radioButtonWeakness1.Text = "Unchanged";
+            this.radioButtonWeakness1.UseVisualStyleBackColor = true;
             // 
-            // radioButtonSoultimateMove3
+            // groupBoxStrongest
             // 
-            this.radioButtonSoultimateMove3.AutoSize = true;
-            this.radioButtonSoultimateMove3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonSoultimateMove3.Location = new System.Drawing.Point(18, 73);
-            this.radioButtonSoultimateMove3.Name = "radioButtonSoultimateMove3";
-            this.radioButtonSoultimateMove3.Size = new System.Drawing.Size(124, 17);
-            this.radioButtonSoultimateMove3.TabIndex = 8;
-            this.radioButtonSoultimateMove3.Text = "Random (completely)";
-            this.radioButtonSoultimateMove3.UseVisualStyleBackColor = true;
+            this.groupBoxStrongest.Controls.Add(this.radioButtonStrongest3);
+            this.groupBoxStrongest.Controls.Add(this.radioButtonStrongest2);
+            this.groupBoxStrongest.Controls.Add(this.radioButtonStrongest1);
+            this.groupBoxStrongest.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxStrongest.Location = new System.Drawing.Point(12, 137);
+            this.groupBoxStrongest.Name = "groupBoxStrongest";
+            this.groupBoxStrongest.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxStrongest.TabIndex = 14;
+            this.groupBoxStrongest.TabStop = false;
+            this.groupBoxStrongest.Text = "Resistance";
             // 
-            // radioButtonSoultimateMove2
+            // radioButtonStrongest3
             // 
-            this.radioButtonSoultimateMove2.AutoSize = true;
-            this.radioButtonSoultimateMove2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonSoultimateMove2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonSoultimateMove2.Name = "radioButtonSoultimateMove2";
-            this.radioButtonSoultimateMove2.Size = new System.Drawing.Size(152, 17);
-            this.radioButtonSoultimateMove2.TabIndex = 7;
-            this.radioButtonSoultimateMove2.Text = "Random (follow evolutions)";
-            this.radioButtonSoultimateMove2.UseVisualStyleBackColor = true;
+            this.radioButtonStrongest3.AutoSize = true;
+            this.radioButtonStrongest3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonStrongest3.Location = new System.Drawing.Point(18, 73);
+            this.radioButtonStrongest3.Name = "radioButtonStrongest3";
+            this.radioButtonStrongest3.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonStrongest3.TabIndex = 8;
+            this.radioButtonStrongest3.Text = "Random (completely)";
+            this.radioButtonStrongest3.UseVisualStyleBackColor = true;
             // 
-            // radioButtonSoultimateMove1
+            // radioButtonStrongest2
             // 
-            this.radioButtonSoultimateMove1.AutoSize = true;
-            this.radioButtonSoultimateMove1.Checked = true;
-            this.radioButtonSoultimateMove1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonSoultimateMove1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonSoultimateMove1.Name = "radioButtonSoultimateMove1";
-            this.radioButtonSoultimateMove1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonSoultimateMove1.TabIndex = 6;
-            this.radioButtonSoultimateMove1.TabStop = true;
-            this.radioButtonSoultimateMove1.Text = "Unchanged";
-            this.radioButtonSoultimateMove1.UseVisualStyleBackColor = true;
+            this.radioButtonStrongest2.AutoSize = true;
+            this.radioButtonStrongest2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonStrongest2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonStrongest2.Name = "radioButtonStrongest2";
+            this.radioButtonStrongest2.Size = new System.Drawing.Size(152, 17);
+            this.radioButtonStrongest2.TabIndex = 7;
+            this.radioButtonStrongest2.Text = "Random (follow evolutions)";
+            this.radioButtonStrongest2.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonStrongest1
+            // 
+            this.radioButtonStrongest1.AutoSize = true;
+            this.radioButtonStrongest1.Checked = true;
+            this.radioButtonStrongest1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonStrongest1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonStrongest1.Name = "radioButtonStrongest1";
+            this.radioButtonStrongest1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonStrongest1.TabIndex = 6;
+            this.radioButtonStrongest1.TabStop = true;
+            this.radioButtonStrongest1.Text = "Unchanged";
+            this.radioButtonStrongest1.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxWaitTime
+            // 
+            this.groupBoxWaitTime.Controls.Add(this.radioButtonWaitTime3);
+            this.groupBoxWaitTime.Controls.Add(this.radioButtonWaitTime2);
+            this.groupBoxWaitTime.Controls.Add(this.radioButtonWaitTime1);
+            this.groupBoxWaitTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxWaitTime.Location = new System.Drawing.Point(398, 259);
+            this.groupBoxWaitTime.Name = "groupBoxWaitTime";
+            this.groupBoxWaitTime.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxWaitTime.TabIndex = 26;
+            this.groupBoxWaitTime.TabStop = false;
+            this.groupBoxWaitTime.Text = "Wait Time";
+            // 
+            // radioButtonWaitTime3
+            // 
+            this.radioButtonWaitTime3.AutoSize = true;
+            this.radioButtonWaitTime3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonWaitTime3.Location = new System.Drawing.Point(18, 73);
+            this.radioButtonWaitTime3.Name = "radioButtonWaitTime3";
+            this.radioButtonWaitTime3.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonWaitTime3.TabIndex = 8;
+            this.radioButtonWaitTime3.Text = "Random (completely)";
+            this.radioButtonWaitTime3.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonWaitTime2
+            // 
+            this.radioButtonWaitTime2.AutoSize = true;
+            this.radioButtonWaitTime2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonWaitTime2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonWaitTime2.Name = "radioButtonWaitTime2";
+            this.radioButtonWaitTime2.Size = new System.Drawing.Size(152, 17);
+            this.radioButtonWaitTime2.TabIndex = 7;
+            this.radioButtonWaitTime2.Text = "Random (follow evolutions)";
+            this.radioButtonWaitTime2.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonWaitTime1
+            // 
+            this.radioButtonWaitTime1.AutoSize = true;
+            this.radioButtonWaitTime1.Checked = true;
+            this.radioButtonWaitTime1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonWaitTime1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonWaitTime1.Name = "radioButtonWaitTime1";
+            this.radioButtonWaitTime1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonWaitTime1.TabIndex = 6;
+            this.radioButtonWaitTime1.TabStop = true;
+            this.radioButtonWaitTime1.Text = "Unchanged";
+            this.radioButtonWaitTime1.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxDrop
+            // 
+            this.groupBoxDrop.Controls.Add(this.radioButtonDrop2);
+            this.groupBoxDrop.Controls.Add(this.radioButtonDrop1);
+            this.groupBoxDrop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxDrop.Location = new System.Drawing.Point(12, 259);
+            this.groupBoxDrop.Name = "groupBoxDrop";
+            this.groupBoxDrop.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxDrop.TabIndex = 20;
+            this.groupBoxDrop.TabStop = false;
+            this.groupBoxDrop.Text = "Yokai Drop";
+            // 
+            // radioButtonDrop2
+            // 
+            this.radioButtonDrop2.AutoSize = true;
+            this.radioButtonDrop2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonDrop2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonDrop2.Name = "radioButtonDrop2";
+            this.radioButtonDrop2.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonDrop2.TabIndex = 7;
+            this.radioButtonDrop2.Text = "Random (completely)";
+            this.radioButtonDrop2.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDrop1
+            // 
+            this.radioButtonDrop1.AutoSize = true;
+            this.radioButtonDrop1.Checked = true;
+            this.radioButtonDrop1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonDrop1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonDrop1.Name = "radioButtonDrop1";
+            this.radioButtonDrop1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonDrop1.TabIndex = 6;
+            this.radioButtonDrop1.TabStop = true;
+            this.radioButtonDrop1.Text = "Unchanged";
+            this.radioButtonDrop1.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxExperience
+            // 
+            this.groupBoxExperience.Controls.Add(this.radioButtonExperience2);
+            this.groupBoxExperience.Controls.Add(this.radioButtonExperience1);
+            this.groupBoxExperience.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxExperience.Location = new System.Drawing.Point(205, 259);
+            this.groupBoxExperience.Name = "groupBoxExperience";
+            this.groupBoxExperience.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxExperience.TabIndex = 13;
+            this.groupBoxExperience.TabStop = false;
+            this.groupBoxExperience.Text = "Experience Curve";
+            // 
+            // radioButtonExperience2
+            // 
+            this.radioButtonExperience2.AutoSize = true;
+            this.radioButtonExperience2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonExperience2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonExperience2.Name = "radioButtonExperience2";
+            this.radioButtonExperience2.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonExperience2.TabIndex = 7;
+            this.radioButtonExperience2.Text = "Random (completely)";
+            this.radioButtonExperience2.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonExperience1
+            // 
+            this.radioButtonExperience1.AutoSize = true;
+            this.radioButtonExperience1.Checked = true;
+            this.radioButtonExperience1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonExperience1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonExperience1.Name = "radioButtonExperience1";
+            this.radioButtonExperience1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonExperience1.TabIndex = 6;
+            this.radioButtonExperience1.TabStop = true;
+            this.radioButtonExperience1.Text = "Unchanged";
+            this.radioButtonExperience1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.groupBoxMiscellaneous);
+            this.tabPage6.Controls.Add(this.groupBoxAttack);
+            this.tabPage6.Controls.Add(this.groupBoxInspirit);
+            this.tabPage6.Controls.Add(this.groupBoxSoultimateMove);
+            this.tabPage6.Controls.Add(this.groupBoxSkill);
+            this.tabPage6.Controls.Add(this.groupBoxTechnique);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(593, 384);
+            this.tabPage6.TabIndex = 2;
+            this.tabPage6.Text = "Param (2)";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxMiscellaneous
+            // 
+            this.groupBoxMiscellaneous.Controls.Add(this.checkBoxScaleEXP);
+            this.groupBoxMiscellaneous.Controls.Add(this.checkBoxScaleMoney);
+            this.groupBoxMiscellaneous.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxMiscellaneous.Location = new System.Drawing.Point(398, 137);
+            this.groupBoxMiscellaneous.Name = "groupBoxMiscellaneous";
+            this.groupBoxMiscellaneous.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxMiscellaneous.TabIndex = 35;
+            this.groupBoxMiscellaneous.TabStop = false;
+            this.groupBoxMiscellaneous.Text = "Miscellaneous";
+            // 
+            // checkBoxScaleEXP
+            // 
+            this.checkBoxScaleEXP.AutoSize = true;
+            this.checkBoxScaleEXP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxScaleEXP.Location = new System.Drawing.Point(23, 53);
+            this.checkBoxScaleEXP.Name = "checkBoxScaleEXP";
+            this.checkBoxScaleEXP.Size = new System.Drawing.Size(109, 17);
+            this.checkBoxScaleEXP.TabIndex = 17;
+            this.checkBoxScaleEXP.Text = "Scale Experience";
+            this.checkBoxScaleEXP.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxScaleMoney
+            // 
+            this.checkBoxScaleMoney.AutoSize = true;
+            this.checkBoxScaleMoney.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxScaleMoney.Location = new System.Drawing.Point(23, 30);
+            this.checkBoxScaleMoney.Name = "checkBoxScaleMoney";
+            this.checkBoxScaleMoney.Size = new System.Drawing.Size(88, 17);
+            this.checkBoxScaleMoney.TabIndex = 10;
+            this.checkBoxScaleMoney.Text = "Scale Money";
+            this.checkBoxScaleMoney.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxAttack
+            // 
+            this.groupBoxAttack.Controls.Add(this.radioButtonAttack3);
+            this.groupBoxAttack.Controls.Add(this.radioButtonAttack2);
+            this.groupBoxAttack.Controls.Add(this.radioButtonAttack1);
+            this.groupBoxAttack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxAttack.Location = new System.Drawing.Point(12, 15);
+            this.groupBoxAttack.Name = "groupBoxAttack";
+            this.groupBoxAttack.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxAttack.TabIndex = 32;
+            this.groupBoxAttack.TabStop = false;
+            this.groupBoxAttack.Text = "Yokai Attack";
+            // 
+            // radioButtonAttack3
+            // 
+            this.radioButtonAttack3.AutoSize = true;
+            this.radioButtonAttack3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonAttack3.Location = new System.Drawing.Point(18, 73);
+            this.radioButtonAttack3.Name = "radioButtonAttack3";
+            this.radioButtonAttack3.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonAttack3.TabIndex = 8;
+            this.radioButtonAttack3.Text = "Random (completely)";
+            this.radioButtonAttack3.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonAttack2
+            // 
+            this.radioButtonAttack2.AutoSize = true;
+            this.radioButtonAttack2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonAttack2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonAttack2.Name = "radioButtonAttack2";
+            this.radioButtonAttack2.Size = new System.Drawing.Size(152, 17);
+            this.radioButtonAttack2.TabIndex = 7;
+            this.radioButtonAttack2.Text = "Random (follow evolutions)";
+            this.radioButtonAttack2.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonAttack1
+            // 
+            this.radioButtonAttack1.AutoSize = true;
+            this.radioButtonAttack1.Checked = true;
+            this.radioButtonAttack1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonAttack1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonAttack1.Name = "radioButtonAttack1";
+            this.radioButtonAttack1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonAttack1.TabIndex = 6;
+            this.radioButtonAttack1.TabStop = true;
+            this.radioButtonAttack1.Text = "Unchanged";
+            this.radioButtonAttack1.UseVisualStyleBackColor = true;
             // 
             // groupBoxInspirit
             // 
@@ -1044,7 +1130,7 @@ namespace YKWrandomizer
             this.groupBoxInspirit.Controls.Add(this.radioButtonInspirit2);
             this.groupBoxInspirit.Controls.Add(this.radioButtonInspirit1);
             this.groupBoxInspirit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxInspirit.Location = new System.Drawing.Point(398, 137);
+            this.groupBoxInspirit.Location = new System.Drawing.Point(398, 15);
             this.groupBoxInspirit.Name = "groupBoxInspirit";
             this.groupBoxInspirit.Size = new System.Drawing.Size(187, 116);
             this.groupBoxInspirit.TabIndex = 13;
@@ -1086,18 +1172,430 @@ namespace YKWrandomizer
             this.radioButtonInspirit1.Text = "Unchanged";
             this.radioButtonInspirit1.UseVisualStyleBackColor = true;
             // 
+            // groupBoxSoultimateMove
+            // 
+            this.groupBoxSoultimateMove.Controls.Add(this.radioButtonSoultimateMove3);
+            this.groupBoxSoultimateMove.Controls.Add(this.radioButtonSoultimateMove2);
+            this.groupBoxSoultimateMove.Controls.Add(this.radioButtonSoultimateMove1);
+            this.groupBoxSoultimateMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxSoultimateMove.Location = new System.Drawing.Point(12, 137);
+            this.groupBoxSoultimateMove.Name = "groupBoxSoultimateMove";
+            this.groupBoxSoultimateMove.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxSoultimateMove.TabIndex = 14;
+            this.groupBoxSoultimateMove.TabStop = false;
+            this.groupBoxSoultimateMove.Text = "Yokai Soultimate Move";
+            // 
+            // radioButtonSoultimateMove3
+            // 
+            this.radioButtonSoultimateMove3.AutoSize = true;
+            this.radioButtonSoultimateMove3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonSoultimateMove3.Location = new System.Drawing.Point(18, 73);
+            this.radioButtonSoultimateMove3.Name = "radioButtonSoultimateMove3";
+            this.radioButtonSoultimateMove3.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonSoultimateMove3.TabIndex = 8;
+            this.radioButtonSoultimateMove3.Text = "Random (completely)";
+            this.radioButtonSoultimateMove3.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSoultimateMove2
+            // 
+            this.radioButtonSoultimateMove2.AutoSize = true;
+            this.radioButtonSoultimateMove2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonSoultimateMove2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonSoultimateMove2.Name = "radioButtonSoultimateMove2";
+            this.radioButtonSoultimateMove2.Size = new System.Drawing.Size(152, 17);
+            this.radioButtonSoultimateMove2.TabIndex = 7;
+            this.radioButtonSoultimateMove2.Text = "Random (follow evolutions)";
+            this.radioButtonSoultimateMove2.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSoultimateMove1
+            // 
+            this.radioButtonSoultimateMove1.AutoSize = true;
+            this.radioButtonSoultimateMove1.Checked = true;
+            this.radioButtonSoultimateMove1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonSoultimateMove1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonSoultimateMove1.Name = "radioButtonSoultimateMove1";
+            this.radioButtonSoultimateMove1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonSoultimateMove1.TabIndex = 6;
+            this.radioButtonSoultimateMove1.TabStop = true;
+            this.radioButtonSoultimateMove1.Text = "Unchanged";
+            this.radioButtonSoultimateMove1.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxSkill
+            // 
+            this.groupBoxSkill.Controls.Add(this.radioButtonSkill2);
+            this.groupBoxSkill.Controls.Add(this.radioButtonSkill1);
+            this.groupBoxSkill.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxSkill.Location = new System.Drawing.Point(205, 137);
+            this.groupBoxSkill.Name = "groupBoxSkill";
+            this.groupBoxSkill.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxSkill.TabIndex = 10;
+            this.groupBoxSkill.TabStop = false;
+            this.groupBoxSkill.Text = "Yokai Ability";
+            // 
+            // radioButtonSkill2
+            // 
+            this.radioButtonSkill2.AutoSize = true;
+            this.radioButtonSkill2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonSkill2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonSkill2.Name = "radioButtonSkill2";
+            this.radioButtonSkill2.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonSkill2.TabIndex = 7;
+            this.radioButtonSkill2.Text = "Random (completely)";
+            this.radioButtonSkill2.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSkill1
+            // 
+            this.radioButtonSkill1.AutoSize = true;
+            this.radioButtonSkill1.Checked = true;
+            this.radioButtonSkill1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonSkill1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonSkill1.Name = "radioButtonSkill1";
+            this.radioButtonSkill1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonSkill1.TabIndex = 6;
+            this.radioButtonSkill1.TabStop = true;
+            this.radioButtonSkill1.Text = "Unchanged";
+            this.radioButtonSkill1.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxTechnique
+            // 
+            this.groupBoxTechnique.Controls.Add(this.radioButtonTechnique3);
+            this.groupBoxTechnique.Controls.Add(this.radioButtonTechnique2);
+            this.groupBoxTechnique.Controls.Add(this.radioButtonTechnique1);
+            this.groupBoxTechnique.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxTechnique.Location = new System.Drawing.Point(205, 15);
+            this.groupBoxTechnique.Name = "groupBoxTechnique";
+            this.groupBoxTechnique.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxTechnique.TabIndex = 33;
+            this.groupBoxTechnique.TabStop = false;
+            this.groupBoxTechnique.Text = "Yokai Technique";
+            // 
+            // radioButtonTechnique3
+            // 
+            this.radioButtonTechnique3.AutoSize = true;
+            this.radioButtonTechnique3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonTechnique3.Location = new System.Drawing.Point(18, 73);
+            this.radioButtonTechnique3.Name = "radioButtonTechnique3";
+            this.radioButtonTechnique3.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonTechnique3.TabIndex = 8;
+            this.radioButtonTechnique3.Text = "Random (completely)";
+            this.radioButtonTechnique3.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonTechnique2
+            // 
+            this.radioButtonTechnique2.AutoSize = true;
+            this.radioButtonTechnique2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonTechnique2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonTechnique2.Name = "radioButtonTechnique2";
+            this.radioButtonTechnique2.Size = new System.Drawing.Size(152, 17);
+            this.radioButtonTechnique2.TabIndex = 7;
+            this.radioButtonTechnique2.Text = "Random (follow evolutions)";
+            this.radioButtonTechnique2.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonTechnique1
+            // 
+            this.radioButtonTechnique1.AutoSize = true;
+            this.radioButtonTechnique1.Checked = true;
+            this.radioButtonTechnique1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonTechnique1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonTechnique1.Name = "radioButtonTechnique1";
+            this.radioButtonTechnique1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonTechnique1.TabIndex = 6;
+            this.radioButtonTechnique1.TabStop = true;
+            this.radioButtonTechnique1.Text = "Unchanged";
+            this.radioButtonTechnique1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.groupBoxBlasterTA);
+            this.tabPage7.Controls.Add(this.groupBoxBlasterTY);
+            this.tabPage7.Controls.Add(this.groupBoxBlasterTSoultimate);
+            this.tabPage7.Controls.Add(this.groupBoxBlasterTAbility);
+            this.tabPage7.Controls.Add(this.groupBoxBlasterTX);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage7.Size = new System.Drawing.Size(593, 384);
+            this.tabPage7.TabIndex = 3;
+            this.tabPage7.Text = "Blasters T";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxBlasterTA
+            // 
+            this.groupBoxBlasterTA.Controls.Add(this.radioButton13);
+            this.groupBoxBlasterTA.Controls.Add(this.radioButton14);
+            this.groupBoxBlasterTA.Controls.Add(this.radioButton15);
+            this.groupBoxBlasterTA.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxBlasterTA.Location = new System.Drawing.Point(12, 15);
+            this.groupBoxBlasterTA.Name = "groupBoxBlasterTA";
+            this.groupBoxBlasterTA.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxBlasterTA.TabIndex = 37;
+            this.groupBoxBlasterTA.TabStop = false;
+            this.groupBoxBlasterTA.Text = "Blasters T Attack (A)";
+            // 
+            // radioButton13
+            // 
+            this.radioButton13.AutoSize = true;
+            this.radioButton13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton13.Location = new System.Drawing.Point(18, 73);
+            this.radioButton13.Name = "radioButton13";
+            this.radioButton13.Size = new System.Drawing.Size(124, 17);
+            this.radioButton13.TabIndex = 8;
+            this.radioButton13.Text = "Random (completely)";
+            this.radioButton13.UseVisualStyleBackColor = true;
+            // 
+            // radioButton14
+            // 
+            this.radioButton14.AutoSize = true;
+            this.radioButton14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton14.Location = new System.Drawing.Point(18, 50);
+            this.radioButton14.Name = "radioButton14";
+            this.radioButton14.Size = new System.Drawing.Size(152, 17);
+            this.radioButton14.TabIndex = 7;
+            this.radioButton14.Text = "Random (follow evolutions)";
+            this.radioButton14.UseVisualStyleBackColor = true;
+            // 
+            // radioButton15
+            // 
+            this.radioButton15.AutoSize = true;
+            this.radioButton15.Checked = true;
+            this.radioButton15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton15.Location = new System.Drawing.Point(18, 27);
+            this.radioButton15.Name = "radioButton15";
+            this.radioButton15.Size = new System.Drawing.Size(81, 17);
+            this.radioButton15.TabIndex = 6;
+            this.radioButton15.TabStop = true;
+            this.radioButton15.Text = "Unchanged";
+            this.radioButton15.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxBlasterTY
+            // 
+            this.groupBoxBlasterTY.Controls.Add(this.radioButton16);
+            this.groupBoxBlasterTY.Controls.Add(this.radioButton17);
+            this.groupBoxBlasterTY.Controls.Add(this.radioButton18);
+            this.groupBoxBlasterTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxBlasterTY.Location = new System.Drawing.Point(398, 15);
+            this.groupBoxBlasterTY.Name = "groupBoxBlasterTY";
+            this.groupBoxBlasterTY.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxBlasterTY.TabIndex = 35;
+            this.groupBoxBlasterTY.TabStop = false;
+            this.groupBoxBlasterTY.Text = "Blasters T Attack (Y)";
+            // 
+            // radioButton16
+            // 
+            this.radioButton16.AutoSize = true;
+            this.radioButton16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton16.Location = new System.Drawing.Point(18, 73);
+            this.radioButton16.Name = "radioButton16";
+            this.radioButton16.Size = new System.Drawing.Size(124, 17);
+            this.radioButton16.TabIndex = 8;
+            this.radioButton16.Text = "Random (completely)";
+            this.radioButton16.UseVisualStyleBackColor = true;
+            // 
+            // radioButton17
+            // 
+            this.radioButton17.AutoSize = true;
+            this.radioButton17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton17.Location = new System.Drawing.Point(18, 50);
+            this.radioButton17.Name = "radioButton17";
+            this.radioButton17.Size = new System.Drawing.Size(152, 17);
+            this.radioButton17.TabIndex = 7;
+            this.radioButton17.Text = "Random (follow evolutions)";
+            this.radioButton17.UseVisualStyleBackColor = true;
+            // 
+            // radioButton18
+            // 
+            this.radioButton18.AutoSize = true;
+            this.radioButton18.Checked = true;
+            this.radioButton18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton18.Location = new System.Drawing.Point(18, 27);
+            this.radioButton18.Name = "radioButton18";
+            this.radioButton18.Size = new System.Drawing.Size(81, 17);
+            this.radioButton18.TabIndex = 6;
+            this.radioButton18.TabStop = true;
+            this.radioButton18.Text = "Unchanged";
+            this.radioButton18.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxBlasterTSoultimate
+            // 
+            this.groupBoxBlasterTSoultimate.Controls.Add(this.radioButton19);
+            this.groupBoxBlasterTSoultimate.Controls.Add(this.radioButton20);
+            this.groupBoxBlasterTSoultimate.Controls.Add(this.radioButton21);
+            this.groupBoxBlasterTSoultimate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxBlasterTSoultimate.Location = new System.Drawing.Point(12, 137);
+            this.groupBoxBlasterTSoultimate.Name = "groupBoxBlasterTSoultimate";
+            this.groupBoxBlasterTSoultimate.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxBlasterTSoultimate.TabIndex = 36;
+            this.groupBoxBlasterTSoultimate.TabStop = false;
+            this.groupBoxBlasterTSoultimate.Text = "Blasters T Soultimate Move";
+            // 
+            // radioButton19
+            // 
+            this.radioButton19.AutoSize = true;
+            this.radioButton19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton19.Location = new System.Drawing.Point(18, 73);
+            this.radioButton19.Name = "radioButton19";
+            this.radioButton19.Size = new System.Drawing.Size(124, 17);
+            this.radioButton19.TabIndex = 8;
+            this.radioButton19.Text = "Random (completely)";
+            this.radioButton19.UseVisualStyleBackColor = true;
+            // 
+            // radioButton20
+            // 
+            this.radioButton20.AutoSize = true;
+            this.radioButton20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton20.Location = new System.Drawing.Point(18, 50);
+            this.radioButton20.Name = "radioButton20";
+            this.radioButton20.Size = new System.Drawing.Size(152, 17);
+            this.radioButton20.TabIndex = 7;
+            this.radioButton20.Text = "Random (follow evolutions)";
+            this.radioButton20.UseVisualStyleBackColor = true;
+            // 
+            // radioButton21
+            // 
+            this.radioButton21.AutoSize = true;
+            this.radioButton21.Checked = true;
+            this.radioButton21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton21.Location = new System.Drawing.Point(18, 27);
+            this.radioButton21.Name = "radioButton21";
+            this.radioButton21.Size = new System.Drawing.Size(81, 17);
+            this.radioButton21.TabIndex = 6;
+            this.radioButton21.TabStop = true;
+            this.radioButton21.Text = "Unchanged";
+            this.radioButton21.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxBlasterTAbility
+            // 
+            this.groupBoxBlasterTAbility.Controls.Add(this.radioButton22);
+            this.groupBoxBlasterTAbility.Controls.Add(this.radioButton23);
+            this.groupBoxBlasterTAbility.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxBlasterTAbility.Location = new System.Drawing.Point(205, 137);
+            this.groupBoxBlasterTAbility.Name = "groupBoxBlasterTAbility";
+            this.groupBoxBlasterTAbility.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxBlasterTAbility.TabIndex = 34;
+            this.groupBoxBlasterTAbility.TabStop = false;
+            this.groupBoxBlasterTAbility.Text = "Blasters T Ability";
+            // 
+            // radioButton22
+            // 
+            this.radioButton22.AutoSize = true;
+            this.radioButton22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton22.Location = new System.Drawing.Point(18, 50);
+            this.radioButton22.Name = "radioButton22";
+            this.radioButton22.Size = new System.Drawing.Size(124, 17);
+            this.radioButton22.TabIndex = 7;
+            this.radioButton22.Text = "Random (completely)";
+            this.radioButton22.UseVisualStyleBackColor = true;
+            // 
+            // radioButton23
+            // 
+            this.radioButton23.AutoSize = true;
+            this.radioButton23.Checked = true;
+            this.radioButton23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton23.Location = new System.Drawing.Point(18, 27);
+            this.radioButton23.Name = "radioButton23";
+            this.radioButton23.Size = new System.Drawing.Size(81, 17);
+            this.radioButton23.TabIndex = 6;
+            this.radioButton23.TabStop = true;
+            this.radioButton23.Text = "Unchanged";
+            this.radioButton23.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxBlasterTX
+            // 
+            this.groupBoxBlasterTX.Controls.Add(this.radioButton24);
+            this.groupBoxBlasterTX.Controls.Add(this.radioButton25);
+            this.groupBoxBlasterTX.Controls.Add(this.radioButton26);
+            this.groupBoxBlasterTX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxBlasterTX.Location = new System.Drawing.Point(205, 15);
+            this.groupBoxBlasterTX.Name = "groupBoxBlasterTX";
+            this.groupBoxBlasterTX.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxBlasterTX.TabIndex = 38;
+            this.groupBoxBlasterTX.TabStop = false;
+            this.groupBoxBlasterTX.Text = "Blasters T Attack (X)";
+            // 
+            // radioButton24
+            // 
+            this.radioButton24.AutoSize = true;
+            this.radioButton24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton24.Location = new System.Drawing.Point(18, 73);
+            this.radioButton24.Name = "radioButton24";
+            this.radioButton24.Size = new System.Drawing.Size(124, 17);
+            this.radioButton24.TabIndex = 8;
+            this.radioButton24.Text = "Random (completely)";
+            this.radioButton24.UseVisualStyleBackColor = true;
+            // 
+            // radioButton25
+            // 
+            this.radioButton25.AutoSize = true;
+            this.radioButton25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton25.Location = new System.Drawing.Point(18, 50);
+            this.radioButton25.Name = "radioButton25";
+            this.radioButton25.Size = new System.Drawing.Size(152, 17);
+            this.radioButton25.TabIndex = 7;
+            this.radioButton25.Text = "Random (follow evolutions)";
+            this.radioButton25.UseVisualStyleBackColor = true;
+            // 
+            // radioButton26
+            // 
+            this.radioButton26.AutoSize = true;
+            this.radioButton26.Checked = true;
+            this.radioButton26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton26.Location = new System.Drawing.Point(18, 27);
+            this.radioButton26.Name = "radioButton26";
+            this.radioButton26.Size = new System.Drawing.Size(81, 17);
+            this.radioButton26.TabIndex = 6;
+            this.radioButton26.TabStop = true;
+            this.radioButton26.Text = "Unchanged";
+            this.radioButton26.UseVisualStyleBackColor = true;
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBoxWildMiscellaneous);
             this.tabPage2.Controls.Add(this.groupBoxBossBaseStat);
             this.tabPage2.Controls.Add(this.groupBoxStatic);
             this.tabPage2.Controls.Add(this.groupBoxWild);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(616, 424);
+            this.tabPage2.Size = new System.Drawing.Size(612, 423);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Wild Area";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxWildMiscellaneous
+            // 
+            this.groupBoxWildMiscellaneous.Controls.Add(this.checkBoxStatScaling);
+            this.groupBoxWildMiscellaneous.Controls.Add(this.checkBoxSwapBosses);
+            this.groupBoxWildMiscellaneous.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxWildMiscellaneous.Location = new System.Drawing.Point(398, 137);
+            this.groupBoxWildMiscellaneous.Name = "groupBoxWildMiscellaneous";
+            this.groupBoxWildMiscellaneous.Size = new System.Drawing.Size(208, 116);
+            this.groupBoxWildMiscellaneous.TabIndex = 36;
+            this.groupBoxWildMiscellaneous.TabStop = false;
+            this.groupBoxWildMiscellaneous.Text = "Miscellaneous";
+            // 
+            // checkBoxStatScaling
+            // 
+            this.checkBoxStatScaling.AutoSize = true;
+            this.checkBoxStatScaling.Enabled = false;
+            this.checkBoxStatScaling.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxStatScaling.Location = new System.Drawing.Point(114, 30);
+            this.checkBoxStatScaling.Name = "checkBoxStatScaling";
+            this.checkBoxStatScaling.Size = new System.Drawing.Size(83, 17);
+            this.checkBoxStatScaling.TabIndex = 18;
+            this.checkBoxStatScaling.Text = "Stat Scaling";
+            this.checkBoxStatScaling.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSwapBosses
+            // 
+            this.checkBoxSwapBosses.AutoSize = true;
+            this.checkBoxSwapBosses.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxSwapBosses.Location = new System.Drawing.Point(23, 30);
+            this.checkBoxSwapBosses.Name = "checkBoxSwapBosses";
+            this.checkBoxSwapBosses.Size = new System.Drawing.Size(90, 17);
+            this.checkBoxSwapBosses.TabIndex = 10;
+            this.checkBoxSwapBosses.Text = "Swap Bosses";
+            this.checkBoxSwapBosses.UseVisualStyleBackColor = true;
+            this.checkBoxSwapBosses.CheckedChanged += new System.EventHandler(this.CheckBoxSwapBosses_CheckedChanged);
             // 
             // groupBoxBossBaseStat
             // 
@@ -1106,7 +1604,7 @@ namespace YKWrandomizer
             this.groupBoxBossBaseStat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxBossBaseStat.Location = new System.Drawing.Point(398, 15);
             this.groupBoxBossBaseStat.Name = "groupBoxBossBaseStat";
-            this.groupBoxBossBaseStat.Size = new System.Drawing.Size(212, 116);
+            this.groupBoxBossBaseStat.Size = new System.Drawing.Size(208, 116);
             this.groupBoxBossBaseStat.TabIndex = 11;
             this.groupBoxBossBaseStat.TabStop = false;
             this.groupBoxBossBaseStat.Text = "Boss Base Stat";
@@ -1258,7 +1756,7 @@ namespace YKWrandomizer
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(616, 424);
+            this.tabPage3.Size = new System.Drawing.Size(612, 423);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Miscellaneous";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1472,7 +1970,6 @@ namespace YKWrandomizer
             // 
             // groupBoxRequestedYokai
             // 
-            this.groupBoxRequestedYokai.Controls.Add(this.forceUltraFixStoryCheckBox);
             this.groupBoxRequestedYokai.Controls.Add(this.checkBoxUnlockYokai);
             this.groupBoxRequestedYokai.Controls.Add(this.checkBoxAvoidBlocked);
             this.groupBoxRequestedYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1530,23 +2027,11 @@ namespace YKWrandomizer
             this.label4.Text = "Randomize...";
             this.label4.Visible = false;
             // 
-            // forceUltraFixStoryCheckBox
-            // 
-            this.forceUltraFixStoryCheckBox.AutoSize = true;
-            this.forceUltraFixStoryCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.forceUltraFixStoryCheckBox.Location = new System.Drawing.Point(23, 71);
-            this.forceUltraFixStoryCheckBox.Name = "forceUltraFixStoryCheckBox";
-            this.forceUltraFixStoryCheckBox.Size = new System.Drawing.Size(114, 17);
-            this.forceUltraFixStoryCheckBox.TabIndex = 11;
-            this.forceUltraFixStoryCheckBox.Text = "Force ultra fix story";
-            this.forceUltraFixStoryCheckBox.UseVisualStyleBackColor = true;
-            this.forceUltraFixStoryCheckBox.CheckedChanged += new System.EventHandler(this.ForceUltraFixStoryCheckBox_CheckedChanged);
-            // 
             // RandomizerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 485);
+            this.ClientSize = new System.Drawing.Size(642, 486);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.tabControl1);
@@ -1559,46 +2044,68 @@ namespace YKWrandomizer
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabControl2.ResumeLayout(false);
+            this.yokaiTabControl.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.groupBoxWaitTime.ResumeLayout(false);
-            this.groupBoxWaitTime.PerformLayout();
-            this.groupBoxBaseStat.ResumeLayout(false);
-            this.groupBoxBaseStat.PerformLayout();
-            this.groupBoxDrop.ResumeLayout(false);
-            this.groupBoxDrop.PerformLayout();
-            this.groupBoxRarity.ResumeLayout(false);
-            this.groupBoxRarity.PerformLayout();
+            this.groupBoxBaseMiscellaneous.ResumeLayout(false);
+            this.groupBoxBaseMiscellaneous.PerformLayout();
+            this.groupBoxHatedFood.ResumeLayout(false);
+            this.groupBoxHatedFood.PerformLayout();
+            this.groupBoxFavFood.ResumeLayout(false);
+            this.groupBoxFavFood.PerformLayout();
+            this.groupBoxStatus.ResumeLayout(false);
+            this.groupBoxStatus.PerformLayout();
+            this.groupBoxRole.ResumeLayout(false);
+            this.groupBoxRole.PerformLayout();
             this.groupBoxRank.ResumeLayout(false);
             this.groupBoxRank.PerformLayout();
             this.groupBoxTribe.ResumeLayout(false);
             this.groupBoxTribe.PerformLayout();
-            this.groupBoxExperience.ResumeLayout(false);
-            this.groupBoxExperience.PerformLayout();
-            this.groupBoxStrongest.ResumeLayout(false);
-            this.groupBoxStrongest.PerformLayout();
-            this.groupBoxWeakness.ResumeLayout(false);
-            this.groupBoxWeakness.PerformLayout();
             this.tabPage5.ResumeLayout(false);
-            this.groupBoxMiscellaneous.ResumeLayout(false);
-            this.groupBoxMiscellaneous.PerformLayout();
-            this.groupBoxAttack.ResumeLayout(false);
-            this.groupBoxAttack.PerformLayout();
-            this.groupBoxTechnique.ResumeLayout(false);
-            this.groupBoxTechnique.PerformLayout();
+            this.groupBoxBaseStat.ResumeLayout(false);
+            this.groupBoxBaseStat.PerformLayout();
             this.groupBoxFusion.ResumeLayout(false);
             this.groupBoxFusion.PerformLayout();
             this.groupBoxSoul.ResumeLayout(false);
             this.groupBoxSoul.PerformLayout();
             this.groupBoxEvolution.ResumeLayout(false);
             this.groupBoxEvolution.PerformLayout();
-            this.groupBoxSkill.ResumeLayout(false);
-            this.groupBoxSkill.PerformLayout();
-            this.groupBoxSoultimateMove.ResumeLayout(false);
-            this.groupBoxSoultimateMove.PerformLayout();
+            this.groupBoxWeakness.ResumeLayout(false);
+            this.groupBoxWeakness.PerformLayout();
+            this.groupBoxStrongest.ResumeLayout(false);
+            this.groupBoxStrongest.PerformLayout();
+            this.groupBoxWaitTime.ResumeLayout(false);
+            this.groupBoxWaitTime.PerformLayout();
+            this.groupBoxDrop.ResumeLayout(false);
+            this.groupBoxDrop.PerformLayout();
+            this.groupBoxExperience.ResumeLayout(false);
+            this.groupBoxExperience.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.groupBoxMiscellaneous.ResumeLayout(false);
+            this.groupBoxMiscellaneous.PerformLayout();
+            this.groupBoxAttack.ResumeLayout(false);
+            this.groupBoxAttack.PerformLayout();
             this.groupBoxInspirit.ResumeLayout(false);
             this.groupBoxInspirit.PerformLayout();
+            this.groupBoxSoultimateMove.ResumeLayout(false);
+            this.groupBoxSoultimateMove.PerformLayout();
+            this.groupBoxSkill.ResumeLayout(false);
+            this.groupBoxSkill.PerformLayout();
+            this.groupBoxTechnique.ResumeLayout(false);
+            this.groupBoxTechnique.PerformLayout();
+            this.tabPage7.ResumeLayout(false);
+            this.groupBoxBlasterTA.ResumeLayout(false);
+            this.groupBoxBlasterTA.PerformLayout();
+            this.groupBoxBlasterTY.ResumeLayout(false);
+            this.groupBoxBlasterTY.PerformLayout();
+            this.groupBoxBlasterTSoultimate.ResumeLayout(false);
+            this.groupBoxBlasterTSoultimate.PerformLayout();
+            this.groupBoxBlasterTAbility.ResumeLayout(false);
+            this.groupBoxBlasterTAbility.PerformLayout();
+            this.groupBoxBlasterTX.ResumeLayout(false);
+            this.groupBoxBlasterTX.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.groupBoxWildMiscellaneous.ResumeLayout(false);
+            this.groupBoxWildMiscellaneous.PerformLayout();
             this.groupBoxBossBaseStat.ResumeLayout(false);
             this.groupBoxBossBaseStat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBossBaseStat)).EndInit();
@@ -1648,7 +2155,7 @@ namespace YKWrandomizer
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.GroupBox groupBoxRequestedYokai;
         private System.Windows.Forms.CheckBox checkBoxAvoidBlocked;
-        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabControl yokaiTabControl;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.GroupBox groupBoxExperience;
         private System.Windows.Forms.RadioButton radioButtonExperience2;
@@ -1672,10 +2179,6 @@ namespace YKWrandomizer
         private System.Windows.Forms.GroupBox groupBoxDrop;
         private System.Windows.Forms.RadioButton radioButtonDrop2;
         private System.Windows.Forms.RadioButton radioButtonDrop1;
-        private System.Windows.Forms.GroupBox groupBoxRarity;
-        private System.Windows.Forms.RadioButton radioButtonRarity3;
-        private System.Windows.Forms.RadioButton radioButtonRarity2;
-        private System.Windows.Forms.RadioButton radioButtonRarity1;
         private System.Windows.Forms.GroupBox groupBoxRank;
         private System.Windows.Forms.RadioButton radioButtonRank3;
         private System.Windows.Forms.RadioButton radioButtonRank2;
@@ -1715,7 +2218,6 @@ namespace YKWrandomizer
         private System.Windows.Forms.RadioButton radioButtonWaitTime2;
         private System.Windows.Forms.RadioButton radioButtonWaitTime1;
         private System.Windows.Forms.GroupBox groupBoxMiscellaneous;
-        private System.Windows.Forms.CheckBox checkBoxYoCommunity;
         private System.Windows.Forms.CheckBox checkBoxScaleEXP;
         private System.Windows.Forms.CheckBox checkBoxScaleMoney;
         private System.Windows.Forms.GroupBox groupBoxAttack;
@@ -1742,6 +2244,47 @@ namespace YKWrandomizer
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox checkBoxLockLegendary;
-        private System.Windows.Forms.CheckBox forceUltraFixStoryCheckBox;
+        private System.Windows.Forms.GroupBox groupBoxBaseMiscellaneous;
+        private System.Windows.Forms.CheckBox checkBoxSwapModel;
+        private System.Windows.Forms.GroupBox groupBoxHatedFood;
+        private System.Windows.Forms.RadioButton radioButtonHatedFood3;
+        private System.Windows.Forms.RadioButton radioButtonHatedFood2;
+        private System.Windows.Forms.RadioButton radioButtonHatedFood1;
+        private System.Windows.Forms.GroupBox groupBoxFavFood;
+        private System.Windows.Forms.RadioButton radioButtonFavFood3;
+        private System.Windows.Forms.RadioButton radioButtonFavFood2;
+        private System.Windows.Forms.RadioButton radioButtonFavFood1;
+        private System.Windows.Forms.GroupBox groupBoxStatus;
+        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.GroupBox groupBoxRole;
+        private System.Windows.Forms.RadioButton radioButtonRole3;
+        private System.Windows.Forms.RadioButton radioButtonRole2;
+        private System.Windows.Forms.RadioButton radioButtonRole1;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.GroupBox groupBoxBlasterTA;
+        private System.Windows.Forms.RadioButton radioButton13;
+        private System.Windows.Forms.RadioButton radioButton14;
+        private System.Windows.Forms.RadioButton radioButton15;
+        private System.Windows.Forms.GroupBox groupBoxBlasterTY;
+        private System.Windows.Forms.RadioButton radioButton16;
+        private System.Windows.Forms.RadioButton radioButton17;
+        private System.Windows.Forms.RadioButton radioButton18;
+        private System.Windows.Forms.GroupBox groupBoxBlasterTSoultimate;
+        private System.Windows.Forms.RadioButton radioButton19;
+        private System.Windows.Forms.RadioButton radioButton20;
+        private System.Windows.Forms.RadioButton radioButton21;
+        private System.Windows.Forms.GroupBox groupBoxBlasterTAbility;
+        private System.Windows.Forms.RadioButton radioButton22;
+        private System.Windows.Forms.RadioButton radioButton23;
+        private System.Windows.Forms.GroupBox groupBoxBlasterTX;
+        private System.Windows.Forms.RadioButton radioButton24;
+        private System.Windows.Forms.RadioButton radioButton25;
+        private System.Windows.Forms.RadioButton radioButton26;
+        private System.Windows.Forms.GroupBox groupBoxWildMiscellaneous;
+        private System.Windows.Forms.CheckBox checkBoxStatScaling;
+        private System.Windows.Forms.CheckBox checkBoxSwapBosses;
     }
 }

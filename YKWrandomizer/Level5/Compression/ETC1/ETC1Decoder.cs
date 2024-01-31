@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace YKWrandomizer.Level5.Compression.ETC1
 {
@@ -78,8 +79,7 @@ namespace YKWrandomizer.Level5.Compression.ETC1
             if (!diffBit)
             {
                 colors1 = new RGB(R % 16, G % 16, B % 16);
-            }
-            else
+            } else
             {
                 RGB c0 = color0;
                 int rd = RGB.Sign3(R % 8), gd = RGB.Sign3(G % 8), bd = RGB.Sign3(B % 8);

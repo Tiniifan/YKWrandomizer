@@ -3,19 +3,26 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using YKWrandomizer.Tool;
+using YKWrandomizer.Tools;
 using YKWrandomizer.Level5.Compression;
 using YKWrandomizer.Level5.Compression.NoCompression;
 
 namespace YKWrandomizer.Level5.Archive.ARC0
 {
-    public class ARC0
+    public class ARC0 : IArchive
     {
+        public string Name => "ARC0";
+
+        public VirtualDirectory Directory { get; set; }
+
         public Stream BaseStream;
 
-        public VirtualDirectory Directory;
-
         public ARC0Support.Header Header;
+
+        public ARC0()
+        {
+            Directory = new VirtualDirectory("/");
+        }
 
         public ARC0(Stream stream)
         {
@@ -83,7 +90,7 @@ namespace YKWrandomizer.Level5.Archive.ARC0
             return folder;
         }
 
-        public void Save(string fileName, ProgressBar progressBar)
+        public void Save(string fileName, ProgressBar progressBar = null)
         {
             using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
@@ -205,7 +212,11 @@ namespace YKWrandomizer.Level5.Archive.ARC0
                     writer.BaseStream.Position = dataOffset + file.FileOffset;
                     files[file].CopyTo(stream);
                     bytesWritten += file.FileSize;
-                    progressBar.Value = (int)((double)bytesWritten / totalBytes * 100);
+
+                    if (progressBar != null)
+                    {
+                        progressBar.Value = (int)((double)bytesWritten / totalBytes * 100);
+                    }
                 }
 
                 // Update the header
@@ -224,7 +235,7 @@ namespace YKWrandomizer.Level5.Archive.ARC0
                 header.TableChunkSize = (int)(directoryEntries.Count * 20 +
                                     directoryHashes.Count * 4 +
                                     fileEntries.Count * 16 +
-                                    tableNameArray.Length + 0x20 + 3) & ~3;
+                                   tableNameArray.Length + 0x20 + 3) & ~3;
                 writer.Seek(0);
                 writer.WriteStruct(header);
             }

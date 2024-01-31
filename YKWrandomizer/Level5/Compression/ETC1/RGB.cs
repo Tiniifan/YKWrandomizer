@@ -33,4 +33,3 @@ namespace YKWrandomizer.Level5.Compression.ETC1
         public static int ErrorRGB(int r, int g, int b) => 2 * r * r + 4 * g * g + 3 * b * b; // human perception
     }
 }
-
