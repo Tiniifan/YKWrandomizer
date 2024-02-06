@@ -25,5 +25,10 @@
         public bool IsLegendaryMystery { get; set; }
         public bool IsTreasure { get; set; }
         public bool IsYokai { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

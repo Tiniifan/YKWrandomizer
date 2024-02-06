@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace YKWrandomizer.Level5.Image
@@ -35,6 +36,13 @@ namespace YKWrandomizer.Level5.Image
             {0, new RGBA8() },
             {1, new RGBA4() },
             {28, new ETC1A4() },
+        };
+
+        public static Dictionary<Type, byte> ImageFormatTypes = new Dictionary<Type, byte>
+        {
+            {typeof(RGBA8), 0 },
+            {typeof(RGBA4), 1 },
+            {typeof(ETC1A4), 28 },
         };
     }
 }

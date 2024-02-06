@@ -64,5 +64,10 @@
         public int BlasterEarnLevelMoveSlot4 { get; set; }
         public int DropOniOrbRate { get; set; }
         public int DropOniOrb { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

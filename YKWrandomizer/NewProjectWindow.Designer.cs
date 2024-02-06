@@ -30,13 +30,13 @@ namespace YKWrandomizer
         private void InitializeComponent()
         {
             this.settingGroupBox = new System.Windows.Forms.GroupBox();
+            this.romfsTextBox = new System.Windows.Forms.TextBox();
+            this.gameComboBox = new System.Windows.Forms.ComboBox();
+            this.languageComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.languageComboBox = new System.Windows.Forms.ComboBox();
-            this.gameComboBox = new System.Windows.Forms.ComboBox();
             this.openButton = new System.Windows.Forms.Button();
-            this.romfsTextBox = new System.Windows.Forms.TextBox();
             this.settingGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,6 +55,34 @@ namespace YKWrandomizer
             this.settingGroupBox.TabIndex = 3;
             this.settingGroupBox.TabStop = false;
             this.settingGroupBox.Text = "Game Settings";
+            // 
+            // romfsTextBox
+            // 
+            this.romfsTextBox.Location = new System.Drawing.Point(129, 83);
+            this.romfsTextBox.Name = "romfsTextBox";
+            this.romfsTextBox.Size = new System.Drawing.Size(206, 20);
+            this.romfsTextBox.TabIndex = 39;
+            this.romfsTextBox.Click += new System.EventHandler(this.RomfsTextBox_Click);
+            // 
+            // gameComboBox
+            // 
+            this.gameComboBox.FormattingEnabled = true;
+            this.gameComboBox.Items.AddRange(new object[] {
+            "Yo-Kai Watch 1"});
+            this.gameComboBox.Location = new System.Drawing.Point(129, 25);
+            this.gameComboBox.Name = "gameComboBox";
+            this.gameComboBox.Size = new System.Drawing.Size(206, 21);
+            this.gameComboBox.TabIndex = 38;
+            this.gameComboBox.SelectedIndexChanged += new System.EventHandler(this.GameComboBox_SelectedIndexChanged);
+            // 
+            // languageComboBox
+            // 
+            this.languageComboBox.FormattingEnabled = true;
+            this.languageComboBox.Location = new System.Drawing.Point(129, 55);
+            this.languageComboBox.Name = "languageComboBox";
+            this.languageComboBox.Size = new System.Drawing.Size(206, 21);
+            this.languageComboBox.TabIndex = 37;
+            this.languageComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -86,29 +114,6 @@ namespace YKWrandomizer
             this.label2.TabIndex = 31;
             this.label2.Text = "Game";
             // 
-            // languageComboBox
-            // 
-            this.languageComboBox.FormattingEnabled = true;
-            this.languageComboBox.Location = new System.Drawing.Point(129, 55);
-            this.languageComboBox.Name = "languageComboBox";
-            this.languageComboBox.Size = new System.Drawing.Size(206, 21);
-            this.languageComboBox.TabIndex = 37;
-            this.languageComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_SelectedIndexChanged);
-            // 
-            // gameComboBox
-            // 
-            this.gameComboBox.FormattingEnabled = true;
-            this.gameComboBox.Items.AddRange(new object[] {
-            "Yo-Kai Watch 1",
-            "Yo-Kai Watch 2",
-            "Yo-Kai Watch 3",
-            "Yo-Kai Watch Blasters"});
-            this.gameComboBox.Location = new System.Drawing.Point(129, 25);
-            this.gameComboBox.Name = "gameComboBox";
-            this.gameComboBox.Size = new System.Drawing.Size(206, 21);
-            this.gameComboBox.TabIndex = 38;
-            this.gameComboBox.SelectedIndexChanged += new System.EventHandler(this.GameComboBox_SelectedIndexChanged);
-            // 
             // openButton
             // 
             this.openButton.Enabled = false;
@@ -119,14 +124,6 @@ namespace YKWrandomizer
             this.openButton.Text = "Open";
             this.openButton.UseVisualStyleBackColor = true;
             this.openButton.Click += new System.EventHandler(this.OpenButton_Click);
-            // 
-            // romfsTextBox
-            // 
-            this.romfsTextBox.Location = new System.Drawing.Point(129, 83);
-            this.romfsTextBox.Name = "romfsTextBox";
-            this.romfsTextBox.Size = new System.Drawing.Size(206, 20);
-            this.romfsTextBox.TabIndex = 39;
-            this.romfsTextBox.Click += new System.EventHandler(this.RomfsTextBox_Click);
             // 
             // NewProjectWindow
             // 

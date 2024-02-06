@@ -11,6 +11,5 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1.Logic
         public new bool EvolveToIsItem { get => base.EvolveToIsItem; set => base.EvolveToIsItem = value; }
         public new int EvolveToHash { get => base.EvolveToHash; set => base.EvolveToHash = value; }
         public new int CombineConfigHash { get => base.CombineConfigHash; set => base.CombineConfigHash = value; }
-
     }
 }

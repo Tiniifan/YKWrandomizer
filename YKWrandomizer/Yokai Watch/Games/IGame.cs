@@ -79,6 +79,24 @@ namespace YKWrandomizer.Yokai_Watch.Games
 
         void SaveMapEncounter(string mapName, IEncountTable[] encountTables, IEncountChara[] encountCharas);
 
+        (IShopConfig[], IShopValidCondition[]) GetShop(string shopName);
+
+        void SaveShop(string shopName, IShopConfig[] shopConfigs, IShopValidCondition[] shopValidConditions);
+
+        string[] GetMapWhoContainsTreasureBoxes();
+
+        IItableDataMore[] GetTreasureBox(string mapName);
+
+        void SaveTreasureBox(string mapName, IItableDataMore[] itableDataMores);
+
+        ICapsuleConfig[] GetCapsuleConfigs();
+
+        void SaveCapsuleConfigs(ICapsuleConfig[] capsuleConfigs);
+
+        ILegendDataConfig[] GetLegends();
+
+        void SaveLegends(ILegendDataConfig[] legendDataConfigs);
+
         ICombineConfig[] GetFusions();
 
         void SaveFusions(ICombineConfig[] combineConfigs);
@@ -86,5 +104,9 @@ namespace YKWrandomizer.Yokai_Watch.Games
         (IEncountTable[], IEncountChara[]) GetStaticEncounters();
 
         void SaveStaticEncounters(IEncountTable[] encountTables, IEncountChara[] encountCharas);
+
+        void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null);
+
+        void FixYokai(List<ICharabase> charabases);
     }
 }

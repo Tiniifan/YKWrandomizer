@@ -56,8 +56,15 @@ namespace YKWrandomizer.Level5.Image
 
         public byte[] Encode(Color color)
         {
-            int argb = color.ToArgb();
-            return new byte[] { (byte)((argb >> 24) & 0xFF), (byte)(argb & 0xFF), (byte)((argb >> 8) & 0xFF), (byte)((argb >> 16) & 0xFF) };
+            int argb = (color.A << 24) | (color.R << 16) | (color.G << 8) | color.B;
+
+            return new byte[]
+            {
+                (byte)((argb >> 24) & 0xFF),
+                (byte)(argb & 0xFF),
+                (byte)((argb >> 8) & 0xFF),
+                (byte)((argb >> 16) & 0xFF)
+            };
         }
 
         public Color Decode(byte[] data)

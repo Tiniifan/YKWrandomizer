@@ -66,6 +66,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YWB
                 { "face_icon", new GameFile(Game, "/data/menu/face_icon") },
                 { "item_icon", new GameFile(Game, "/data/menu/item_icon") },
                 { "model", new GameFile(Game, "/data/character") },
+                { "shop", new GameFile(Game, "/data/res/shop") },
             };
         }
 
@@ -450,6 +451,61 @@ namespace YKWrandomizer.Yokai_Watch.Games.YWB
             encountConfig.ReplaceEntry("ENCOUNT_TABLE_BEGIN", "ENCOUNT_TABLE_INFO_", encountTables);
 
             Game.Directory.GetFolderFromFullPath("/data/res/battle").Files[lastEncounter].ByteContent = encountConfig.Save();
+        }
+
+        public (IShopConfig[], IShopValidCondition[]) GetShop(string shopName)
+        {
+            return (null, null);
+        }
+
+        public void SaveShop(string shopName, IShopConfig[] shopConfigs, IShopValidCondition[] shopValidConditions)
+        {
+
+        }
+
+        public string[] GetMapWhoContainsTreasureBoxes()
+        {
+            return null;
+        }
+
+        public IItableDataMore[] GetTreasureBox(string mapName)
+        {
+            return null;
+        }
+
+        public void SaveTreasureBox(string mapName, IItableDataMore[] itableDataMores)
+        {
+
+        }
+
+        public ICapsuleConfig[] GetCapsuleConfigs()
+        {
+            return null;
+        }
+
+        public void SaveCapsuleConfigs(ICapsuleConfig[] capsuleConfigs)
+        {
+
+        }
+
+        public ILegendDataConfig[] GetLegends()
+        {
+            return null;
+        }
+
+        public void SaveLegends(ILegendDataConfig[] legendDataConfigs)
+        {
+
+        }
+
+        public void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null)
+        {
+
+        }
+
+        public void FixYokai(List<ICharabase> charabases)
+        {
+
         }
     }
 }

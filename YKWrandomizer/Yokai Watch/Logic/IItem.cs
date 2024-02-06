@@ -9,6 +9,7 @@
         public bool CanBeBuy { get; set; }
         public bool CanBeSell { get; set; }
         public int SellPrize { get; set; }
+        public int PurchasePrice { get; set; }
         public int ItemPosX { get; set; }
         public int ItemPosY { get; set; }
         public int DescriptionHash { get; set; }

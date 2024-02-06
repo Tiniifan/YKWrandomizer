@@ -10,6 +10,7 @@ namespace YKWrandomizer.Yokai_Watch.Common.Battles
     {
         public static Dictionary<string, int> YW1 = new Dictionary<string, int>()
         {
+            {"ev03_btl0040", 10 },
             {"ev04_btl0020", 15 },
             {"ev05_btl0010", 20 },
             {"ev07_btl0010", 25 },
@@ -17,6 +18,7 @@ namespace YKWrandomizer.Yokai_Watch.Common.Battles
             {"ev09_btl0010", 35 },
             {"ev10_btl0010", 40 },
             {"ev11_btl0020", 45 },
+            {"ev11_btl0030", 40 },
             {"ev11_btl0070", 55 },
             {"ev11_btl0120", 55 },
             {"ev11_btl0130", 60 },

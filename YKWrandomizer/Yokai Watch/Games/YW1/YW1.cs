@@ -66,6 +66,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                 { "item_icon", new GameFile(Game, "/data/menu/item_icon") },
                 { "model", new GameFile(Game, "/data/character") },
                 { "map_encounter", new GameFile(Game, "/data/res/map") },
+                { "shop", new GameFile(Game, "/data/res/shop") },
             };
         }
 
@@ -208,28 +209,28 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                     return itemconfigFile.Entries
                         .Where(x => x.GetName() == "ITEM_EQUIPMENT_BEGIN")
                         .SelectMany(x => x.Children)
-                        .Select(x => x.ToClass<Consumable>())
+                        .Select(x => x.ToClass<Item>())
                         .ToArray();
                 case "consumable":
                     return itemconfigFile.Entries
                         .Where(x => x.GetName() == "ITEM_CONSUME_BEGIN")
                         .SelectMany(x => x.Children)
-                        .Select(x => x.ToClass<Consumable>())
+                        .Select(x => x.ToClass<Item>())
                         .ToArray();
                 case "important":
                     return itemconfigFile.Entries
                         .Where(x => x.GetName() == "ITEM_IMPORTANT_BEGIN")
                         .SelectMany(x => x.Children)
-                        .Select(x => x.ToClass<Consumable>())
+                        .Select(x => x.ToClass<Item>())
                         .ToArray();
                 case "creature":
                     return itemconfigFile.Entries
                         .Where(x => x.GetName() == "ITEM_CREATURE_BEGIN")
                         .SelectMany(x => x.Children)
-                        .Select(x => x.ToClass<Consumable>())
+                        .Select(x => x.ToClass<Item>())
                         .ToArray();
                 case "all":
-                    string[] itemTypes = { "ITEM_EQUIPMENT_BEGIN", "ITEM_CONSUME_BEGIN", "ITEM_CREATURE_BEGIN" };
+                    string[] itemTypes = { "ITEM_EQUIPMENT_BEGIN", "ITEM_CONSUME_BEGIN"};
                     return itemconfigFile.Entries
                         .Where(x => itemTypes.Contains(x.GetName()))
                         .SelectMany(x => x.Children)
@@ -362,6 +363,140 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             Game.Directory.GetFolderFromFullPath("/data/res/map/" + mapName).Files[lastEncountConfigFile].ByteContent = encountConfig.Save();
         }
 
+        public (IShopConfig[], IShopValidCondition[]) GetShop(string shopName)
+        {
+            VirtualDirectory shopFolder = Game.Directory.GetFolderFromFullPath("data/res/shop");
+            string lastShopFile = shopFolder.Files.Keys.Where(x => x.StartsWith("shop_") && x.Contains(shopName)).OrderByDescending(x => x).First();
+
+            CfgBin shopCfgBin = new CfgBin();
+            shopCfgBin.Open(Game.Directory.GetFileFromFullPath("/data/res/shop/" + lastShopFile));
+
+            IShopConfig[] shopConfig = shopCfgBin.Entries
+                .Where(x => x.GetName() == "SHOP_CONFIG_INFO_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<ShopConfig>())
+                .ToArray();
+
+            return (shopConfig, null);
+        }
+
+        public void SaveShop(string shopName, IShopConfig[] shopConfigs, IShopValidCondition[] shopValidConditions)
+        {
+            ShopConfig[] formatShopConfigs = shopConfigs.OfType<ShopConfig>().ToArray();
+
+            VirtualDirectory shopFolder = Game.Directory.GetFolderFromFullPath("data/res/shop");
+            string lastShopFile = shopFolder.Files.Keys.Where(x => x.StartsWith("shop_") && x.Contains(shopName)).OrderByDescending(x => x).First();
+
+            CfgBin shopCfgBin = new CfgBin();
+            shopCfgBin.Open(Game.Directory.GetFileFromFullPath("/data/res/shop/" + lastShopFile));
+
+            shopCfgBin.ReplaceEntry("SHOP_CONFIG_INFO_BEGIN", "SHOP_CONFIG_INFO_", formatShopConfigs);
+
+            Game.Directory.GetFolderFromFullPath("/data/res/shop/").Files[lastShopFile].ByteContent = shopCfgBin.Save();
+        }
+
+        public string[] GetMapWhoContainsTreasureBoxes()
+        {
+            VirtualDirectory mapEncounterFolder = Game.Directory.GetFolderFromFullPath("/data/res/map");
+
+            return mapEncounterFolder.Folders
+                    .Where(folder =>
+                        folder.Files.Any(file =>
+                        file.Key.StartsWith(folder.Name + "_tbox")))
+                    .Select(folder => folder.Name)
+                    .ToArray();
+        }
+
+        public IItableDataMore[] GetTreasureBox(string mapName)
+        {
+            VirtualDirectory mapFolder = Game.Directory.GetFolderFromFullPath(Files["map_encounter"].Path);
+            string lastTboxConfigFile = mapFolder.GetFolder(mapName).Files.Keys.Where(x => x.StartsWith(mapName + "_tbox")).OrderByDescending(x => x).First();
+
+            CfgBin tboxConfig = new CfgBin();
+            tboxConfig.Open(Game.Directory.GetFileFromFullPath(Files["map_encounter"].Path + "/" + mapName + "/" + lastTboxConfigFile));
+
+            return tboxConfig.Entries
+                .Where(x => x.GetName() == "ITABLE_DATA_MORE_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<ItableDataMore>())
+                .ToArray();
+        }
+
+        public void SaveTreasureBox(string mapName, IItableDataMore[] itableDataMores)
+        {
+            ItableDataMore[] formatItableDataMores = itableDataMores.OfType<ItableDataMore>().ToArray();
+
+            VirtualDirectory mapFolder = Game.Directory.GetFolderFromFullPath(Files["map_encounter"].Path);
+            string lastTboxConfigFile = mapFolder.GetFolder(mapName).Files.Keys.Where(x => x.StartsWith(mapName + "_tbox")).OrderByDescending(x => x).First();
+
+            CfgBin tboxConfig = new CfgBin();
+            tboxConfig.Open(Game.Directory.GetFileFromFullPath(Files["map_encounter"].Path + "/" + mapName + "/" + lastTboxConfigFile));
+
+            tboxConfig.ReplaceEntry("ITABLE_DATA_MORE_BEGIN", "ITABLE_DATA_MORE_", formatItableDataMores);
+
+            Game.Directory.GetFolderFromFullPath("/data/res/map/" + mapName).Files[lastTboxConfigFile].ByteContent = tboxConfig.Save();
+        }
+
+        public ICapsuleConfig[] GetCapsuleConfigs()
+        {
+            VirtualDirectory capsuleFolder = Game.Directory.GetFolderFromFullPath("data/res/capsule");
+            string lastCapsuleConfig = capsuleFolder.Files.Keys.Where(x => x.StartsWith("capsule_config")).OrderByDescending(x => x).First();
+
+            CfgBin capsuleConfigFile = new CfgBin();
+            capsuleConfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/capsule/" + lastCapsuleConfig));
+
+            return capsuleConfigFile.Entries
+                .Where(x => x.GetName() == "CAPSULE_CONFIG_INFO_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<CapsuleConfig>())
+                .ToArray();
+        }
+
+        public void SaveCapsuleConfigs(ICapsuleConfig[] capsuleConfigs)
+        {
+            CapsuleConfig[] formatCapsuleConfigs = capsuleConfigs.OfType<CapsuleConfig>().ToArray();
+
+            VirtualDirectory capsuleFolder = Game.Directory.GetFolderFromFullPath("data/res/capsule");
+            string lastCapsuleConfig = capsuleFolder.Files.Keys.Where(x => x.StartsWith("capsule_config")).OrderByDescending(x => x).First();
+
+            CfgBin capsuleConfigFile = new CfgBin();
+            capsuleConfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/capsule/" + lastCapsuleConfig));
+
+            capsuleConfigFile.ReplaceEntry("CAPSULE_CONFIG_INFO_BEGIN", "CAPSULE_CONFIG_INFO_", formatCapsuleConfigs);
+
+            Game.Directory.GetFolderFromFullPath("/data/res/capsule").Files[lastCapsuleConfig].ByteContent = capsuleConfigFile.Save();
+        }
+
+        public ILegendDataConfig[] GetLegends()
+        {
+            VirtualDirectory legendFolder = Game.Directory.GetFolderFromFullPath("data/res/legend");
+            string lastLegendConfig = legendFolder.Files.Keys.Where(x => x.StartsWith("legend_config")).OrderByDescending(x => x).First();
+
+            CfgBin legendConfigFile = new CfgBin();
+            legendConfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/legend/" + lastLegendConfig));
+
+            return legendConfigFile.Entries
+                .Where(x => x.GetName() == "LEGEND_DATA_CONFIG_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<LegendDataConfig>())
+                .ToArray();
+        }
+
+        public void SaveLegends(ILegendDataConfig[] legendDataConfigs)
+        {
+            LegendDataConfig[] formatLegendConfigs = legendDataConfigs.OfType<LegendDataConfig>().ToArray();
+
+            VirtualDirectory legendFolder = Game.Directory.GetFolderFromFullPath("data/res/legend");
+            string lastLegendConfig = legendFolder.Files.Keys.Where(x => x.StartsWith("legend_config")).OrderByDescending(x => x).First();
+
+            CfgBin legendConfigFile = new CfgBin();
+            legendConfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/legend/" + lastLegendConfig));
+
+            legendConfigFile.ReplaceEntry("LEGEND_DATA_CONFIG_BEGIN", "LEGEND_DATA_CONFIG_", formatLegendConfigs);
+
+            Game.Directory.GetFolderFromFullPath("/data/res/legend").Files[lastLegendConfig].ByteContent = legendConfigFile.Save();
+        }
+
         public ICombineConfig[] GetFusions()
         {
             VirtualDirectory shopFolder = Game.Directory.GetFolderFromFullPath("data/res/shop");
@@ -432,9 +567,9 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             Game.Directory.GetFolderFromFullPath("/data/res/battle").Files[lastEncounter].ByteContent = encountConfig.Save();
         }
 
-        public void UnlockUnscoutableYokai(ICharaparam[] charaparams, ICharabase[] charabases, ICharascale[] charascales, IHackslashCharaparam[] hackslashCharaparams = null, IBattleCharaparam[] battleCharaparams = null)
+        public void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null)
         {
-            Dictionary<int, int> yoCriminalsBaseHash = new Dictionary<int, int>()
+            Dictionary<int, int> yoCriminalsBaseHashes = new Dictionary<int, int>()
             {
                 {unchecked((int)0xE81D47D4), unchecked((int)0xAAF99754)},
                 {unchecked((int)0xF8EE5663), unchecked((int)0x83927ACE)},
@@ -489,6 +624,221 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                 {unchecked((int)0x81B35AA1), unchecked((int)0x02261CC7)},
                 {unchecked((int)0x52E79EE8), unchecked((int)0x8016AEA0)},
             };
+
+            List<int> yoBossBaseHashes = new List<int>()
+            {
+                unchecked((int)0xDCD2242C),
+                unchecked((int)0x42B6B18F),
+                unchecked((int)0x5B4A38E3),
+                unchecked((int)0xC2436959),
+                unchecked((int)0xB54459CF),
+                unchecked((int)0x2B20CC6C),
+                unchecked((int)0x5C27FCFA),
+                unchecked((int)0xC52EAD40),
+                unchecked((int)0xB2299DD6),
+                unchecked((int)0x22968047),
+                unchecked((int)0x5591B0D1),
+                unchecked((int)0x35563934),
+                unchecked((int)0x425109A2),
+                unchecked((int)0xDC359C01),
+                unchecked((int)0x9251D8DC),
+                unchecked((int)0x0B588966),
+                unchecked((int)0x0C354D7F),
+                unchecked((int)0x7B327DE9),
+                unchecked((int)0x152E7C3E),
+                unchecked((int)0x62294CA8),
+                unchecked((int)0xA067BA5E),
+                unchecked((int)0x3E032FFD),
+                unchecked((int)0xF63D1DD8),
+                unchecked((int)0xEF262C99),
+                unchecked((int)0x7142B93A),
+                unchecked((int)0xC40B7F5A),
+                unchecked((int)0xDD104E1B),
+                unchecked((int)0x4374DBB8),
+                unchecked((int)0x3473EB2E),
+                unchecked((int)0xA4CCF6BF),
+                unchecked((int)0x43936395),
+                unchecked((int)0xDA9A322F),
+                unchecked((int)0xAD9D02B9),
+            };
+
+            List<int> whiteYokaiParamHashes = new List<int>()
+            {
+                unchecked((int)0x910D0C8D),
+                unchecked((int)0x08045D37),
+                unchecked((int)0x7F036DA1),
+                unchecked((int)0xE167F802),
+                unchecked((int)0x9660C894),
+                unchecked((int)0x0F69992E),
+                unchecked((int)0x786EA9B8),
+                unchecked((int)0xE8D1B429),
+                unchecked((int)0x9FD684BF),
+                unchecked((int)0xA94BAADC),
+                unchecked((int)0xDE4C9A4A),
+                unchecked((int)0x4745CBF0),
+                unchecked((int)0x3042FB66),
+            };
+
+            // Get the index of the latest befriendable yokai
+            int lastBefriendableIndex = charaparams.FindLastIndex(x =>
+            {
+                string tribeName = Tribes[x.Tribe];
+                return ((x.ScoutableHash != 0x00 && x.ShowInMedalium == true)
+                        || (x.ScoutableHash == 0x00 && x.ShowInMedalium == true && tribeName != "Boss" && tribeName != "Untribe"));
+            }) + 1;
+
+            int medalIndex = 248;
+
+            foreach (KeyValuePair<int, int> keyValuePair in yoCriminalsBaseHashes)
+            {
+                uint newParamHash = Crc32.Compute(Encoding.GetEncoding("Shift-JIS").GetBytes("added_param_" + medalIndex));
+
+                // Avoid to add already existing yokai
+                if (!charaparams.Any(x => x.ParamHash == newParamHash))
+                {
+                    // Found yo-criminal and base yokai
+                    if (charabases.Any(x => x.BaseHash == keyValuePair.Key) && charabases.Any(x => x.BaseHash == keyValuePair.Value))
+                    {
+                        // Search yo-criminal scale
+                        if (charascales.Any(x => x.BaseHash != keyValuePair.Key) && charascales.Any(x => x.BaseHash == keyValuePair.Value))
+                        {
+                            ICharascale yokaiCriminalCharascale = (ICharascale)charascales.FirstOrDefault(x => x.BaseHash == keyValuePair.Value).Clone();
+                            yokaiCriminalCharascale.BaseHash = keyValuePair.Key;
+                            charascales.Add(yokaiCriminalCharascale);
+                        }
+
+                        ICharabase yokaiBaseCharabase = charabases.FirstOrDefault(x => x.BaseHash == keyValuePair.Value);
+                        ICharabase yokaiCriminalCharabase = charabases.FirstOrDefault(x => x.BaseHash == keyValuePair.Key);
+
+                        yokaiCriminalCharabase.Tribe = yokaiBaseCharabase.Tribe;
+                        yokaiCriminalCharabase.Rank = yokaiBaseCharabase.Rank;
+                        yokaiCriminalCharabase.FavoriteFoodHash = yokaiBaseCharabase.FavoriteFoodHash;
+                        yokaiCriminalCharabase.HatedFoodHash = yokaiBaseCharabase.HatedFoodHash;
+                        yokaiCriminalCharabase.MedalPosX = yokaiBaseCharabase.MedalPosX;
+                        yokaiCriminalCharabase.MedalPosY = yokaiBaseCharabase.MedalPosY;
+                        yokaiCriminalCharabase.DescriptionHash = yokaiBaseCharabase.DescriptionHash;
+
+                        ICharaparam yokaiCriminalCharaparam = (ICharaparam)charaparams.FirstOrDefault(x => x.BaseHash == keyValuePair.Value).Clone();
+
+                        yokaiCriminalCharaparam.BaseHash = keyValuePair.Key;
+                        yokaiCriminalCharaparam.ParamHash = unchecked((int)newParamHash);
+                        yokaiCriminalCharaparam.EvolveParam = 0x00;
+                        yokaiCriminalCharaparam.EvolveLevel = 0;
+                        yokaiCriminalCharaparam.MedaliumOffset = 0;
+
+                        charaparams.Insert(lastBefriendableIndex, yokaiCriminalCharaparam);
+
+                        medalIndex++;
+                        lastBefriendableIndex++;
+                    }
+                }
+            }
+
+            foreach(int yoBossBaseHash in yoBossBaseHashes)
+            {
+                int newBaseHash = unchecked((int)Crc32.Compute(Encoding.GetEncoding("Shift-JIS").GetBytes("added_base_" + medalIndex)));
+                int newParamHash = unchecked((int)Crc32.Compute(Encoding.GetEncoding("Shift-JIS").GetBytes("added_param_" + medalIndex)));
+
+                // Avoid to add already existing yokai
+                if (!charabases.Any(x => x.BaseHash == newBaseHash))
+                {
+                    // Search boss scale
+                    if (charascales.Any(x => x.BaseHash == yoBossBaseHash))
+                    {
+                        ICharascale yokaiBossCharascale = (ICharascale)charascales.FirstOrDefault(x => x.BaseHash == yoBossBaseHash).Clone();
+                        yokaiBossCharascale.BaseHash = newBaseHash;
+                        yokaiBossCharascale.Scale1 /= 1.5f;
+                        // yokaiBossCharascale.Scale2 /= 1.5f;
+                        yokaiBossCharascale.Scale3 /= 2f;
+                        yokaiBossCharascale.Scale4 /= 2f;
+                        yokaiBossCharascale.Scale5 /= 1.1f;
+                        charascales.Add(yokaiBossCharascale);
+                    }
+                    else
+                    {
+                        ICharascale yokaiBossCharascale = new Charascale();
+                        yokaiBossCharascale.BaseHash = newBaseHash;
+                        yokaiBossCharascale.Scale1 = 0.5f;
+                        yokaiBossCharascale.Scale2 = 0.5f;
+                        yokaiBossCharascale.Scale3 = 0.5f;
+                        yokaiBossCharascale.Scale4 = 0.5f;
+                        yokaiBossCharascale.Scale5 = 0.5f;
+                        charascales.Add(yokaiBossCharascale);
+                    }
+
+                    ICharabase yokaiBossCharabase = (ICharabase)charabases.FirstOrDefault(x => x.BaseHash == yoBossBaseHash).Clone();
+                    yokaiBossCharabase.BaseHash = newBaseHash;
+                    charabases.Add(yokaiBossCharabase);
+                }
+
+                if (!charaparams.Any(x => x.ParamHash == newParamHash))
+                {
+                    // Search if the boss exists
+                    if (charabases.Any(x => x.BaseHash == yoBossBaseHash))
+                    {
+                        ICharaparam yokaiBossCharaparam = new Charaparam();
+
+                        yokaiBossCharaparam.BaseHash = newBaseHash;
+                        yokaiBossCharaparam.ParamHash = newParamHash;
+                        yokaiBossCharaparam.AttributeDamageEarth = 1;
+                        yokaiBossCharaparam.AttributeDamageFire = 1;
+                        yokaiBossCharaparam.AttributeDamageIce = 1;
+                        yokaiBossCharaparam.AttributeDamageLigthning = 1;
+                        yokaiBossCharaparam.AttributeDamageWater = 1;
+                        yokaiBossCharaparam.AttributeDamageWind = 1;
+                        yokaiBossCharaparam.EvolveParam = 0x00;
+                        yokaiBossCharaparam.EvolveLevel = 0;
+                        yokaiBossCharaparam.EvolveOffset = -1;
+                        yokaiBossCharaparam.MedaliumOffset = 0;
+                        yokaiBossCharaparam.ShowInMedalium = true;
+                        yokaiBossCharaparam.ScoutableHash = 0x13345632;
+                        yokaiBossCharaparam.Experience = 5;
+                        yokaiBossCharaparam.Money = 5;
+                        yokaiBossCharaparam.Tribe = 6;
+
+                        charaparams.Insert(lastBefriendableIndex, yokaiBossCharaparam);
+
+                        medalIndex++;
+                        lastBefriendableIndex++;
+                    }
+                }
+            }
+
+            foreach (int whiteYokaiParamHash in whiteYokaiParamHashes)
+            {
+                // Search if the boss exists
+                if (charaparams.Any(x => x.ParamHash == whiteYokaiParamHash))
+                {
+                    ICharaparam whiteYokaiCharaparam = charaparams.FirstOrDefault(x => x.ParamHash == whiteYokaiParamHash);
+                    whiteYokaiCharaparam.ShowInMedalium = true;
+                    whiteYokaiCharaparam.MedaliumOffset = 0;
+                    whiteYokaiCharaparam.ScoutableHash = 0x13345632;
+                }
+            }
+        }
+
+        public void FixYokai(List<ICharabase> charabases)
+        {
+            ICharabase dulluma = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0x871F067C));
+            if (dulluma != null)
+            {
+                dulluma.Rank = 0;
+            }
+
+            ICharabase mochismo = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0xAFB681D1));
+            if (mochismo != null)
+            {
+                if (mochismo.Rank > 0x01)
+                {
+                    mochismo.Rank = 0x01;
+                }
+            }
+
+            ICharabase buhu = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0xADF03F88));
+            if (buhu != null)
+            {
+                buhu.Rank = 0;
+            }
         }
     }
 }

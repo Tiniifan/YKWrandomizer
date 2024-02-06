@@ -6,14 +6,56 @@ namespace YKWrandomizer.Yokai_Watch.Common
     {
         public static Dictionary<string, List<uint>> YW1 = new Dictionary<string, List<uint>>
         {
-             {"/seq/phs/c01_trigger_0.01.xq", new List<uint>(){ 0x987 } },
-            {"/seq/phs/c02_trigger_0.01.xq", new List<uint>(){ 0x7E4 } },
-            {"/seq/phs/c03_trigger_0.01.xq", new List<uint>(){ 0x4E3 } },
-            {"/seq/phs/c04_trigger_0.01.xq", new List<uint>(){ 0x58C } },
-            {"/seq/phs/c06_trigger_0.01.xq", new List<uint>(){ 0x66D } },
-            {"/seq/phs/c07_trigger_0.01.xq", new List<uint>(){ 0x2F1 } },
-            {"/seq/phs/c09_trigger_0.01.xq", new List<uint>(){ 0x2E7 } },
-            {"/seq/phs/c11_trigger_0.01.xq", new List<uint>(){ 0xD62 } },
+             {"c01_trigger_0.01.xq", new List<uint>()
+                { 
+                    0x987 
+                } 
+             },
+            {"c02_trigger_0.01.xq", new List<uint>()
+                {
+                    0x987
+                }
+             },
+            {"c03_trigger_0.01.xq", new List<uint>()
+                {
+                    0x987
+                }
+             },
+            {"c04_trigger_0.01.xq", new List<uint>()
+                {
+                    0x987
+                }
+             },
+            {"c05_trigger_0.01.xq", new List<uint>()
+                {
+                    0x987
+                }
+             },
+            {"c06_trigger_0.01.xq", new List<uint>()
+                {
+                    0x987
+                }
+             },
+            {"c07_trigger_0.01.xq", new List<uint>()
+                {
+                    0x987
+                }
+             },
+            {"c08_trigger_0.01.xq", new List<uint>()
+                {
+                    0x987
+                }
+             },
+            {"c09_trigger_0.01.xq", new List<uint>()
+                {
+                    0x987
+                }
+             },
+            {"c10_trigger_0.01.xq", new List<uint>()
+                {
+                    0x987
+                }
+             },
         };
 
         public static Dictionary<string, List<uint>> YW3 = new Dictionary<string, List<uint>>

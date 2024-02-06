@@ -41,11 +41,11 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1.Logic
         public new int Drop2Rate { get => base.Drop2Rate; set => base.Drop2Rate = value; }
         public int Unk11 { get; set; }
         public int Unk12 { get; set; }
-        public int Unk13 { get; set; }
-        public int Unk14 { get; set; }
-        public int Unk15 { get; set; }
-        public int Unk16 { get; set; }
-        public int Unk17 { get; set; }
+        public int GrownHP { get; set; }
+        public int GrownStrength { get; set; }
+        public int GrownSpirit { get; set; }
+        public int GrownDefense { get; set; }
+        public int GrownSpeed { get; set; }
         public new int ExperienceCurve { get => base.ExperienceCurve; set => base.ExperienceCurve = value; }
         public new int Quote1 { get => base.Quote1; set => base.Quote1 = value; }
         public new int Quote2 { get => base.Quote2; set => base.Quote2 = value; }

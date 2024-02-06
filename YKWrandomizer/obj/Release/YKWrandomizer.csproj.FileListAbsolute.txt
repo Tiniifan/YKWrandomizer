@@ -7,3 +7,4 @@ C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomi
 C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomizer.exe
 C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomizer.pdb
 C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomizer.csproj.AssemblyReference.cache
+C:\Users\Mathieu\source\repos\YKWrandomizer\YKWrandomizer\obj\Release\YKWrandomizer.NewProjectWindow.resources
