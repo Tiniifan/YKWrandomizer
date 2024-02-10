@@ -35,7 +35,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
 
         public Dictionary<int, string> ScoutablesType => Common.ScoutablesType.YW1;
 
-        public Dictionary<string, int> BossBattles => Common.Battles.BossBattles.YW1;
+        public Dictionary<int, int> BossBattles => Common.Battles.BossBattles.YW1;
 
         public ARC0 Game { get; set; }
 
@@ -835,6 +835,29 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             {
                 buhu.Rank = 0;
             }
+        }
+
+        public void FixArea(Dictionary<string, (List<int>, List<int>)> areas)
+        {
+            // dulluma fusion quest
+            areas["t101d03"].Item1[0] = unchecked((int)0xAEACEBD9);
+
+            // mochusmo fusion quest
+            areas["t103d11"].Item1[0] = unchecked((int)0x86056C74);
+        }
+
+        public void FixShop()
+        {
+            // Carp quest
+
+            (IShopConfig[], IShopValidCondition[]) shopData = GetShop("shop_shpN007");
+            IShopConfig[] shopConfigs = shopData.Item1;
+
+            shopConfigs[0].ItemHash = unchecked((int)0x389FE8FC);
+            shopConfigs[0].Price = 100;
+
+            // Save
+            SaveShop("shop_shpN007.cfg", shopConfigs, null);
         }
     }
 }

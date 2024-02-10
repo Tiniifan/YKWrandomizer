@@ -986,7 +986,7 @@ namespace YKWrandomizer.Yokai_Watch
                     .Select(bossBattle =>
                     {
                         // Join table and supposed boss level
-                        IEncountTable encountTable = (IEncountTable)encountTables.FirstOrDefault(x => x.EncountConfigHash == (int)Crc32.Compute(Encoding.UTF8.GetBytes(bossBattle.Key))).Clone();
+                        IEncountTable encountTable = (IEncountTable)encountTables.FirstOrDefault(x => x.EncountConfigHash == bossBattle.Key).Clone();
                         return (encountTable, bossBattle.Value);
                     })
                     .Where(tuple => tuple.encountTable != null)
@@ -996,10 +996,10 @@ namespace YKWrandomizer.Yokai_Watch
 
                 for (int i = 0; i < bossEncountTables.Count(); i++)
                 {
-                    KeyValuePair<string, int> bossBattle = Game.BossBattles.ElementAt(i);
+                    KeyValuePair<int, int> bossBattle = Game.BossBattles.ElementAt(i);
 
                     // Get boss encount table
-                    IEncountTable encountTable = encountTables.FirstOrDefault(x => x.EncountConfigHash == (int)Crc32.Compute(Encoding.UTF8.GetBytes(bossBattle.Key)));
+                    IEncountTable encountTable = encountTables.FirstOrDefault(x => x.EncountConfigHash == bossBattle.Key);
 
                     if (encountTable != null)
                     {
@@ -1057,11 +1057,6 @@ namespace YKWrandomizer.Yokai_Watch
                             }
                         }
                     }
-                }
-
-                foreach (KeyValuePair<string, int> bossBattle in Game.BossBattles)
-                {
-
                 }
 
                 // Save static encounters
@@ -1144,87 +1139,63 @@ namespace YKWrandomizer.Yokai_Watch
                     // Generate random scoutable list
                     for (int i = 0; i < area.Value.Item1; i++)
                     {
-                        if (Game.Name == "Yo-Kai Watch 1" && i < 3 && (area.Key == "t101d03" || area.Key == "t103d11"))
+                        int getProbability = Seed.Probability(new int[] { 25, 25, 20, 15, 9, 5, 1 });
+                        List<(ICharaparam, ICharabase)> filtredScoutableYokai = new List<(ICharaparam, ICharabase)>();
+
+                        if (getProbability == 0)
                         {
-                            int paramHash = 0x0;
-
-                            if (area.Key == "t101d03")
-                            {
-                                // Dulluma fusion quest
-                                paramHash = unchecked((int)0xAEACEBD9);
-                            } else if (area.Key == "t103d11")
-                            {
-                                // Mochismo fusion quest
-                                paramHash = unchecked((int)0x86056C74);
-                            }
-
-                            if (paramHash != 0x00 && usedParamHashes.ContainsKey(paramHash) == false)
-                            {
-                                usedParamHashes.Add(paramHash, true);
-                            }
-
-                            scoutableHashes.Add(paramHash);
-                        } 
+                            // E rank
+                            filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 0).ToList();
+                        }
+                        else if (getProbability == 1)
+                        {
+                            // D rank
+                            filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 1).ToList();
+                        }
+                        else if (getProbability == 2)
+                        {
+                            // C rank
+                            filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 2).ToList();
+                        }
+                        else if (getProbability == 3)
+                        {
+                            // B rank
+                            filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 3).ToList();
+                        }
+                        else if (getProbability == 4)
+                        {
+                            // A rank
+                            filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 4).ToList();
+                        }
+                        else if (getProbability == 5)
+                        {
+                            // S rank
+                            filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 5).ToList();
+                        }
                         else
                         {
-                            int getProbability = Seed.Probability(new int[] { 25, 25, 20, 15, 9, 5, 1 });
-                            List<(ICharaparam, ICharabase)> filtredScoutableYokai = new List<(ICharaparam, ICharabase)>();
-
-                            if (getProbability == 0)
-                            {
-                                // E rank
-                                filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 0).ToList();
-                            }
-                            else if (getProbability == 1)
-                            {
-                                // D rank
-                                filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 1).ToList();
-                            }
-                            else if (getProbability == 2)
-                            {
-                                // C rank
-                                filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 2).ToList();
-                            }
-                            else if (getProbability == 3)
-                            {
-                                // B rank
-                                filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 3).ToList();
-                            }
-                            else if (getProbability == 4)
-                            {
-                                // A rank
-                                filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 4).ToList();
-                            }
-                            else if (getProbability == 5)
-                            {
-                                // S rank
-                                filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.Rank == 5).ToList();
-                            }
-                            else
-                            {
-                                // Rare yokai
-                                filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.IsRare == true).ToList();
-                            }
-
-                            int paramHash = 0x0;
-
-                            // Select random yokai
-                            if (filtredScoutableYokai.Count != 0)
-                            {
-                                paramHash = filtredScoutableYokai[Seed.Next(filtredScoutableYokai.Count())].Item1.ParamHash;
-                            }
-                            else
-                            {
-                                paramHash = scoutableYokai[Seed.Next(scoutableYokai.Count())].Item1.ParamHash;
-                            }
-
-                            if (paramHash != 0x00 && usedParamHashes.ContainsKey(paramHash) == false)
-                            {
-                                usedParamHashes.Add(paramHash, true);
-                            }
-
-                            scoutableHashes.Add(paramHash);
+                            // Rare yokai
+                            filtredScoutableYokai = scoutableYokai.Where(x => x.Item2.IsRare == true).ToList();
                         }
+
+                        int paramHash = 0x0;
+
+                        // Select random yokai
+                        if (filtredScoutableYokai.Count != 0)
+                        {
+                            paramHash = filtredScoutableYokai[Seed.Next(filtredScoutableYokai.Count())].Item1.ParamHash;
+                        }
+                        else
+                        {
+                            paramHash = scoutableYokai[Seed.Next(scoutableYokai.Count())].Item1.ParamHash;
+                        }
+
+                        if (paramHash != 0x00 && usedParamHashes.ContainsKey(paramHash) == false)
+                        {
+                            usedParamHashes.Add(paramHash, true);
+                        }
+
+                        scoutableHashes.Add(paramHash);
                     }
 
                     // Generate random static list
@@ -1277,6 +1248,9 @@ namespace YKWrandomizer.Yokai_Watch
                         usedParamHashes.Add(unusedYokais[i].Item1.ParamHash, true);
                     }
                 }
+
+                // Fix Area to prevent soft lock
+                Game.FixArea(randomAreas);
 
                 // Save randomized area
                 foreach (KeyValuePair<string, (List<int>, List<int>)> randomArea in randomAreas)
@@ -1373,6 +1347,8 @@ namespace YKWrandomizer.Yokai_Watch
                 // Save
                 Game.SaveShop(shopFile, shopConfigs, validConditions);
             }
+
+            Game.FixShop();
         }
 
         public void RandomizeTreasureBox(bool randomize)
@@ -1523,6 +1499,9 @@ namespace YKWrandomizer.Yokai_Watch
                 if (Game.Name == "Yo-Kai Watch 1")
                 {
                     charaparam.ScoutableHash = 0x13345632;
+                } else if (Game.Name == "Yo-Kai Watch 2")
+                {
+                    charaparam.ScoutableHash = 0x00654331;
                 }
             }
 

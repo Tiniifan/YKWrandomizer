@@ -34,7 +34,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
 
         public Dictionary<int, string> ScoutablesType => Common.ScoutablesType.YW2;
 
-        public Dictionary<string, int> BossBattles => Common.Battles.BossBattles.YW2;
+        public Dictionary<int, int> BossBattles => Common.Battles.BossBattles.YW2;
 
         public ARC0 Game { get; set; }
 
@@ -444,7 +444,6 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                 formatShopValidCondition = shopValidConditions.OfType<ShopValidCondition>().ToArray();
             }
 
-
             VirtualDirectory shopFolder = Game.Directory.GetFolderFromFullPath("data/res/shop");
             string lastShopFile = shopFolder.Files.Keys.Where(x => x.StartsWith("shop_") && x.Contains(shopName)).OrderByDescending(x => x).First();
 
@@ -829,6 +828,12 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                     ICharaparam unbefriendableYokaiCharaparam = charaparams.FirstOrDefault(x => x.ParamHash == unbefriendableYokaiParamHash);
                     unbefriendableYokaiCharaparam.ShowInMedalium = true;
                     unbefriendableYokaiCharaparam.ScoutableHash = 0x00654331;
+
+                    if (unbefriendableYokaiCharaparam.MedaliumOffset == 0)
+                    {
+                        unbefriendableYokaiCharaparam.MedaliumOffset = 449;
+                    }
+
                 }
             }
 
@@ -851,6 +856,17 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                         yokaiBossCharascale.Scale4 /= 1.5f;
                         yokaiBossCharascale.Scale5 /= 1.1f;
                         yokaiBossCharascale.Scale6 /= 1.5f;
+
+                        if (yoBossBaseHash == unchecked((int)0xC437BB7D))
+                        {
+                            yokaiBossCharascale.Scale1 /= 2f;
+                            yokaiBossCharascale.Scale2 /= 2f;
+                            yokaiBossCharascale.Scale3 /= 2f;
+                            yokaiBossCharascale.Scale4 /= 2f;
+                            yokaiBossCharascale.Scale5 /= 2f;
+                            yokaiBossCharascale.Scale6 /= 2f;
+                        }
+
                         charascales.Add(yokaiBossCharascale);
                     }
                     else
@@ -887,7 +903,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                     yokaiBossCharaparam.EvolveParam = 0x00;
                     yokaiBossCharaparam.EvolveLevel = 0;
                     yokaiBossCharaparam.EvolveOffset = -1;
-                    yokaiBossCharaparam.MedaliumOffset = 0x1;
+                    yokaiBossCharaparam.MedaliumOffset = 449;
                     yokaiBossCharaparam.ShowInMedalium = true;
                     yokaiBossCharaparam.ScoutableHash = 0x00654331;
                     yokaiBossCharaparam.EquipmentSlotsAmount = 1;
@@ -910,6 +926,95 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
             if (brushido != null)
             {
                 brushido.Rank = 0;
+            }
+
+            ICharabase ake = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0x3D3DBE2C));
+            if (ake != null)
+            {
+                ake.Rank = 0;
+            }
+
+            ICharabase flushback = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0x12589D32));
+            if (flushback != null)
+            {
+                flushback.Rank = 0;
+            }
+
+            ICharabase wiglin = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0x9A067621));
+            if (wiglin != null)
+            {
+                wiglin.Rank = 0;
+            }
+
+            ICharabase rhyth = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0xA83014A3));
+            if (rhyth != null)
+            {
+                if (rhyth.Rank > 0x01)
+                {
+                    rhyth.Rank = 0x01;
+                }
+            }
+
+            ICharabase steppa = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0x831D4760));
+            if (steppa != null)
+            {
+                steppa.Rank = 0;
+            }
+
+            ICharabase fidgephant = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0xA7665F91));
+            if (fidgephant != null)
+            {
+                if (fidgephant.Rank > 0x01)
+                {
+                    fidgephant.Rank = 0x01;
+                }
+            }
+        }
+
+        public void FixArea(Dictionary<string, (List<int>, List<int>)> areas)
+        {
+            // Les 3 algues de morts and Flushback
+            areas["t121d11"].Item1[0] = unchecked((int)0xE516B755);
+            areas["t121d11"].Item1[2] = unchecked((int)0xCE3BE496);
+            areas["t121d11"].Item1[1] = unchecked((int)0xFC0D8614);
+            areas["t121d11"].Item1[3] = unchecked((int)0x74536D07);
+
+            // Ake fusion quest
+            areas["t103d11"].Item1[0] = unchecked((int)0x5B364E19);
+
+            // fidgephant
+            areas["t131g00"].Item1[5] = unchecked((int)0xC16DAFA4);
+            areas["t131g00"].Item1[6] = unchecked((int)0xC16DAFA4);
+            areas["t131g00"].Item1[7] = unchecked((int)0xC16DAFA4);
+        }
+
+        public void FixShop()
+        {
+            // Bamboo quest
+            string[] files = new string[] { "shop_shpN024.cfg", "shop_shpN024_0.01n.cfg" };
+            int[] pos = new int[] { 2, 4 };
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                (IShopConfig[], IShopValidCondition[]) shopData = GetShop(files[i]);
+                IShopConfig[] shopConfigs = shopData.Item1;
+                IShopValidCondition[] validConditions = null;
+
+                if (shopData.Item2 != null && shopData.Item2.Length > 0)
+                {
+                    validConditions = shopData.Item2;
+                }
+
+                shopConfigs[pos[i]].ItemHash = unchecked((int)0x3CF5AC04);
+                shopConfigs[pos[i]].Price = 500;
+
+                if (validConditions != null && shopConfigs[pos[i]].ShopValidConditionIndex != -1)
+                {
+                    validConditions[shopConfigs[pos[i]].ShopValidConditionIndex].Price = 500;
+                }
+
+                // Save
+                SaveShop(files[i], shopConfigs, validConditions);
             }
         }
     }

@@ -25,7 +25,7 @@ namespace YKWrandomizer.Yokai_Watch.Games
 
         Dictionary<int, string> ScoutablesType { get; }
 
-        Dictionary<string, int> BossBattles { get; }
+        Dictionary<int, int> BossBattles { get; }
 
         ARC0 Game { get; set; }
 
@@ -108,5 +108,9 @@ namespace YKWrandomizer.Yokai_Watch.Games
         void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null);
 
         void FixYokai(List<ICharabase> charabases);
+
+        void FixArea(Dictionary<string, (List<int>, List<int>)> areas);
+
+        void FixShop();
     }
 }

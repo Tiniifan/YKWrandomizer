@@ -33,7 +33,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public Dictionary<int, string> ScoutablesType => Common.ScoutablesType.YW3;
 
-        public Dictionary<string, int> BossBattles => Common.Battles.BossBattles.YW1;
+        public Dictionary<int, int> BossBattles => Common.Battles.BossBattles.YW1;
 
         public ARC0 Game { get; set; }
 
@@ -630,6 +630,16 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
         }
 
         public void FixYokai(List<ICharabase> charabases)
+        {
+
+        }
+
+        public void FixArea(Dictionary<string, (List<int>, List<int>)> areas)
+        {
+
+        }
+
+        public void FixShop()
         {
 
         }
