@@ -39,7 +39,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2.Logic
         public new int AbilityHash { get => base.AbilityHash; set => base.AbilityHash = value; }
         public new int Money { get => base.Money; set => base.Money = value; }
         public new int Experience { get => base.Experience; set => base.Experience = value; }
-        public int Unk9 { get; set; }
+        public new int EquipmentSlotsAmount { get => base.EquipmentSlotsAmount; set => base.EquipmentSlotsAmount = value; }
         public new int Drop1Hash { get => base.Drop1Hash; set => base.Drop1Hash = value; }
         public new int Drop1Rate { get => base.Drop1Rate; set => base.Drop1Rate = value; }
         public new int Drop2Hash { get => base.Drop2Hash; set => base.Drop2Hash = value; }
@@ -54,7 +54,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2.Logic
         public int Unk12 { get; set; }
         public new int EvolveOffset { get => base.EvolveOffset; set => base.EvolveOffset = value; }
         public new int MedaliumOffset { get => base.MedaliumOffset; set => base.MedaliumOffset = value; }
-        public int Unk13 { get; set; }
+        public new bool ShowInMedalium { get => base.ShowInMedalium; set => base.ShowInMedalium = value; }
         public int Unk14 { get; set; }
         public int Unk15 { get; set; }
     }

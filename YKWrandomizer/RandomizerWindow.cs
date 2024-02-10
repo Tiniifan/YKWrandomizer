@@ -91,31 +91,15 @@ namespace YKWrandomizer
                     groupBoxStrongest.Text = "Attribute damage";
                     groupBoxWaitTime.Enabled = false;
                     yokaiTabControl.TabPages.RemoveAt(3);
-                                    
-
-                    // Tempory restriction
-                    groupBoxDrop.Enabled = true;
-                    checkBoxScaleMoney.Enabled = true;
-                    checkBoxScaleEXP.Enabled = true;
-                    groupBoxShop.Enabled = true;
-                    groupBoxTreasureBox.Enabled = true;
-                    groupBoxCrankKai.Enabled = true;
                 }
                 else if (game is YW2)
                 {
-                    groupBoxGivenYokai.Enabled = false;
-                    groupBoxWaitTime.Enabled = false;
+                    groupBoxRole.Enabled = false;
+                    groupBoxSoul.Enabled = false;
                     groupBoxWeakness.Enabled = false;
-                    groupBoxSoul.Enabled = true;
                     groupBoxStrongest.Text = "Attribute damage";
-
-                    // Tempory restriction
-                    groupBoxDrop.Enabled = true;
-                    checkBoxScaleMoney.Enabled = true;
-                    checkBoxScaleEXP.Enabled = true;
-                    groupBoxShop.Enabled = true;
-                    groupBoxTreasureBox.Enabled = true;
-                    groupBoxCrankKai.Enabled = true;
+                    groupBoxWaitTime.Enabled = false;
+                    yokaiTabControl.TabPages.RemoveAt(3);
                 }
                 else if (game is YW3)
                 {
@@ -144,7 +128,7 @@ namespace YKWrandomizer
             }
         }
 
-        private async void RandomizeSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RandomizeSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             label4.Text = "Randomize";
             label4.Visible = true;
@@ -156,41 +140,26 @@ namespace YKWrandomizer
             progressBar1.Value = 0;
             randomizeSaveToolStripMenuItem.Enabled = false;
 
-            await Task.Run(() =>
-            {
-                Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.SwapBosses(checkBoxSwapBosses.Checked, checkBoxStatScaling.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeShop(radioButtonShop2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                comboBoxSetStarter.Invoke((Action)delegate
-                {
-                    Randomizer.RandomizeGiven(radioButtonGiven2.Checked, new int[] { comboBoxSetStarter.SelectedIndex });
-                });
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            });
+            Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
+            Console.WriteLine("Done RemoveUnscoutableYokai");
+            Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
+            Console.WriteLine("Done RandomizeLegendary");
+            Randomizer.SwapBosses(checkBoxSwapBosses.Checked, checkBoxStatScaling.Checked);
+            Console.WriteLine("Done SwapBosses");
+            Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
+            Console.WriteLine("Done RandomizeYokai");
+            Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
+            Console.WriteLine("Done RandomizeStatic");
+            Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
+            Console.WriteLine("Done RandomizeWild");
+            Randomizer.RandomizeShop(radioButtonShop2.Checked);
+            Console.WriteLine("Done RandomizeShop");
+            Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
+            Console.WriteLine("Done RandomizeTreasureBox");
+            Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
+            Console.WriteLine("Done RandomizeCrankKai");
+            Randomizer.RandomizeGiven(radioButtonGiven2.Checked, new int[] { comboBoxSetStarter.SelectedIndex });
+            Console.WriteLine("Done RandomizeGiven");
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = Path.GetFileName(openFileDialog1.FileName);

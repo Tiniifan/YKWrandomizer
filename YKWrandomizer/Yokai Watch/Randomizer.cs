@@ -289,12 +289,12 @@ namespace YKWrandomizer.Yokai_Watch
                 if (options["groupBoxDrop"].Name == "Random")
                 {
                     // Prevent to randomize key items
-                    if (Items.Any(x => x.ItemHash == charaparam.Drop1Hash))
+                    if (Items.Any(x => x.ItemHash == charaparam.Drop1Hash) || charaparam.Drop1Hash == 0x0)
                     {
                         charaparam.Drop1Hash = Items.ElementAt(Seed.GetNumbers(0, Items.Count, 2)[0]).ItemHash;
                     }
 
-                    if (Items.Any(x => x.ItemHash == charaparam.Drop2Hash))
+                    if (Items.Any(x => x.ItemHash == charaparam.Drop2Hash) || charaparam.Drop2Hash == 0x0)
                     {
                         charaparam.Drop2Hash = Items.ElementAt(Seed.GetNumbers(0, Items.Count, 2)[0]).ItemHash;
                     }
@@ -1164,7 +1164,8 @@ namespace YKWrandomizer.Yokai_Watch
                             }
 
                             scoutableHashes.Add(paramHash);
-                        } else
+                        } 
+                        else
                         {
                             int getProbability = Seed.Probability(new int[] { 25, 25, 20, 15, 9, 5, 1 });
                             List<(ICharaparam, ICharabase)> filtredScoutableYokai = new List<(ICharaparam, ICharabase)>();
@@ -1335,19 +1336,16 @@ namespace YKWrandomizer.Yokai_Watch
             // Get all files starting with "shop_shp" from the specified directory
             var files = Game.Game.Directory.GetFolderFromFullPath(Game.Files["shop"].Path).Files.Keys;
 
-            // Group files by their common prefix (everything up to the last "_")
-            var fileGroups = files
-                .Where(x => x.StartsWith("shop_shp"))
-                .GroupBy(x => x.Substring(x.LastIndexOf('_') + 1));
-
-            // Select the last file from each group based on the ordering
-            var shopFiles = fileGroups
-                .Select(group => group.OrderByDescending(x => x).First());
-
-            foreach (string shopFile in shopFiles)
+            foreach (string shopFile in files.Where(x => x.StartsWith("shop_shp")))
             {
                 (IShopConfig[], IShopValidCondition[]) shopData = Game.GetShop(shopFile);
                 IShopConfig[] shopConfigs = shopData.Item1;
+                IShopValidCondition[] validConditions = null;
+
+                if (shopData.Item2 != null && shopData.Item2.Length > 0)
+                {
+                    validConditions = shopData.Item2;
+                }
 
                 // Generate random items
                 int[] randomItemsIndex = Seed.GetNumbers(0, autorizedItems.Length, shopConfigs.Length).ToArray();
@@ -1364,11 +1362,16 @@ namespace YKWrandomizer.Yokai_Watch
                         {
                             shopConfigs[i].Price = randomItem.PurchasePrice;
                         }
+
+                        if (validConditions != null && shopConfigs[i].ShopValidConditionIndex != -1)
+                        {
+                            validConditions[shopConfigs[i].ShopValidConditionIndex].Price = randomItem.PurchasePrice;
+                        }
                     }
                 }
 
                 // Save
-                Game.SaveShop(shopFile, shopConfigs, null);
+                Game.SaveShop(shopFile, shopConfigs, validConditions);
             }
         }
 
@@ -1661,7 +1664,7 @@ namespace YKWrandomizer.Yokai_Watch
                         // Check if the bytes int read is a charaparam hash
                         if (Charaparams.Any(x => x.ParamHash == bytesInt))
                         {
-                            if (Game.Name == "Yo-Kai Watch 1" && fileCount == 0 && yokaiCount == 0 && starters[0] != -1)
+                            if ((Game.Name == "Yo-Kai Watch 1" || Game.Name == "Yo-Kai Watch 2") && fileCount == 0 && yokaiCount == 0 && starters[0] != -1)
                             {
                                 // Change the starter
                                 bytesInt = allYokais[starters[0]];

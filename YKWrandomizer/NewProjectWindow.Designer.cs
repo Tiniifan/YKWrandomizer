@@ -68,7 +68,8 @@ namespace YKWrandomizer
             // 
             this.gameComboBox.FormattingEnabled = true;
             this.gameComboBox.Items.AddRange(new object[] {
-            "Yo-Kai Watch 1"});
+            "Yo-Kai Watch 1",
+            "Yo-Kai Watch 2"});
             this.gameComboBox.Location = new System.Drawing.Point(129, 25);
             this.gameComboBox.Name = "gameComboBox";
             this.gameComboBox.Size = new System.Drawing.Size(206, 21);

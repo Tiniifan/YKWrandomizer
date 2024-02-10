@@ -124,7 +124,10 @@
     <Compile Include="Yokai Watch\Games\YW1\Logic\CapsuleConfig.cs" />
     <Compile Include="Yokai Watch\Games\YW1\Logic\ShopConfig.cs" />
     <Compile Include="Yokai Watch\Games\YW1\Logic\TBox.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\CapsuleConfig.cs" />
     <Compile Include="Yokai Watch\Games\YW2\Logic\CombineConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\ShopConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW2\Logic\TBox.cs" />
     <Compile Include="Yokai Watch\Games\YW3\Logic\CombineConfig.cs" />
     <Compile Include="Yokai Watch\Games\YW3\Logic\EncountConfig.cs" />
     <Compile Include="Yokai Watch\Games\YWB\Logic\CombineConfig.cs" />

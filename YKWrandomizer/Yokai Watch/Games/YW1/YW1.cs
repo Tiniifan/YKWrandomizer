@@ -750,7 +750,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                         yokaiBossCharascale.Scale1 /= 1.5f;
                         // yokaiBossCharascale.Scale2 /= 1.5f;
                         yokaiBossCharascale.Scale3 /= 2f;
-                        yokaiBossCharascale.Scale4 /= 2f;
+                        yokaiBossCharascale.Scale4 /= 1.5f;
                         yokaiBossCharascale.Scale5 /= 1.1f;
                         charascales.Add(yokaiBossCharascale);
                     }
@@ -773,34 +773,30 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
 
                 if (!charaparams.Any(x => x.ParamHash == newParamHash))
                 {
-                    // Search if the boss exists
-                    if (charabases.Any(x => x.BaseHash == yoBossBaseHash))
-                    {
-                        ICharaparam yokaiBossCharaparam = new Charaparam();
+                    ICharaparam yokaiBossCharaparam = new Charaparam();
 
-                        yokaiBossCharaparam.BaseHash = newBaseHash;
-                        yokaiBossCharaparam.ParamHash = newParamHash;
-                        yokaiBossCharaparam.AttributeDamageEarth = 1;
-                        yokaiBossCharaparam.AttributeDamageFire = 1;
-                        yokaiBossCharaparam.AttributeDamageIce = 1;
-                        yokaiBossCharaparam.AttributeDamageLigthning = 1;
-                        yokaiBossCharaparam.AttributeDamageWater = 1;
-                        yokaiBossCharaparam.AttributeDamageWind = 1;
-                        yokaiBossCharaparam.EvolveParam = 0x00;
-                        yokaiBossCharaparam.EvolveLevel = 0;
-                        yokaiBossCharaparam.EvolveOffset = -1;
-                        yokaiBossCharaparam.MedaliumOffset = 0;
-                        yokaiBossCharaparam.ShowInMedalium = true;
-                        yokaiBossCharaparam.ScoutableHash = 0x13345632;
-                        yokaiBossCharaparam.Experience = 5;
-                        yokaiBossCharaparam.Money = 5;
-                        yokaiBossCharaparam.Tribe = 6;
+                    yokaiBossCharaparam.BaseHash = newBaseHash;
+                    yokaiBossCharaparam.ParamHash = newParamHash;
+                    yokaiBossCharaparam.AttributeDamageEarth = 1;
+                    yokaiBossCharaparam.AttributeDamageFire = 1;
+                    yokaiBossCharaparam.AttributeDamageIce = 1;
+                    yokaiBossCharaparam.AttributeDamageLigthning = 1;
+                    yokaiBossCharaparam.AttributeDamageWater = 1;
+                    yokaiBossCharaparam.AttributeDamageWind = 1;
+                    yokaiBossCharaparam.EvolveParam = 0x00;
+                    yokaiBossCharaparam.EvolveLevel = 0;
+                    yokaiBossCharaparam.EvolveOffset = -1;
+                    yokaiBossCharaparam.MedaliumOffset = 0;
+                    yokaiBossCharaparam.ShowInMedalium = true;
+                    yokaiBossCharaparam.ScoutableHash = 0x13345632;
+                    yokaiBossCharaparam.Experience = 5;
+                    yokaiBossCharaparam.Money = 5;
+                    yokaiBossCharaparam.Tribe = 6;
 
-                        charaparams.Insert(lastBefriendableIndex, yokaiBossCharaparam);
+                    charaparams.Insert(lastBefriendableIndex, yokaiBossCharaparam);
 
-                        medalIndex++;
-                        lastBefriendableIndex++;
-                    }
+                    medalIndex++;
+                    lastBefriendableIndex++;
                 }
             }
 

@@ -65,6 +65,8 @@
         public int DropOniOrbRate { get; set; }
         public int DropOniOrb { get; set; }
 
+        public int EquipmentSlotsAmount { get; set; }
+
         public object Clone()
         {
             return MemberwiseClone();
