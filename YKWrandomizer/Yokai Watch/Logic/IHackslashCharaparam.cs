@@ -8,5 +8,10 @@
         public int SoultimateHash { get; set; }
         public int AttackYHash { get; set; }
         public int AttackXHash { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

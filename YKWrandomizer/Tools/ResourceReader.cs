@@ -28,7 +28,7 @@ namespace YKWrandomizer.Tools
 
             if (resourcePath == null)
             {
-                throw new FileNotFoundException("Resource not found");
+                throw new FileNotFoundException("Resource not found " + Path);
             }
 
             return executingAssembly.GetManifestResourceStream(resourcePath);

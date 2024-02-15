@@ -104,7 +104,7 @@
     <Compile Include="Yokai Watch\Common\Type\Speeds.cs" />
     <Compile Include="Tools\Draw.cs" />
     <Compile Include="Tools\ResourceReader.cs" />
-    <Compile Include="Yokai Watch\Common\Yokais\YokaiGiven.cs" />
+    <Compile Include="Yokai Watch\Common\Yokais\MiniBossBlastersT.cs" />
     <Compile Include="Yokai Watch\Common\Type\ExperienceCurves.cs" />
     <Compile Include="Yokai Watch\Common\Type\Ranks.cs" />
     <Compile Include="Yokai Watch\Common\Type\Attribute.cs" />
@@ -128,8 +128,12 @@
     <Compile Include="Yokai Watch\Games\YW2\Logic\CombineConfig.cs" />
     <Compile Include="Yokai Watch\Games\YW2\Logic\ShopConfig.cs" />
     <Compile Include="Yokai Watch\Games\YW2\Logic\TBox.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\CapsuleConfig.cs" />
     <Compile Include="Yokai Watch\Games\YW3\Logic\CombineConfig.cs" />
     <Compile Include="Yokai Watch\Games\YW3\Logic\EncountConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\Legendconfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\ShopConfig.cs" />
+    <Compile Include="Yokai Watch\Games\YW3\Logic\TBox.cs" />
     <Compile Include="Yokai Watch\Games\YWB\Logic\CombineConfig.cs" />
     <Compile Include="Yokai Watch\Games\YWB\Logic\EncountConfig.cs" />
     <Compile Include="Yokai Watch\Logic\ILegendConfig.cs" />

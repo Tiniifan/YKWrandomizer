@@ -9,5 +9,10 @@
         public int Drop1Rate { get; set; }
         public int Drop2Hash { get; set; }
         public int Drop2Rate { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

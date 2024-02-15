@@ -171,16 +171,16 @@ namespace YKWrandomizer
             this.radioButtonShop2 = new System.Windows.Forms.RadioButton();
             this.radioButtonShop1 = new System.Windows.Forms.RadioButton();
             this.groupBoxGivenYokai = new System.Windows.Forms.GroupBox();
+            this.comboBoxSetStarter = new System.Windows.Forms.ComboBox();
             this.radioButtonGiven2 = new System.Windows.Forms.RadioButton();
+            this.checkBoxSetStarter = new System.Windows.Forms.CheckBox();
             this.radioButtonGiven1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxRequestedYokai = new System.Windows.Forms.GroupBox();
+            this.checkBoxUnlockYokai = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkBoxSetStarter = new System.Windows.Forms.CheckBox();
-            this.comboBoxSetStarter = new System.Windows.Forms.ComboBox();
-            this.checkBoxUnlockYokai = new System.Windows.Forms.CheckBox();
-            this.groupBoxRequestedYokai = new System.Windows.Forms.GroupBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -972,9 +972,9 @@ namespace YKWrandomizer
             this.radioButtonDrop2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioButtonDrop2.Location = new System.Drawing.Point(18, 50);
             this.radioButtonDrop2.Name = "radioButtonDrop2";
-            this.radioButtonDrop2.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonDrop2.Size = new System.Drawing.Size(65, 17);
             this.radioButtonDrop2.TabIndex = 7;
-            this.radioButtonDrop2.Text = "Random (completely)";
+            this.radioButtonDrop2.Text = "Random";
             this.radioButtonDrop2.UseVisualStyleBackColor = true;
             // 
             // radioButtonDrop1
@@ -1008,9 +1008,9 @@ namespace YKWrandomizer
             this.radioButtonExperience2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioButtonExperience2.Location = new System.Drawing.Point(18, 50);
             this.radioButtonExperience2.Name = "radioButtonExperience2";
-            this.radioButtonExperience2.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonExperience2.Size = new System.Drawing.Size(65, 17);
             this.radioButtonExperience2.TabIndex = 7;
-            this.radioButtonExperience2.Text = "Random (completely)";
+            this.radioButtonExperience2.Text = "Random";
             this.radioButtonExperience2.UseVisualStyleBackColor = true;
             // 
             // radioButtonExperience1
@@ -1238,9 +1238,9 @@ namespace YKWrandomizer
             this.radioButtonSkill2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioButtonSkill2.Location = new System.Drawing.Point(18, 50);
             this.radioButtonSkill2.Name = "radioButtonSkill2";
-            this.radioButtonSkill2.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonSkill2.Size = new System.Drawing.Size(65, 17);
             this.radioButtonSkill2.TabIndex = 7;
-            this.radioButtonSkill2.Text = "Random (completely)";
+            this.radioButtonSkill2.Text = "Random";
             this.radioButtonSkill2.UseVisualStyleBackColor = true;
             // 
             // radioButtonSkill1
@@ -1933,6 +1933,16 @@ namespace YKWrandomizer
             this.groupBoxGivenYokai.TabStop = false;
             this.groupBoxGivenYokai.Text = "Given Yokai";
             // 
+            // comboBoxSetStarter
+            // 
+            this.comboBoxSetStarter.Enabled = false;
+            this.comboBoxSetStarter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxSetStarter.FormattingEnabled = true;
+            this.comboBoxSetStarter.Location = new System.Drawing.Point(210, 21);
+            this.comboBoxSetStarter.Name = "comboBoxSetStarter";
+            this.comboBoxSetStarter.Size = new System.Drawing.Size(172, 21);
+            this.comboBoxSetStarter.TabIndex = 12;
+            // 
             // radioButtonGiven2
             // 
             this.radioButtonGiven2.AutoSize = true;
@@ -1944,6 +1954,19 @@ namespace YKWrandomizer
             this.radioButtonGiven2.Text = "Random";
             this.radioButtonGiven2.UseVisualStyleBackColor = true;
             this.radioButtonGiven2.CheckedChanged += new System.EventHandler(this.RadioButtonGiven2_CheckedChanged);
+            // 
+            // checkBoxSetStarter
+            // 
+            this.checkBoxSetStarter.AutoSize = true;
+            this.checkBoxSetStarter.Enabled = false;
+            this.checkBoxSetStarter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxSetStarter.Location = new System.Drawing.Point(110, 25);
+            this.checkBoxSetStarter.Name = "checkBoxSetStarter";
+            this.checkBoxSetStarter.Size = new System.Drawing.Size(94, 17);
+            this.checkBoxSetStarter.TabIndex = 11;
+            this.checkBoxSetStarter.Text = "Choose starter";
+            this.checkBoxSetStarter.UseVisualStyleBackColor = true;
+            this.checkBoxSetStarter.CheckedChanged += new System.EventHandler(this.CheckBoxSetStarter_CheckedChanged);
             // 
             // radioButtonGiven1
             // 
@@ -1957,6 +1980,29 @@ namespace YKWrandomizer
             this.radioButtonGiven1.TabStop = true;
             this.radioButtonGiven1.Text = "Unchanged";
             this.radioButtonGiven1.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxRequestedYokai
+            // 
+            this.groupBoxRequestedYokai.Controls.Add(this.checkBoxUnlockYokai);
+            this.groupBoxRequestedYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxRequestedYokai.Location = new System.Drawing.Point(12, 259);
+            this.groupBoxRequestedYokai.Name = "groupBoxRequestedYokai";
+            this.groupBoxRequestedYokai.Size = new System.Drawing.Size(581, 116);
+            this.groupBoxRequestedYokai.TabIndex = 7;
+            this.groupBoxRequestedYokai.TabStop = false;
+            this.groupBoxRequestedYokai.Text = "More Options";
+            // 
+            // checkBoxUnlockYokai
+            // 
+            this.checkBoxUnlockYokai.AutoSize = true;
+            this.checkBoxUnlockYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxUnlockYokai.Location = new System.Drawing.Point(23, 26);
+            this.checkBoxUnlockYokai.Name = "checkBoxUnlockYokai";
+            this.checkBoxUnlockYokai.Size = new System.Drawing.Size(161, 17);
+            this.checkBoxUnlockYokai.TabIndex = 10;
+            this.checkBoxUnlockYokai.Text = "Unlock unbefriendable yokai";
+            this.checkBoxUnlockYokai.UseVisualStyleBackColor = true;
+            this.checkBoxUnlockYokai.CheckedChanged += new System.EventHandler(this.CheckBoxUnlockYokai_CheckedChanged);
             // 
             // openFileDialog1
             // 
@@ -1980,52 +2026,6 @@ namespace YKWrandomizer
             this.label4.TabIndex = 3;
             this.label4.Text = "Randomize...";
             this.label4.Visible = false;
-            // 
-            // checkBoxSetStarter
-            // 
-            this.checkBoxSetStarter.AutoSize = true;
-            this.checkBoxSetStarter.Enabled = false;
-            this.checkBoxSetStarter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxSetStarter.Location = new System.Drawing.Point(110, 25);
-            this.checkBoxSetStarter.Name = "checkBoxSetStarter";
-            this.checkBoxSetStarter.Size = new System.Drawing.Size(94, 17);
-            this.checkBoxSetStarter.TabIndex = 11;
-            this.checkBoxSetStarter.Text = "Choose starter";
-            this.checkBoxSetStarter.UseVisualStyleBackColor = true;
-            this.checkBoxSetStarter.CheckedChanged += new System.EventHandler(this.CheckBoxSetStarter_CheckedChanged);
-            // 
-            // comboBoxSetStarter
-            // 
-            this.comboBoxSetStarter.Enabled = false;
-            this.comboBoxSetStarter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxSetStarter.FormattingEnabled = true;
-            this.comboBoxSetStarter.Location = new System.Drawing.Point(210, 21);
-            this.comboBoxSetStarter.Name = "comboBoxSetStarter";
-            this.comboBoxSetStarter.Size = new System.Drawing.Size(172, 21);
-            this.comboBoxSetStarter.TabIndex = 12;
-            // 
-            // checkBoxUnlockYokai
-            // 
-            this.checkBoxUnlockYokai.AutoSize = true;
-            this.checkBoxUnlockYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxUnlockYokai.Location = new System.Drawing.Point(23, 26);
-            this.checkBoxUnlockYokai.Name = "checkBoxUnlockYokai";
-            this.checkBoxUnlockYokai.Size = new System.Drawing.Size(161, 17);
-            this.checkBoxUnlockYokai.TabIndex = 10;
-            this.checkBoxUnlockYokai.Text = "Unlock unbefriendable yokai";
-            this.checkBoxUnlockYokai.UseVisualStyleBackColor = true;
-            this.checkBoxUnlockYokai.CheckedChanged += new System.EventHandler(this.CheckBoxUnlockYokai_CheckedChanged);
-            // 
-            // groupBoxRequestedYokai
-            // 
-            this.groupBoxRequestedYokai.Controls.Add(this.checkBoxUnlockYokai);
-            this.groupBoxRequestedYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxRequestedYokai.Location = new System.Drawing.Point(12, 259);
-            this.groupBoxRequestedYokai.Name = "groupBoxRequestedYokai";
-            this.groupBoxRequestedYokai.Size = new System.Drawing.Size(581, 116);
-            this.groupBoxRequestedYokai.TabIndex = 7;
-            this.groupBoxRequestedYokai.TabStop = false;
-            this.groupBoxRequestedYokai.Text = "More Options";
             // 
             // RandomizerWindow
             // 

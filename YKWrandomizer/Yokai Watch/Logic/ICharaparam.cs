@@ -66,6 +66,7 @@
         public int DropOniOrb { get; set; }
 
         public int EquipmentSlotsAmount { get; set; }
+        public int BattleType { get; set; }
 
         public object Clone()
         {

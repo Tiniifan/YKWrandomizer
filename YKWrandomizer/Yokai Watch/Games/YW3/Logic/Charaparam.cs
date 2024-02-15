@@ -34,7 +34,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3.Logic
         public new int SoultimateHash { get => base.SoultimateHash; set => base.SoultimateHash = value; }
         public new int AbilityHash { get => base.AbilityHash; set => base.AbilityHash = value; }
         public int Unk8 { get; set; }
-        public int BattleType { get; set; }
+        public new int BattleType { get => base.BattleType; set => base.BattleType = value; }
         public new int ScoutableHash { get => base.ScoutableHash; set => base.ScoutableHash = value; }
         public int Unk9 { get; set; }
         public int Unk10 { get; set; }
@@ -43,7 +43,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3.Logic
         public new int BefriendQuote { get => base.BefriendQuote; set => base.BefriendQuote = value; }
         public int Unk13 { get; set; }
         public new int EvolveOffset { get => base.EvolveOffset; set => base.EvolveOffset = value; }
-        public int Unk14 { get; set; }
+        public new int EquipmentSlotsAmount { get => base.EquipmentSlotsAmount; set => base.EquipmentSlotsAmount = value; }
         public new int WaitTime { get => base.WaitTime; set => base.WaitTime = value; }
     }
 }

@@ -859,12 +859,12 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
 
                         if (yoBossBaseHash == unchecked((int)0xC437BB7D))
                         {
-                            yokaiBossCharascale.Scale1 /= 2f;
-                            yokaiBossCharascale.Scale2 /= 2f;
+                            yokaiBossCharascale.Scale1 /= 1.5f;
+                            yokaiBossCharascale.Scale2 /= 1.5f;
                             yokaiBossCharascale.Scale3 /= 2f;
-                            yokaiBossCharascale.Scale4 /= 2f;
-                            yokaiBossCharascale.Scale5 /= 2f;
-                            yokaiBossCharascale.Scale6 /= 2f;
+                            yokaiBossCharascale.Scale4 /= 1.5f;
+                            yokaiBossCharascale.Scale5 /= 1.5f;
+                            yokaiBossCharascale.Scale6 /= 1.5f;
                         }
 
                         charascales.Add(yokaiBossCharascale);

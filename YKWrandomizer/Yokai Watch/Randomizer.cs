@@ -31,6 +31,10 @@ namespace YKWrandomizer.Yokai_Watch
 
         private List<ICharascale> Charascales;
 
+        private List<IBattleCharaparam> BattleCharaparams;
+
+        private List<IHackslashCharaparam> HackslashCharaparams;
+
         private List<IItem> Items;
 
         private RandomNumber Seed = new RandomNumber();
@@ -84,6 +88,14 @@ namespace YKWrandomizer.Yokai_Watch
 
             Charascales = new List<ICharascale>();
             Charascales.AddRange(Game.GetCharascale());
+
+            if (Game.Name == "Yo-Kai Watch 3")
+            {
+                BattleCharaparams = new List<IBattleCharaparam>();
+                BattleCharaparams.AddRange(Game.GetBattleCharaparam());
+                HackslashCharaparams = new List<IHackslashCharaparam>();
+                HackslashCharaparams.AddRange(Game.GetHackslashCharaparam());
+            }
 
             // Get Names
             Charanames = new T2bþ(Game.Files["chara_text"].File.Directory.GetFileFromFullPath(Game.Files["chara_text"].Path));
@@ -264,8 +276,6 @@ namespace YKWrandomizer.Yokai_Watch
                     // Remove the used yokai
                     yokaiCharabases.RemoveAt(randomIndex);
                 }
-
-                Console.WriteLine("YES");
             }
 
             // Randomize yokai informations
@@ -273,6 +283,14 @@ namespace YKWrandomizer.Yokai_Watch
             {
                 // Get charabase
                 ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
+                IBattleCharaparam battleCharaparam = null;
+                IHackslashCharaparam hackslashCharaparam = null;
+
+                if (Game.Name == "Yo-Kai Watch 3")
+                {
+                    battleCharaparam = BattleCharaparams.FirstOrDefault(x => x.ParamHash == charaparam.ParamHash);
+                    hackslashCharaparam = HackslashCharaparams.FirstOrDefault(x => x.ParamHash == charaparam.ParamHash);
+                }
 
                 // Get tribe name
                 string tribeName = "";
@@ -286,17 +304,33 @@ namespace YKWrandomizer.Yokai_Watch
                 }
 
                 // Randomize drop item
-                if (options["groupBoxDrop"].Name == "Random")
+                if (Game.Name == "Yo-Kai Watch 3")
                 {
                     // Prevent to randomize key items
                     if (Items.Any(x => x.ItemHash == charaparam.Drop1Hash) || charaparam.Drop1Hash == 0x0)
                     {
-                        charaparam.Drop1Hash = Items.ElementAt(Seed.GetNumbers(0, Items.Count, 2)[0]).ItemHash;
+                        battleCharaparam.Drop1Hash = Items.ElementAt(Seed.GetNumbers(0, Items.Count, 2)[0]).ItemHash;
                     }
 
                     if (Items.Any(x => x.ItemHash == charaparam.Drop2Hash) || charaparam.Drop2Hash == 0x0)
                     {
-                        charaparam.Drop2Hash = Items.ElementAt(Seed.GetNumbers(0, Items.Count, 2)[0]).ItemHash;
+                        battleCharaparam.Drop2Hash = Items.ElementAt(Seed.GetNumbers(0, Items.Count, 2)[0]).ItemHash;
+                    }
+                } 
+                else
+                {
+                    if (options["groupBoxDrop"].Name == "Random")
+                    {
+                        // Prevent to randomize key items
+                        if (Items.Any(x => x.ItemHash == charaparam.Drop1Hash) || charaparam.Drop1Hash == 0x0)
+                        {
+                            charaparam.Drop1Hash = Items.ElementAt(Seed.GetNumbers(0, Items.Count, 2)[0]).ItemHash;
+                        }
+
+                        if (Items.Any(x => x.ItemHash == charaparam.Drop2Hash) || charaparam.Drop2Hash == 0x0)
+                        {
+                            charaparam.Drop2Hash = Items.ElementAt(Seed.GetNumbers(0, Items.Count, 2)[0]).ItemHash;
+                        }
                     }
                 }
 
@@ -555,7 +589,7 @@ namespace YKWrandomizer.Yokai_Watch
                     // Randomize Wait time
                     if (options["groupBoxWaitTime"].Name == "Random")
                     {
-                        charaparam.WaitTime = Seed.Next(0, 7);
+                        charaparam.WaitTime = Seed.Next(1, 7);
                     }
                 }
                 else
@@ -609,20 +643,45 @@ namespace YKWrandomizer.Yokai_Watch
                     }
 
                     // Fix money
-                    if (options["groupBoxMiscellaneous"].CheckBoxes["checkBoxScaleMoney"].Checked)
+                    if (Game.Name == "Yo-Kai Watch 3")
                     {
-                        if (charaparam.Money > 35)
+                        if (options["groupBoxMiscellaneous"].CheckBoxes["checkBoxScaleMoney"].Checked)
                         {
-                            charaparam.Money = 5 + (charabase.Rank + 1) * 6;
+                            if (battleCharaparam.Money > 35)
+                            {
+                                battleCharaparam.Money = 5 + (charabase.Rank + 1) * 6;
+                            }
+                        }
+                    } else
+                    {
+                        if (options["groupBoxMiscellaneous"].CheckBoxes["checkBoxScaleMoney"].Checked)
+                        {
+                            if (charaparam.Money > 35)
+                            {
+                                charaparam.Money = 5 + (charabase.Rank + 1) * 6;
+                            }
                         }
                     }
 
+
                     // Fix experience
-                    if (options["groupBoxMiscellaneous"].CheckBoxes["checkBoxScaleMoney"].Checked)
+                    if (Game.Name == "Yo-Kai Watch 3")
                     {
-                        if (charaparam.Experience > 46)
+                        if (options["groupBoxMiscellaneous"].CheckBoxes["checkBoxScaleMoney"].Checked)
                         {
-                            charaparam.Experience = 26 + (charabase.Rank + 1) * 4;
+                            if (battleCharaparam.Experience > 46)
+                            {
+                                battleCharaparam.Experience = 26 + (charabase.Rank + 1) * 4;
+                            }
+                        }
+                    } else
+                    {
+                        if (options["groupBoxMiscellaneous"].CheckBoxes["checkBoxScaleMoney"].Checked)
+                        {
+                            if (charaparam.Experience > 46)
+                            {
+                                charaparam.Experience = 26 + (charabase.Rank + 1) * 4;
+                            }
                         }
                     }
                 }
@@ -808,85 +867,91 @@ namespace YKWrandomizer.Yokai_Watch
             Game.SaveCharaBase(Charabases.ToArray());
             Game.SaveCharaparam(Charaparams.ToArray());
             Game.SaveCharaevolution(charaevolves.ToArray());
-            //Game.SaveBattleCharaparam(BattleCharaparams.ToArray());
-            //Game.SaveHackslashCharaparam(HackslashCharaparams.ToArray());
 
-            // Get medallium icons
-            byte[] faceIconData = Game.Files["face_icon"].File.Directory.GetFileFromFullPath(Game.Files["face_icon"].Path + "/face_icon.xi");
-            Bitmap faceIcon = IMGC.ToBitmap(faceIconData);
-
-            // Get the size of the medal
-            int medalSize = 0;
-            if (Game.Name == "Yo-Kai Watch 1")
+            if (Game.Name == "Yo-Kai Watch 3")
             {
-                medalSize = 44;
-            }
-            else if (Game.Name == "Yo-Kai Watch 2")
-            {
-                medalSize = 44;
-            }
-            else if (Game.Name == "Yo-Kai Watch 3")
-            {
-                medalSize = 32;
-            }
-            else if (Game.Name == "Yo-Kai Watch Blaster")
-            {
-                medalSize = 44;
+                Console.WriteLine(BattleCharaparams.Count());
+                Game.SaveBattleCharaparam(BattleCharaparams.ToArray());
+                Game.SaveHackslashCharaparam(HackslashCharaparams.ToArray());
             }
 
             // Fix medallium icons
-            foreach(ICharaparam charaparam in Charaparams)
+            if (Game.Name != "Yo-Kai Watch 3")
             {
-                // Get charabase
-                ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
+                // Get medallium icons
+                byte[] faceIconData = Game.Files["face_icon"].File.Directory.GetFileFromFullPath(Game.Files["face_icon"].Path + "/face_icon.xi");
+                Bitmap faceIcon = IMGC.ToBitmap(faceIconData);
 
-                // Get tribe name
-                string tribeName = "";
+                // Get the size of the medal
+                int medalSize = 0;
                 if (Game.Name == "Yo-Kai Watch 1")
                 {
-                    tribeName = Game.Tribes[charaparam.Tribe];
+                    medalSize = 44;
                 }
-                else
+                else if (Game.Name == "Yo-Kai Watch 2")
                 {
-                    tribeName = Game.Tribes[charabase.Tribe];
+                    medalSize = 44;
                 }
-                
-                if (charaparam.ShowInMedalium == true && charaparam.MedaliumOffset > 0 && tribeName != "Boss" && tribeName != "Untribe")
+                else if (Game.Name == "Yo-Kai Watch Blaster")
                 {
-                    if (charabase.MedalPosX > -1 && charabase.MedalPosY > -1)
+                    medalSize = 44;
+                }
+
+                // Match medallium icons border to tribe
+                foreach (ICharaparam charaparam in Charaparams)
+                {
+                    // Get charabase
+                    ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
+
+                    // Get tribe name
+                    string tribeName = "";
+                    if (Game.Name == "Yo-Kai Watch 1")
                     {
-                        // Get tribe
-                        int tribe = 0;
-                        if (Game.Name == "Yo-Kai Watch 1")
-                        {
-                            tribe = charaparam.Tribe;
-                        } else
-                        {
-                            tribe = charabase.Tribe;
-                        }
-
-                        Image newMedal = null;
-
-                        if (charabase.IsLegend)
-                        {
-                            newMedal = Image.FromStream(new ResourceReader("y_medal_lege0" + tribe + ".png").GetResourceStream());
-                        }
-                        else if (charabase.IsRare)
-                        {
-                            newMedal = Image.FromStream(new ResourceReader("y_medal_rare0" + tribe + ".png").GetResourceStream());
-                        }
-                        else
-                        {
-                            newMedal = Image.FromStream(new ResourceReader("y_medal_nml0" + tribe + ".png").GetResourceStream());
-                        }
-
-                        faceIcon = Draw.DrawImage(faceIcon, charabase.MedalPosX * medalSize, charabase.MedalPosY * medalSize, newMedal);
+                        tribeName = Game.Tribes[charaparam.Tribe];
                     }
-                }   
-            }
+                    else
+                    {
+                        tribeName = Game.Tribes[charabase.Tribe];
+                    }
 
-            // Save new medallium icons
-            Game.Files["face_icon"].File.Directory.GetFolderFromFullPath(Game.Files["face_icon"].Path).Files["face_icon.xi"].ByteContent = IMGC.ToIMGC(faceIcon, new RGBA8());
+                    if (charaparam.ShowInMedalium == true && charaparam.MedaliumOffset > 0 && tribeName != "Boss" && tribeName != "Untribe")
+                    {
+                        if (charabase.MedalPosX > -1 && charabase.MedalPosY > -1)
+                        {
+                            // Get tribe
+                            int tribe = 0;
+                            if (Game.Name == "Yo-Kai Watch 1")
+                            {
+                                tribe = charaparam.Tribe;
+                            }
+                            else
+                            {
+                                tribe = charabase.Tribe;
+                            }
+
+                            Image newMedal = null;
+
+                            if (charabase.IsLegend)
+                            {
+                                newMedal = Image.FromStream(new ResourceReader("y_medal_lege0" + tribe + ".png").GetResourceStream());
+                            }
+                            else if (charabase.IsRare)
+                            {
+                                newMedal = Image.FromStream(new ResourceReader("y_medal_rare0" + tribe + ".png").GetResourceStream());
+                            }
+                            else
+                            {
+                                newMedal = Image.FromStream(new ResourceReader("y_medal_nml0" + tribe + ".png").GetResourceStream());
+                            }
+
+                            faceIcon = Draw.DrawImage(faceIcon, charabase.MedalPosX * medalSize, charabase.MedalPosY * medalSize, newMedal);
+                        }
+                    }
+                }
+
+                // Save new medallium icons
+                Game.Files["face_icon"].File.Directory.GetFolderFromFullPath(Game.Files["face_icon"].Path).Files["face_icon.xi"].ByteContent = IMGC.ToIMGC(faceIcon, new RGBA8());
+            }
         }
 
         public void RandomizeStatic(bool randomize, decimal percentageLevel)
@@ -1643,7 +1708,7 @@ namespace YKWrandomizer.Yokai_Watch
                         // Check if the bytes int read is a charaparam hash
                         if (Charaparams.Any(x => x.ParamHash == bytesInt))
                         {
-                            if ((Game.Name == "Yo-Kai Watch 1" || Game.Name == "Yo-Kai Watch 2") && fileCount == 0 && yokaiCount == 0 && starters[0] != -1)
+                            if ((Game.Name == "Yo-Kai Watch 1" || Game.Name == "Yo-Kai Watch 2" || Game.Name == "Yo-Kai Watch 3") && fileCount == 0 && yokaiCount == 0 && starters[0] != -1)
                             {
                                 // Change the starter
                                 bytesInt = allYokais[starters[0]];
@@ -1688,11 +1753,7 @@ namespace YKWrandomizer.Yokai_Watch
         {
             if (randomize == false) return;
 
-            if (Game.Name == "Yo-Kai Watch 1" || Game.Name == "Yo-Kai Watch 2")
-            {
-                Game.UnlockUnscoutableYokai(Charaparams, Charabases, Charascales);
-            }
-
+            Game.UnlockUnscoutableYokai(Charaparams, Charabases, Charascales, HackslashCharaparams, BattleCharaparams);
         }
 
         public string[] GetPlayableYokai(bool autorizeUnscoutableYokai)
@@ -1700,10 +1761,12 @@ namespace YKWrandomizer.Yokai_Watch
             List<ICharabase> charabasesCloned = Charabases.Select(charaBase => (ICharabase)charaBase.Clone()).ToList();
             List<ICharaparam> charaparamsCloned = Charaparams.Select(charaParam => (ICharaparam)charaParam.Clone()).ToList();
             List<ICharascale> charascalesCloned = Charascales.Select(charaScale => (ICharascale)charaScale.Clone()).ToList();
+            List<IBattleCharaparam> battleCharaparamsCloned = BattleCharaparams.Select(battleCharaparam => (IBattleCharaparam)battleCharaparam.Clone()).ToList();
+            List<IHackslashCharaparam> hackslashCharaparamsCloned = HackslashCharaparams.Select(hackslashCharaparam => (IHackslashCharaparam)hackslashCharaparam.Clone()).ToList();
 
             if (autorizeUnscoutableYokai)
             {
-                Game.UnlockUnscoutableYokai(charaparamsCloned, charabasesCloned, charascalesCloned, null, null);
+                Game.UnlockUnscoutableYokai(charaparamsCloned, charabasesCloned, charascalesCloned, hackslashCharaparamsCloned, battleCharaparamsCloned);
             }
 
             return GetNames(charaparamsCloned
