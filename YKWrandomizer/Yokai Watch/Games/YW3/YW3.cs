@@ -35,7 +35,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public Dictionary<int, string> ScoutablesType => Common.ScoutablesType.YW3;
 
-        public Dictionary<int, int> BossBattles => Common.Battles.BossBattles.YW1;
+        public Dictionary<int, int> BossBattles => Common.Battles.BossBattles.YW3;
 
         public ARC0 Game { get; set; }
 
@@ -788,7 +788,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
         public ILegendDataConfig[] GetLegends()
         {
             VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
-            string lastLegendConfig = characterFolder.Files.Keys.Where(x => x.StartsWith("legend_config")).OrderByDescending(x => x).First();
+            string lastLegendConfig = characterFolder.Files.Keys.Where(x => x.StartsWith("dictionary_config")).OrderByDescending(x => x).First();
 
             CfgBin legendConfigFile = new CfgBin();
             legendConfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastLegendConfig));
@@ -805,7 +805,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             LegendDataConfig[] formatLegendConfigs = legendDataConfigs.OfType<LegendDataConfig>().ToArray();
 
             VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
-            string lastLegendConfig = characterFolder.Files.Keys.Where(x => x.StartsWith("legend_config")).OrderByDescending(x => x).First();
+            string lastLegendConfig = characterFolder.Files.Keys.Where(x => x.StartsWith("dictionary_config")).OrderByDescending(x => x).First();
 
             CfgBin legendConfigFile = new CfgBin();
             legendConfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/" + lastLegendConfig));
@@ -1169,9 +1169,16 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                     {
                         ICharascale yokaiCharascale = (ICharascale)charascales.FirstOrDefault(x => x.BaseHash == unbefriendableYokaiBaseHash).Clone();
                         yokaiCharascale.BaseHash = newBaseHash;
+                        yokaiCharascale.Scale1 /= 1.5f;
+                        yokaiCharascale.Scale2 /= 1.5f;
+                        yokaiCharascale.Scale3 /= 2f;
+                        yokaiCharascale.Scale4 /= 1.5f;
+                        yokaiCharascale.Scale5 /= 1.1f;
+                        yokaiCharascale.Scale6 /= 1.5f;
+                        yokaiCharascale.Scale7 /= 1.5f;
 
                         // Perform blasters t scale
-                        if (yokaiCharascale.Scale7 == 0)
+                        if (yokaiCharascale.Scale7 <= 0)
                         {
                             yokaiCharascale.Scale7 = 1f;
                         }
@@ -1250,16 +1257,182 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             {
                 treetter.Rank = 0;
             }
+
+            ICharabase mrSandmeh = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0x267EF43B));
+            if (mrSandmeh != null)
+            {
+                if (mrSandmeh.Rank > 0x03)
+                {
+                    mrSandmeh.Rank = 0x03;
+                }
+            }
+
+            ICharabase mudmunch = charabases.FirstOrDefault(x => x.BaseHash == unchecked((int)0xFBA70DA1));
+            if (mudmunch != null)
+            {
+                if (mudmunch.Rank > 0x02)
+                {
+                    mudmunch.Rank = 0x02;
+                }
+            }
         }
 
-        public void FixArea(Dictionary<string, (List<int>, List<int>)> areas)
+        public void FixArea()
         {
+            // Yo-Net Nummskull
+            (IEncountTable[], IEncountChara[]) map_t104d07_encounterData = GetMapEncounter("t104d07");
+            map_t104d07_encounterData.Item2[0].ParamHash = unchecked((int)0xD8CADD7A);
+            map_t104d07_encounterData.Item2[1].ParamHash = unchecked((int)0xD8CADD7A);
+            SaveMapEncounter("t104d07", map_t104d07_encounterData.Item1, map_t104d07_encounterData.Item2);
 
+            // Yo-Net Nummskull and Yo-Net Why Naant (1)
+            (IEncountTable[], IEncountChara[]) map_t104d01_encounterData = GetMapEncounter("t104d01");
+            map_t104d01_encounterData.Item2[0].ParamHash = unchecked((int)0x5E5EAFD4);
+            map_t104d01_encounterData.Item2[9].ParamHash = unchecked((int)0x8A1714AE);
+            map_t104d01_encounterData.Item2[10].ParamHash = unchecked((int)0x8A1714AE);
+            map_t104d01_encounterData.Item2[11].ParamHash = unchecked((int)0x8A1714AE);
+            map_t104d01_encounterData.Item2[12].ParamHash = unchecked((int)0x8A1714AE);
+            map_t104d01_encounterData.Item2[45].ParamHash = unchecked((int)0x8A1714AE);
+            SaveMapEncounter("t104d07", map_t104d07_encounterData.Item1, map_t104d07_encounterData.Item2);
+
+            // Yo-Net Mudmunch
+            (IEncountTable[], IEncountChara[]) map_t109g00_encounterData = GetMapEncounter("t109g00");
+            map_t109g00_encounterData.Item2[58].ParamHash = unchecked((int)0x9DACFD94);
+            map_t109g00_encounterData.Item2[59].ParamHash = unchecked((int)0x9DACFD94);
+            map_t109g00_encounterData.Item2[60].ParamHash = unchecked((int)0x9DACFD94);
+            map_t109g00_encounterData.Item2[61].ParamHash = unchecked((int)0x9DACFD94);
+            SaveMapEncounter("t109g00", map_t109g00_encounterData.Item1, map_t109g00_encounterData.Item2);
+
+            // Yo-Net Why Naant (2)
+            (IEncountTable[], IEncountChara[]) map_t104i10_encounterData = GetMapEncounter("t104i10");
+            map_t104i10_encounterData.Item2[0].ParamHash = unchecked((int)0x8A1714AE);
+            map_t104i10_encounterData.Item2[1].ParamHash = unchecked((int)0x8A1714AE);
+            SaveMapEncounter("t104i10", map_t104i10_encounterData.Item1, map_t104i10_encounterData.Item2);
+
+            // Snaggly Fusion Quest
+            (IEncountTable[], IEncountChara[]) map_t401d01_encounterData = GetMapEncounter("t401d01");
+            map_t401d01_encounterData.Item2[2].ParamHash = unchecked((int)0x948C1A34);
+            map_t401d01_encounterData.Item2[3].ParamHash = unchecked((int)0x948C1A34);
+            map_t401d01_encounterData.Item2[5].ParamHash = unchecked((int)0x948C1A34);
+            map_t401d01_encounterData.Item2[15].ParamHash = unchecked((int)0x948C1A34);
+            SaveMapEncounter("t401d01", map_t401d01_encounterData.Item1, map_t401d01_encounterData.Item2);
+
+            // Terrorpotta Fusion Quest
+            (IEncountTable[], IEncountChara[]) map_t102d03_encounterData = GetMapEncounter("t102d03");
+            map_t102d03_encounterData.Item2[63].ParamHash = unchecked((int)0x0059A7DA);
+            map_t102d03_encounterData.Item2[65].ParamHash = unchecked((int)0x0059A7DA);
+            map_t102d03_encounterData.Item2[66].ParamHash = unchecked((int)0x0059A7DA);
+            map_t102d03_encounterData.Item2[79].ParamHash = unchecked((int)0x0059A7DA);
+            SaveMapEncounter("t102d03", map_t102d03_encounterData.Item1, map_t102d03_encounterData.Item2);
+
+            // Nate Fusion Quest
+            ICombineConfig[] fusions = GetFusions();
+            fusions[16].BaseHash = unchecked((int)0xD59E7AE5);
+            fusions[16].MaterialHash = unchecked((int)0x948C1A34);
+            fusions[16].EvolveToHash = unchecked((int)0xF0F52539);
+            SaveFusions(fusions);
+
+            // Negative Buzz Quest
+            (IEncountTable[], IEncountChara[]) map_t101d05_encounterData = GetMapEncounter("t101d05");
+            map_t101d05_encounterData.Item2[37].ParamHash = unchecked((int)0x7E5D11C5);
+            map_t101d05_encounterData.Item2[38].ParamHash = unchecked((int)0x7E5D11C5);
+            map_t101d05_encounterData.Item2[39].ParamHash = unchecked((int)0x7E5D11C5);
+            map_t101d05_encounterData.Item2[46].ParamHash = unchecked((int)0x7E5D11C5);
+            SaveMapEncounter("t101d05", map_t101d05_encounterData.Item1, map_t101d05_encounterData.Item2);
+
+            // Pupsicle Quest
+            (IEncountTable[], IEncountChara[]) map_t404d05_encounterData = GetMapEncounter("t404d05");
+            map_t404d05_encounterData.Item2[0].ParamHash = unchecked((int)0xE406F078);
+            map_t404d05_encounterData.Item2[1].ParamHash = unchecked((int)0xE406F078);
+            SaveMapEncounter("t404d05", map_t404d05_encounterData.Item1, map_t404d05_encounterData.Item2);
+
+            // El Gusto Quest
+            (IEncountTable[], IEncountChara[]) map_t404d01_encounterData = GetMapEncounter("t404d01");
+            map_t404d01_encounterData.Item2[3].ParamHash = unchecked((int)0xD5BC1812);
+            map_t404d01_encounterData.Item2[4].ParamHash = unchecked((int)0xD5BC1812);
+            SaveMapEncounter("t404d01", map_t404d01_encounterData.Item1, map_t404d01_encounterData.Item2);
+
+            // Sing Kong Quest
+            (IEncountTable[], IEncountChara[]) map_t104i45_encounterData = GetMapEncounter("t104i45");
+            map_t104i45_encounterData.Item2[4].ParamHash = unchecked((int)0xBDEB866B);
+            map_t104i45_encounterData.Item2[19].ParamHash = unchecked((int)0xBDEB866B);
+            map_t104i45_encounterData.Item2[20].ParamHash = unchecked((int)0xBDEB866B);
+            map_t104i45_encounterData.Item2[26].ParamHash = unchecked((int)0xBDEB866B);
+            SaveMapEncounter("t104i45", map_t104i45_encounterData.Item1, map_t104i45_encounterData.Item2);
+
+            // Twrecks Quest
+            (IEncountTable[], IEncountChara[]) map_t108d03_encounterData = GetMapEncounter("t108d03");
+            map_t108d03_encounterData.Item2[34].ParamHash = unchecked((int)0xAC347709);
+            map_t108d03_encounterData.Item2[37].ParamHash = unchecked((int)0xAC347709);
+            map_t108d03_encounterData.Item2[38].ParamHash = unchecked((int)0xAC347709);
+            map_t108d03_encounterData.Item2[41].ParamHash = unchecked((int)0xAC347709);
+            map_t108d03_encounterData.Item2[47].ParamHash = unchecked((int)0xAC347709);
+            SaveMapEncounter("t108d03", map_t108d03_encounterData.Item1, map_t108d03_encounterData.Item2);
+
+            // Mr Sandmeh Quest
+            (IEncountTable[], IEncountChara[]) map_t102g00_encounterData = GetMapEncounter("t102g00");
+            map_t102g00_encounterData.Item2[40].ParamHash = unchecked((int)0x4075040E);
+            map_t102g00_encounterData.Item2[41].ParamHash = unchecked((int)0x4075040E);
+            map_t102g00_encounterData.Item2[42].ParamHash = unchecked((int)0x4075040E);
+            map_t102g00_encounterData.Item2[43].ParamHash = unchecked((int)0x4075040E);
+            SaveMapEncounter("t102g00", map_t102g00_encounterData.Item1, map_t102g00_encounterData.Item2);
         }
 
         public void FixShop()
         {
+            // Dr. Maddiman quest
+            string[] files = new string[] { "shop_shpM004_0.01.cfg"};
+            int[] pos = new int[] { 0, 1 };
 
+            for (int i = 0; i < files.Length; i++)
+            {
+                (IShopConfig[], IShopValidCondition[]) shopData = GetShop(files[i]);
+                IShopConfig[] shopConfigs = shopData.Item1;
+                IShopValidCondition[] validConditions = null;
+
+                if (shopData.Item2 != null && shopData.Item2.Length > 0)
+                {
+                    validConditions = shopData.Item2;
+                }
+
+                shopConfigs[pos[i]].ItemHash = unchecked((int)0x6BE1ACBF);
+                shopConfigs[pos[i]].Price = 220;
+
+                if (validConditions != null && shopConfigs[pos[i]].ShopValidConditionIndex != -1)
+                {
+                    validConditions[shopConfigs[pos[i]].ShopValidConditionIndex].Price = 220;
+                }
+
+                // Save
+                SaveShop(files[i], shopConfigs, validConditions);
+            }
+
+            // Dr. Maddiman quest (2)
+            files = new string[] { "shop_shpN120_0.01.cfg" };
+            pos = new int[] { 4 };
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                (IShopConfig[], IShopValidCondition[]) shopData = GetShop(files[i]);
+                IShopConfig[] shopConfigs = shopData.Item1;
+                IShopValidCondition[] validConditions = null;
+
+                if (shopData.Item2 != null && shopData.Item2.Length > 0)
+                {
+                    validConditions = shopData.Item2;
+                }
+
+                shopConfigs[pos[i]].ItemHash = unchecked((int)0x6BE1ACBF);
+                shopConfigs[pos[i]].Price = 220;
+
+                if (validConditions != null && shopConfigs[pos[i]].ShopValidConditionIndex != -1)
+                {
+                    validConditions[shopConfigs[pos[i]].ShopValidConditionIndex].Price = 220;
+                }
+
+                // Save
+                SaveShop(files[i], shopConfigs, validConditions);
+            }
         }
     }
 }

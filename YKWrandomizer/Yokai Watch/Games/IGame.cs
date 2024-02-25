@@ -109,7 +109,7 @@ namespace YKWrandomizer.Yokai_Watch.Games
 
         void FixYokai(List<ICharabase> charabases);
 
-        void FixArea(Dictionary<string, (List<int>, List<int>)> areas);
+        void FixArea();
 
         void FixShop();
     }

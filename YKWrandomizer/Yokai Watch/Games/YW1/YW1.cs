@@ -837,13 +837,23 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             }
         }
 
-        public void FixArea(Dictionary<string, (List<int>, List<int>)> areas)
+        public void FixArea()
         {
-            // dulluma fusion quest
-            areas["t101d03"].Item1[0] = unchecked((int)0xAEACEBD9);
+            // Dulluma fusion quest
+            (IEncountTable[], IEncountChara[]) map_t101d03_encounterData = GetMapEncounter("t101d03");
+            map_t101d03_encounterData.Item2[0].ParamHash = unchecked((int)0xAEACEBD9);
+            map_t101d03_encounterData.Item2[3].ParamHash = unchecked((int)0xAEACEBD9);
+            map_t101d03_encounterData.Item2[6].ParamHash = unchecked((int)0xAEACEBD9);
+            map_t101d03_encounterData.Item2[7].ParamHash = unchecked((int)0xAEACEBD9);
+            SaveMapEncounter("t101d03", map_t101d03_encounterData.Item1, map_t101d03_encounterData.Item2);
 
-            // mochusmo fusion quest
-            areas["t103d11"].Item1[0] = unchecked((int)0x86056C74);
+            // Mochismo fusion quest
+            (IEncountTable[], IEncountChara[]) map_t103d11_encounterData = GetMapEncounter("t103d11");
+            map_t103d11_encounterData.Item2[7].ParamHash = unchecked((int)0xAEACEBD9);
+            map_t103d11_encounterData.Item2[9].ParamHash = unchecked((int)0xAEACEBD9);
+            map_t103d11_encounterData.Item2[11].ParamHash = unchecked((int)0xAEACEBD9);
+            map_t103d11_encounterData.Item2[15].ParamHash = unchecked((int)0xAEACEBD9);
+            SaveMapEncounter("t103d11", map_t103d11_encounterData.Item1, map_t103d11_encounterData.Item2);
         }
 
         public void FixShop()

@@ -108,6 +108,9 @@ namespace YKWrandomizer
                     groupBoxWeakness.Enabled = true;
                     groupBoxSoul.Enabled = false;
                     groupBoxStrongest.Text = "Strongest";
+
+                    yokaiTabControl.TabPages.RemoveAt(3);
+                    groupBoxLegendaryYokai.Enabled = false;
                 }
 
                 Randomizer = new Randomizer(game);
@@ -119,7 +122,7 @@ namespace YKWrandomizer
             }
         }
 
-        private void RandomizeSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void RandomizeSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             label4.Text = "Randomize";
             label4.Visible = true;
@@ -131,81 +134,41 @@ namespace YKWrandomizer
             progressBar1.Value = 0;
             randomizeSaveToolStripMenuItem.Enabled = false;
 
-            Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            Console.WriteLine("Done RemoveUnscoutableYokai");
+            await Task.Run(() =>
+            {
+                Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-            Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            Console.WriteLine("Done RandomizeLegendary");
+                Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-            Randomizer.SwapBosses(checkBoxSwapBosses.Checked, checkBoxStatScaling.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            Console.WriteLine("Done SwapBosses");
+                Randomizer.SwapBosses(checkBoxSwapBosses.Checked, checkBoxStatScaling.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-            Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            Console.WriteLine("Done RandomizeYokai");
+                Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-            Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            Console.WriteLine("Done RandomizeStatic");
+                Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-            Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            Console.WriteLine("Done RandomizeWild");
+                Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-            Randomizer.RandomizeShop(radioButtonShop2.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            Console.WriteLine("Done RandomizeShop");
+                Randomizer.RandomizeShop(radioButtonShop2.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-            Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            Console.WriteLine("Done RandomizeTreasureBox");
+                Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-            Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            Console.WriteLine("Done RandomizeCrankKai");
+                Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
-            Randomizer.RandomizeGiven(radioButtonGiven2.Checked, new int[] { comboBoxSetStarter.SelectedIndex });
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            Console.WriteLine("Done RandomizeGiven");
-
-            //await Task.Run(() =>
-            //{
-            //Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
-            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            //Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
-            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            //Randomizer.SwapBosses(checkBoxSwapBosses.Checked, checkBoxStatScaling.Checked);
-            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            //Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
-            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            //Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
-            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            //Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
-            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            //Randomizer.RandomizeShop(radioButtonShop2.Checked);
-            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            //Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
-            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            //Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
-            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            //comboBoxSetStarter.Invoke((Action)delegate
-            //{
-            //Randomizer.RandomizeGiven(radioButtonGiven2.Checked, new int[] { comboBoxSetStarter.SelectedIndex });
-            //});
-            //progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-            //});
+                comboBoxSetStarter.Invoke((Action)delegate
+                {
+                    Randomizer.RandomizeGiven(radioButtonGiven2.Checked, new int[] { comboBoxSetStarter.SelectedIndex });
+                });
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+            });
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = Path.GetFileName(openFileDialog1.FileName);

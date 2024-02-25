@@ -971,21 +971,39 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
             }
         }
 
-        public void FixArea(Dictionary<string, (List<int>, List<int>)> areas)
+        public void FixArea()
         {
-            // Les 3 algues de morts and Flushback
-            areas["t121d11"].Item1[0] = unchecked((int)0xE516B755);
-            areas["t121d11"].Item1[2] = unchecked((int)0xCE3BE496);
-            areas["t121d11"].Item1[1] = unchecked((int)0xFC0D8614);
-            areas["t121d11"].Item1[3] = unchecked((int)0x74536D07);
+            // Seaweed and Flushback
+            (IEncountTable[], IEncountChara[]) map_t121d11_encounterData = GetMapEncounter("t121d11");
+            map_t121d11_encounterData.Item2[26].ParamHash = unchecked((int)0xE516B755);
+            map_t121d11_encounterData.Item2[29].ParamHash = unchecked((int)0xE516B755);
+            map_t121d11_encounterData.Item2[30].ParamHash = unchecked((int)0xE516B755);
+            map_t121d11_encounterData.Item2[27].ParamHash = unchecked((int)0xCE3BE496);
+            map_t121d11_encounterData.Item2[32].ParamHash = unchecked((int)0xCE3BE496);
+            map_t121d11_encounterData.Item2[25].ParamHash = unchecked((int)0xFC0D8614);
+            map_t121d11_encounterData.Item2[28].ParamHash = unchecked((int)0xFC0D8614);
+            map_t121d11_encounterData.Item2[31].ParamHash = unchecked((int)0xFC0D8614);
+            map_t121d11_encounterData.Item2[12].ParamHash = unchecked((int)0x74536D07);
+            map_t121d11_encounterData.Item2[16].ParamHash = unchecked((int)0x74536D07);
+            map_t121d11_encounterData.Item2[19].ParamHash = unchecked((int)0x74536D07);
+            SaveMapEncounter("t121d11", map_t121d11_encounterData.Item1, map_t121d11_encounterData.Item2);
 
             // Ake fusion quest
-            areas["t103d11"].Item1[0] = unchecked((int)0x5B364E19);
+            (IEncountTable[], IEncountChara[]) map_t103d11_encounterData = GetMapEncounter("t103d11");
+            map_t103d11_encounterData.Item2[3].ParamHash = unchecked((int)0x5B364E19);
+            map_t103d11_encounterData.Item2[4].ParamHash = unchecked((int)0x5B364E19);
+            SaveMapEncounter("t103d11", map_t103d11_encounterData.Item1, map_t103d11_encounterData.Item2);
 
-            // fidgephant
-            areas["t131g00"].Item1[5] = unchecked((int)0xC16DAFA4);
-            areas["t131g00"].Item1[6] = unchecked((int)0xC16DAFA4);
-            areas["t131g00"].Item1[7] = unchecked((int)0xC16DAFA4);
+            // Fidgephant quest
+            (IEncountTable[], IEncountChara[]) map_t131g00_encounterData = GetMapEncounter("t131g00");
+            map_t131g00_encounterData.Item2[4].ParamHash = unchecked((int)0x5B364E19);
+            map_t131g00_encounterData.Item2[5].ParamHash = unchecked((int)0x5B364E19);
+            map_t131g00_encounterData.Item2[6].ParamHash = unchecked((int)0x5B364E19);
+            map_t131g00_encounterData.Item2[7].ParamHash = unchecked((int)0x5B364E19);
+            map_t131g00_encounterData.Item2[54].ParamHash = unchecked((int)0x5B364E19);
+            map_t131g00_encounterData.Item2[55].ParamHash = unchecked((int)0x5B364E19);
+            map_t131g00_encounterData.Item2[61].ParamHash = unchecked((int)0x5B364E19);
+            SaveMapEncounter("t131g00", map_t131g00_encounterData.Item1, map_t131g00_encounterData.Item2);
         }
 
         public void FixShop()

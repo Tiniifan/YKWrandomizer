@@ -508,7 +508,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YWB
 
         }
 
-        public void FixArea(Dictionary<string, (List<int>, List<int>)> areas)
+        public void FixArea()
         {
 
         }

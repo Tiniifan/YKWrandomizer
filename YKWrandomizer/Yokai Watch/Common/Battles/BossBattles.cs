@@ -76,7 +76,39 @@ namespace YKWrandomizer.Yokai_Watch.Common.Battles
 
         public static Dictionary<int, int> YW3 = new Dictionary<int, int>()
         {
-
+            {unchecked((int)0x59653864), 35 },
+            {unchecked((int)0x11853600), 40 },
+            {unchecked((int)0x59987A7E), 50 },
+            {unchecked((int)0xA4F0460D), 60 },
+            {unchecked((int)0x95185C90), 70 },
+            {unchecked((int)0x336F5724), 80 },
+            {unchecked((int)0xF3D91E18), 60 },
+            {unchecked((int)0x685A4693), 65 },
+            {unchecked((int)0xE6D54170), 70 },
+            {unchecked((int)0x127DF3EA), 10 },
+            {unchecked((int)0x8B74A250), 15 },
+            {unchecked((int)0xFC7392C6), 15 },
+            {unchecked((int)0x00C85C04), 20 },
+            {unchecked((int)0x99C10DBE), 25 },
+            {unchecked((int)0xEEC63D28), 30 },
+            {unchecked((int)0x70A2A88B), 40 },
+            {unchecked((int)0xB8743B61), 35 },
+            {unchecked((int)0x567A5A4D), 45 },
+            {unchecked((int)0xC81ECFEE), 45 },
+            {unchecked((int)0xBF19FF78), 50 },
+            {unchecked((int)0x25A303D8), 25 },
+            {unchecked((int)0xCBAD62F4), 60 },
+            {unchecked((int)0x55C9F757), 65 },
+            {unchecked((int)0x22CEC7C1), 50 },
+            {unchecked((int)0x9D1F64BD), 60 },
+            {unchecked((int)0x04163507), 65 },
+            {unchecked((int)0x73110591), 65 },
+            {unchecked((int)0xED759032), 70 },
+            {unchecked((int)0x9A72A0A4), 75 },
+            {unchecked((int)0x8FAACB53), 60 },
+            {unchecked((int)0x16A39AE9), 60 },
+            {unchecked((int)0x61A4AA7F), 60 },
+            {unchecked((int)0xFFC03FDC), 99 },
         };
 
         public static Dictionary<int, int> YWB = new Dictionary<int, int>()

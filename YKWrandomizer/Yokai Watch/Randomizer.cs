@@ -256,7 +256,8 @@ namespace YKWrandomizer.Yokai_Watch
             if (options["groupBoxBaseMiscellaneous"].CheckBoxes["checkBoxSwapModel"].Checked == true)
             {
                 // Get only yokais
-                List<ICharabase> yokaiCharabases = Charabases.Where(x => x.IsYokai == true).ToList();
+                List<ICharabase> yokaiCharabases = Charabases.Where(x => x.IsYokai == true).Select(charaBase => (ICharabase)charaBase.Clone()).ToList();
+                List<ICharascale> yokaiCharascales = Charascales.Where(x => yokaiCharabases.Any(y => y.BaseHash == x.BaseHash)).Select(charaScale => (ICharascale)charaScale.Clone()).ToList();
 
                 foreach (ICharabase yokai in Charabases.Where(x => x.IsYokai == true))
                 {
@@ -272,6 +273,76 @@ namespace YKWrandomizer.Yokai_Watch
                     yokai.FileNameNumber = randomYokaiCharabase.FileNameNumber;
                     yokai.FileNamePrefix = randomYokaiCharabase.FileNamePrefix;
                     yokai.FileNameVariant = randomYokaiCharabase.FileNameVariant;
+
+                    // Create charascale if not exist
+                    ICharascale yokaiScale = null;
+                    if (!Charascales.Any(x => x.BaseHash == yokai.BaseHash))
+                    {
+                        switch (Game.Name)
+                        {
+                            case "Yo-Kai Watch 1":
+                                yokaiScale = GameSupport.GetLogic<YKW1.Charascale>();
+                                break;
+                            case "Yo-Kai Watch 2":
+                                yokaiScale = GameSupport.GetLogic<YKW2.Charascale>();
+                                break;
+                            case "Yo-Kai Watch 3":
+                                yokaiScale = GameSupport.GetLogic<YKW3.Charascale>();
+                                break;
+                            case "Yo-Kai Watch Blaster":
+                                yokaiScale = GameSupport.GetLogic<YKWB.Charascale>();
+                                break;
+                        }
+
+                        Charascales.Add(yokaiScale);
+                    } else
+                    {
+                        yokaiScale = Charascales.FirstOrDefault(x => x.BaseHash == yokai.BaseHash);
+                    }
+
+                    // Get random scale
+                    if (yokaiCharascales.Any(x => x.BaseHash == randomYokaiCharabase.BaseHash))
+                    {
+                        ICharascale randomScale = yokaiCharascales.FirstOrDefault(x => x.BaseHash == randomYokaiCharabase.BaseHash);
+
+                        yokaiScale.Scale1 = randomScale.Scale1;
+                        yokaiScale.Scale2 = randomScale.Scale2;
+                        yokaiScale.Scale3 = randomScale.Scale3;
+                        yokaiScale.Scale4 = randomScale.Scale4;
+                        yokaiScale.Scale5 = randomScale.Scale5;
+                        yokaiScale.Scale6 = randomScale.Scale6;
+                        yokaiScale.Scale7 = randomScale.Scale7;
+                    }
+
+                    // Fix invisible scale
+                    if (yokaiScale.Scale1 == 0)
+                    {
+                        yokaiScale.Scale1 = 0.7f;
+                    }
+                    if (yokaiScale.Scale2 == 0)
+                    {
+                        yokaiScale.Scale2 = 0.7f;
+                    }
+                    if (yokaiScale.Scale3 == 0)
+                    {
+                        yokaiScale.Scale3 = 0.7f;
+                    }
+                    if (yokaiScale.Scale4 == 0)
+                    {
+                        yokaiScale.Scale4 = 0.7f;
+                    }
+                    if (yokaiScale.Scale5 == 0)
+                    {
+                        yokaiScale.Scale5 = 0.7f;
+                    }
+                    if (yokaiScale.Scale6 == 0)
+                    {
+                        yokaiScale.Scale6 = 0.7f;
+                    }
+                    if (yokaiScale.Scale7 == 0)
+                    {
+                        yokaiScale.Scale7 = 0.7f;
+                    }
 
                     // Remove the used yokai
                     yokaiCharabases.RemoveAt(randomIndex);
@@ -870,7 +941,6 @@ namespace YKWrandomizer.Yokai_Watch
 
             if (Game.Name == "Yo-Kai Watch 3")
             {
-                Console.WriteLine(BattleCharaparams.Count());
                 Game.SaveBattleCharaparam(BattleCharaparams.ToArray());
                 Game.SaveHackslashCharaparam(HackslashCharaparams.ToArray());
             }
@@ -1314,9 +1384,6 @@ namespace YKWrandomizer.Yokai_Watch
                     }
                 }
 
-                // Fix Area to prevent soft lock
-                Game.FixArea(randomAreas);
-
                 // Save randomized area
                 foreach (KeyValuePair<string, (List<int>, List<int>)> randomArea in randomAreas)
                 {
@@ -1362,6 +1429,9 @@ namespace YKWrandomizer.Yokai_Watch
                     // Save file
                     Game.SaveMapEncounter(randomArea.Key, encountTables, encountCharas);
                 }
+
+                // Fix Area to prevent soft lock
+                Game.FixArea();
             }
         }
 
@@ -1720,6 +1790,16 @@ namespace YKWrandomizer.Yokai_Watch
                             else if (Game.Name == "Yo-Kai Watch 1" && fileCount == 1 && yokaiCount == 0)
                             {
                                 // Don't swap jibanyan
+                                bytesInt = unchecked((int)0x9D58E36C);
+                                if (scoutableYokai.Contains(bytesInt))
+                                {
+                                    scoutableYokai.Remove(bytesInt);
+                                }
+                            }
+                            else if (Game.Name == "Yo-Kai Watch 2" && fileCount == 5 && yokaiCount == 0)
+                            {
+                                // Don't swap miradox
+                                bytesInt = unchecked((int)0x2532F806); 
                                 if (scoutableYokai.Contains(bytesInt))
                                 {
                                     scoutableYokai.Remove(bytesInt);
@@ -1761,8 +1841,14 @@ namespace YKWrandomizer.Yokai_Watch
             List<ICharabase> charabasesCloned = Charabases.Select(charaBase => (ICharabase)charaBase.Clone()).ToList();
             List<ICharaparam> charaparamsCloned = Charaparams.Select(charaParam => (ICharaparam)charaParam.Clone()).ToList();
             List<ICharascale> charascalesCloned = Charascales.Select(charaScale => (ICharascale)charaScale.Clone()).ToList();
-            List<IBattleCharaparam> battleCharaparamsCloned = BattleCharaparams.Select(battleCharaparam => (IBattleCharaparam)battleCharaparam.Clone()).ToList();
-            List<IHackslashCharaparam> hackslashCharaparamsCloned = HackslashCharaparams.Select(hackslashCharaparam => (IHackslashCharaparam)hackslashCharaparam.Clone()).ToList();
+            List<IBattleCharaparam> battleCharaparamsCloned = null;
+            List<IHackslashCharaparam> hackslashCharaparamsCloned = null;
+
+            if (Game.Name == "Yo-Kai Watch 3")
+            {
+                battleCharaparamsCloned = BattleCharaparams.Select(battleCharaparam => (IBattleCharaparam)battleCharaparam.Clone()).ToList();
+                hackslashCharaparamsCloned = HackslashCharaparams.Select(hackslashCharaparam => (IHackslashCharaparam)hackslashCharaparam.Clone()).ToList();
+            }      
 
             if (autorizeUnscoutableYokai)
             {
