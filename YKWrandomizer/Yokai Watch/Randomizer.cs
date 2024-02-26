@@ -119,6 +119,16 @@ namespace YKWrandomizer.Yokai_Watch
             ICharabase parentBase = Charabases.FirstOrDefault(x => x.BaseHash == parentParam.BaseHash);
             ICharabase childBase = Charabases.FirstOrDefault(x => x.BaseHash == childParam.BaseHash);
 
+            // Get hackslash
+            IHackslashCharaparam parentHackslashCharaparam = null;
+            IHackslashCharaparam childHackslashCharaparam = null;
+
+            if (Game.Name == "Yo-Kai Watch 3")
+            {
+                parentHackslashCharaparam = HackslashCharaparams.FirstOrDefault(x => x.ParamHash == parentParam.ParamHash);
+                childHackslashCharaparam = HackslashCharaparams.FirstOrDefault(x => x.ParamHash == childParam.ParamHash);
+            }
+
             if (options["groupBoxTribe"].Name == "Swap")
             {
                 childBase.Tribe = parentBase.Tribe;
@@ -244,6 +254,38 @@ namespace YKWrandomizer.Yokai_Watch
             if (options["groupBoxSoultimateMove"].Name == "Swap")
             {
                 childParam.SoultimateHash = parentParam.SoultimateHash;
+            }
+
+            // Randomize Blaster T moveset
+            if (Game.Name == "Yo-Kai Watch 3")
+            {
+                if (parentHackslashCharaparam != null && childHackslashCharaparam != null)
+                {
+                    if (options["groupBoxBlasterTA"].Name != "Swap")
+                    {
+                        childHackslashCharaparam.AttackAHash = parentHackslashCharaparam.AttackAHash;
+                    }
+
+                    if (options["groupBoxBlasterTX"].Name != "Swap")
+                    {
+                        childHackslashCharaparam.AttackXHash = parentHackslashCharaparam.AttackXHash; 
+                    }
+
+                    if (options["groupBoxBlasterTY"].Name != "Swap")
+                    {
+                        childHackslashCharaparam.AttackYHash = parentHackslashCharaparam.AttackYHash;
+                    }
+
+                    if (options["groupBoxBlasterTSoultimate"].Name != "Swap")
+                    {
+                        childHackslashCharaparam.SoultimateHash = parentHackslashCharaparam.SoultimateHash;
+                    }
+
+                    if (options["groupBoxBlasterTAbility"].Name != "Swap")
+                    {
+                        childHackslashCharaparam.SkillHash = parentHackslashCharaparam.SkillHash;
+                    }
+                }
             }
         }
 
@@ -445,13 +487,14 @@ namespace YKWrandomizer.Yokai_Watch
                     // Randomize favorite food
                     if (options["groupBoxFavFood"].Name != "Unchanged")
                     {
-                        charabase.FavoriteFoodHash = Seed.Next(Game.FoodsType.Count);
+                        charabase.FavoriteFoodHash = Game.FoodsType.ElementAt(Seed.Next(Game.FoodsType.Count)).Key;
                     }
 
                     // Randomize hated food
                     if (options["groupBoxHatedFood"].Name != "Unchanged")
                     {
-                        charabase.HatedFoodHash = Seed.Next(0, Game.FoodsType.Count, charabase.FavoriteFoodHash);
+                        int favoriteFoodIndex = Game.FoodsType.Keys.ToList().IndexOf(charabase.FavoriteFoodHash);
+                        charabase.HatedFoodHash = Game.FoodsType.ElementAt(Seed.Next(0, Game.FoodsType.Count, favoriteFoodIndex)).Key;
                     }
 
                     // Randomize resistance
@@ -713,6 +756,59 @@ namespace YKWrandomizer.Yokai_Watch
                         charaparam.AbilityHash = (int)Game.Skills.ElementAt(Seed.Next(Game.Skills.Count)).Key;
                     }
 
+                    // Randomize Blaster T moveset
+                    if (Game.Name == "Yo-Kai Watch 3")
+                    {
+                        if (hackslashCharaparam != null)
+                        {
+                            if (options["groupBoxBlasterTA"].Name != "Unchanged")
+                            {
+                                int randomAttackAHash = 0x00;
+
+                                while (randomAttackAHash == 0 || randomAttackAHash == hackslashCharaparam.AttackXHash || randomAttackAHash == hackslashCharaparam.AttackYHash)
+                                {
+                                    randomAttackAHash = (int)Common.Attacks.YW3BT.ElementAt(Seed.Next(Common.Attacks.YW3BT.Count)).Key;
+                                }
+
+                                hackslashCharaparam.AttackAHash = randomAttackAHash;
+                            }
+
+                            if (options["groupBoxBlasterTX"].Name != "Unchanged")
+                            {
+                                int randomAttackXHash = 0x00;
+
+                                while (randomAttackXHash == 0 || randomAttackXHash == hackslashCharaparam.AttackAHash || randomAttackXHash == hackslashCharaparam.AttackYHash)
+                                {
+                                    randomAttackXHash = (int)Common.Attacks.YW3BT.ElementAt(Seed.Next(Common.Attacks.YW3BT.Count)).Key;
+                                }
+
+                                hackslashCharaparam.AttackXHash = randomAttackXHash;
+                            }
+
+                            if (options["groupBoxBlasterTY"].Name != "Unchanged")
+                            {
+                                int randomAttackYHash = 0x00;
+
+                                while (randomAttackYHash == 0 || randomAttackYHash == hackslashCharaparam.AttackAHash || randomAttackYHash == hackslashCharaparam.AttackXHash)
+                                {
+                                    randomAttackYHash = (int)Common.Attacks.YW3BT.ElementAt(Seed.Next(Common.Attacks.YW3BT.Count)).Key;
+                                }
+
+                                hackslashCharaparam.AttackYHash = randomAttackYHash;
+                            }
+
+                            if (options["groupBoxBlasterTSoultimate"].Name != "Unchanged")
+                            {
+                                hackslashCharaparam.SoultimateHash = (int)Common.Soultimates.YW3BT.ElementAt(Seed.Next(Common.Soultimates.YW3BT.Count)).Key;
+                            }
+
+                            if (options["groupBoxBlasterTAbility"].Name != "Unchanged")
+                            {
+                                hackslashCharaparam.SkillHash = (int)Common.Skills.YW3BT.ElementAt(Seed.Next(Common.Skills.YW3BT.Count)).Key;
+                            }
+                        }
+                    }
+
                     // Fix money
                     if (Game.Name == "Yo-Kai Watch 3")
                     {
@@ -757,9 +853,6 @@ namespace YKWrandomizer.Yokai_Watch
                     }
                 }
             }
-
-            // Fix Yokais
-            Game.FixYokai(Charabases);
 
             // Randomize evolution
             if (options["groupBoxEvolution"].Name == "Random")
@@ -931,6 +1024,9 @@ namespace YKWrandomizer.Yokai_Watch
                 // Add charaevolve to the charaevolves list
                 charaevolves.Add(charaevolve);
             }
+
+            // Fix Yokais
+            Game.FixYokai(Charabases);
 
             // Save
             Game.SaveFusions(fusions.ToArray());
@@ -1782,6 +1878,15 @@ namespace YKWrandomizer.Yokai_Watch
                             {
                                 // Change the starter
                                 bytesInt = allYokais[starters[0]];
+                                if (scoutableYokai.Contains(bytesInt))
+                                {
+                                    scoutableYokai.Remove(bytesInt);
+                                }
+                            }
+                            else if (Game.Name == "Yo-Kai Watch 3" && fileCount == 0 && yokaiCount == 1 && starters[1] != -1)
+                            {
+                                // Change the starter
+                                bytesInt = allYokais[starters[1]];
                                 if (scoutableYokai.Contains(bytesInt))
                                 {
                                     scoutableYokai.Remove(bytesInt);

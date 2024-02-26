@@ -171,7 +171,7 @@ namespace YKWrandomizer
             this.radioButtonShop2 = new System.Windows.Forms.RadioButton();
             this.radioButtonShop1 = new System.Windows.Forms.RadioButton();
             this.groupBoxGivenYokai = new System.Windows.Forms.GroupBox();
-            this.comboBoxSetStarter = new System.Windows.Forms.ComboBox();
+            this.comboBoxSetStarter1 = new System.Windows.Forms.ComboBox();
             this.radioButtonGiven2 = new System.Windows.Forms.RadioButton();
             this.checkBoxSetStarter = new System.Windows.Forms.CheckBox();
             this.radioButtonGiven1 = new System.Windows.Forms.RadioButton();
@@ -181,6 +181,9 @@ namespace YKWrandomizer
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
+            this.labelStarter1 = new System.Windows.Forms.Label();
+            this.labelStarter2 = new System.Windows.Forms.Label();
+            this.comboBoxSetStarter2 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -1921,7 +1924,10 @@ namespace YKWrandomizer
             // 
             // groupBoxGivenYokai
             // 
-            this.groupBoxGivenYokai.Controls.Add(this.comboBoxSetStarter);
+            this.groupBoxGivenYokai.Controls.Add(this.labelStarter2);
+            this.groupBoxGivenYokai.Controls.Add(this.comboBoxSetStarter2);
+            this.groupBoxGivenYokai.Controls.Add(this.labelStarter1);
+            this.groupBoxGivenYokai.Controls.Add(this.comboBoxSetStarter1);
             this.groupBoxGivenYokai.Controls.Add(this.radioButtonGiven2);
             this.groupBoxGivenYokai.Controls.Add(this.checkBoxSetStarter);
             this.groupBoxGivenYokai.Controls.Add(this.radioButtonGiven1);
@@ -1933,15 +1939,15 @@ namespace YKWrandomizer
             this.groupBoxGivenYokai.TabStop = false;
             this.groupBoxGivenYokai.Text = "Given Yokai";
             // 
-            // comboBoxSetStarter
+            // comboBoxSetStarter1
             // 
-            this.comboBoxSetStarter.Enabled = false;
-            this.comboBoxSetStarter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxSetStarter.FormattingEnabled = true;
-            this.comboBoxSetStarter.Location = new System.Drawing.Point(210, 21);
-            this.comboBoxSetStarter.Name = "comboBoxSetStarter";
-            this.comboBoxSetStarter.Size = new System.Drawing.Size(172, 21);
-            this.comboBoxSetStarter.TabIndex = 12;
+            this.comboBoxSetStarter1.Enabled = false;
+            this.comboBoxSetStarter1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxSetStarter1.FormattingEnabled = true;
+            this.comboBoxSetStarter1.Location = new System.Drawing.Point(242, 22);
+            this.comboBoxSetStarter1.Name = "comboBoxSetStarter1";
+            this.comboBoxSetStarter1.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxSetStarter1.TabIndex = 12;
             // 
             // radioButtonGiven2
             // 
@@ -1960,11 +1966,11 @@ namespace YKWrandomizer
             this.checkBoxSetStarter.AutoSize = true;
             this.checkBoxSetStarter.Enabled = false;
             this.checkBoxSetStarter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxSetStarter.Location = new System.Drawing.Point(110, 25);
+            this.checkBoxSetStarter.Location = new System.Drawing.Point(110, 26);
             this.checkBoxSetStarter.Name = "checkBoxSetStarter";
-            this.checkBoxSetStarter.Size = new System.Drawing.Size(94, 17);
+            this.checkBoxSetStarter.Size = new System.Drawing.Size(74, 17);
             this.checkBoxSetStarter.TabIndex = 11;
-            this.checkBoxSetStarter.Text = "Choose starter";
+            this.checkBoxSetStarter.Text = "Set starter";
             this.checkBoxSetStarter.UseVisualStyleBackColor = true;
             this.checkBoxSetStarter.CheckedChanged += new System.EventHandler(this.CheckBoxSetStarter_CheckedChanged);
             // 
@@ -2026,6 +2032,36 @@ namespace YKWrandomizer
             this.label4.TabIndex = 3;
             this.label4.Text = "Randomize...";
             this.label4.Visible = false;
+            // 
+            // labelStarter1
+            // 
+            this.labelStarter1.AutoSize = true;
+            this.labelStarter1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStarter1.Location = new System.Drawing.Point(187, 27);
+            this.labelStarter1.Name = "labelStarter1";
+            this.labelStarter1.Size = new System.Drawing.Size(49, 13);
+            this.labelStarter1.TabIndex = 13;
+            this.labelStarter1.Text = "Jibanyan";
+            // 
+            // labelStarter2
+            // 
+            this.labelStarter2.AutoSize = true;
+            this.labelStarter2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStarter2.Location = new System.Drawing.Point(187, 53);
+            this.labelStarter2.Name = "labelStarter2";
+            this.labelStarter2.Size = new System.Drawing.Size(49, 13);
+            this.labelStarter2.TabIndex = 15;
+            this.labelStarter2.Text = "Jibanyan";
+            // 
+            // comboBoxSetStarter2
+            // 
+            this.comboBoxSetStarter2.Enabled = false;
+            this.comboBoxSetStarter2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxSetStarter2.FormattingEnabled = true;
+            this.comboBoxSetStarter2.Location = new System.Drawing.Point(242, 48);
+            this.comboBoxSetStarter2.Name = "comboBoxSetStarter2";
+            this.comboBoxSetStarter2.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxSetStarter2.TabIndex = 14;
             // 
             // RandomizerWindow
             // 
@@ -2282,9 +2318,12 @@ namespace YKWrandomizer
         private System.Windows.Forms.GroupBox groupBoxWildMiscellaneous;
         private System.Windows.Forms.CheckBox checkBoxStatScaling;
         private System.Windows.Forms.CheckBox checkBoxSwapBosses;
-        private System.Windows.Forms.ComboBox comboBoxSetStarter;
+        private System.Windows.Forms.ComboBox comboBoxSetStarter1;
         private System.Windows.Forms.CheckBox checkBoxSetStarter;
         private System.Windows.Forms.GroupBox groupBoxRequestedYokai;
         private System.Windows.Forms.CheckBox checkBoxUnlockYokai;
+        private System.Windows.Forms.Label labelStarter2;
+        private System.Windows.Forms.ComboBox comboBoxSetStarter2;
+        private System.Windows.Forms.Label labelStarter1;
     }
 }

@@ -1177,6 +1177,16 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                         yokaiCharascale.Scale6 /= 1.5f;
                         yokaiCharascale.Scale7 /= 1.5f;
 
+                        if (unbefriendableYokaiBaseHash == unchecked((int)0xE452A275) || unbefriendableYokaiBaseHash == unchecked((int)0xFD499334))
+                        {
+                            yokaiCharascale.Scale1 /= 1.5f;
+                            yokaiCharascale.Scale2 /= 1.5f;
+                            yokaiCharascale.Scale3 /= 2f;
+                            yokaiCharascale.Scale4 /= 1.5f;
+                            yokaiCharascale.Scale5 /= 1.5f;
+                            yokaiCharascale.Scale6 /= 1.5f;
+                        }
+
                         // Perform blasters t scale
                         if (yokaiCharascale.Scale7 <= 0)
                         {
