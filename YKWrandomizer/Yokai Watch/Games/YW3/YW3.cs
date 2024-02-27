@@ -37,6 +37,8 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public Dictionary<int, int> BossBattles => Common.Battles.BossBattles.YW3;
 
+        private List<ICharaparam> BlastersTCharaparam = new List<ICharaparam>();
+
         public ARC0 Game { get; set; }
 
         public ARC0 Language { get; set; }
@@ -205,7 +207,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
                 if (charaparam != null)
                 {
-                    charaparams.Remove(charaparam);
+                    BlastersTCharaparam.Add(charaparam);
                 }
             }
 
@@ -214,7 +216,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public void SaveCharaparam(ICharaparam[] charaparams)
         {
-            Charaparam[] formatCharaparams = charaparams.OfType<Charaparam>().ToArray();
+            List<ICharaparam> charaparamsList = charaparams.ToList();
+            charaparamsList.AddRange(BlastersTCharaparam);
+
+            Charaparam[] formatCharaparams = charaparamsList.OfType<Charaparam>().ToArray();
 
             VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
             string lastCharaparam = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_param")).OrderByDescending(x => x).First();
@@ -613,8 +618,8 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             CfgBin encountConfig = new CfgBin();
             encountConfig.Open(Game.Directory.GetFileFromFullPath("/data/res/battle/" + lastEncounter));
 
-            encountConfig.ReplaceEntry("ENCOUNT_TABLE_BEGIN", "ENCOUNT_TABLE_INFO_", formatEncountTables);
-            encountConfig.ReplaceEntry("ENCOUNT_CHARA_BEGIN", "ENCOUNT_CHARA_INFO_", formatEncountCharas);
+            encountConfig.ReplaceEntry("ENCOUNT_TABLE_BEGIN", "ENCOUNT_TABLE_", formatEncountTables);
+            encountConfig.ReplaceEntry("ENCOUNT_CHARA_BEGIN", "ENCOUNT_CHARA_", formatEncountCharas);
 
             Game.Directory.GetFolderFromFullPath("/data/res/battle").Files[lastEncounter].ByteContent = encountConfig.Save();
         }
@@ -919,6 +924,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 unchecked((int)0xB3285090),
                 unchecked((int)0x288D1CFF),
                 unchecked((int)0x137A2F0B),
+                unchecked((int)0x8149C5EC),
             };
 
             List<int> unbefriendableYokaiBaseHashes = new List<int>()
@@ -951,95 +957,6 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 unchecked((int)0x8E23A139),
                 unchecked((int)0x9C960ED7),
 
-                unchecked((int)0x72D38212),
-                unchecked((int)0x60662DFC),
-                unchecked((int)0xD8DA4A99),
-                unchecked((int)0xC1C17BD8),
-                unchecked((int)0xEAEC281B),
-                unchecked((int)0x4FB3ABA2),
-                unchecked((int)0x0813D172),
-                unchecked((int)0x84EF7807),
-                unchecked((int)0x9DF44946),
-                unchecked((int)0xC34F02D7),
-                unchecked((int)0x36CFA417),
-                unchecked((int)0x0BAF8DA7),
-                unchecked((int)0x89FF1A76),
-                unchecked((int)0x3F1B2319),
-                unchecked((int)0x26001258),
-                unchecked((int)0x027B0AA9),
-                unchecked((int)0x1B603BE8),
-                unchecked((int)0x10CEA547),
-                unchecked((int)0x09D59406),
-                unchecked((int)0xA872C222),
-                unchecked((int)0xB169F363),
-                unchecked((int)0x45DB7079),
-                unchecked((int)0xCFEC1BE7),
-                unchecked((int)0xB3E78A6C),
-                unchecked((int)0xAAFCBB2D),
-                unchecked((int)0x18DC673D),
-                unchecked((int)0x2AEA05BF),
-                unchecked((int)0x93829364),
-                unchecked((int)0xAEE2BAD4),
-                unchecked((int)0x1CC266C4),
-                unchecked((int)0x5B621C14),
-                unchecked((int)0x49D7B3FA),
-                unchecked((int)0xA48A610F),
-                unchecked((int)0x99EA48BF),
-                unchecked((int)0xAE34B88D),
-                unchecked((int)0xDE4A326F),
-                unchecked((int)0xE32A1BDF),
-                unchecked((int)0xF19FB431),
-                unchecked((int)0x510AC7CF),
-                unchecked((int)0x43BF6821),
-                unchecked((int)0x7EDF4191),
-                unchecked((int)0x67C470D0),
-                unchecked((int)0x4CE92313),
-                unchecked((int)0x2BCA94AF),
-                unchecked((int)0x16AABD1F),
-                unchecked((int)0x0FB18C5E),
-                unchecked((int)0x94FA2ACE),
-                unchecked((int)0x864F8520),
-                unchecked((int)0xA99A037E),
-                unchecked((int)0x6FD6B2AA),
-                unchecked((int)0x52B69B1A),
-                unchecked((int)0xDDD40C4D),
-                unchecked((int)0x1516E1CA),
-                unchecked((int)0x2876C87A),
-                unchecked((int)0xD9328BC5),
-                unchecked((int)0x9A56146A),
-                unchecked((int)0x88E3BB84),
-                unchecked((int)0x305FDCE1),
-                unchecked((int)0x834D252B),
-                unchecked((int)0x91F88AC5),
-                unchecked((int)0x2944EDA0),
-                unchecked((int)0xA7363DDA),
-                unchecked((int)0xE096470A),
-                unchecked((int)0xDDF66EBA),
-                unchecked((int)0x5FA6F96B),
-                unchecked((int)0x62C6D0DB),
-                unchecked((int)0x9E80007F),
-                unchecked((int)0xE452A275),
-                unchecked((int)0xFD499334),
-                unchecked((int)0x05D95785),
-                unchecked((int)0xEAFE9CD1),
-                unchecked((int)0xAD5EE601),
-                unchecked((int)0x2F0E71D0),
-                unchecked((int)0x36154091),
-                unchecked((int)0x3DBBDE3E),
-                unchecked((int)0x24A0EF7F),
-                unchecked((int)0xA3E029CF),
-                unchecked((int)0xB1558621),
-                unchecked((int)0xE3581B63),
-                unchecked((int)0xE29A7154),
-                unchecked((int)0xE0DCCF0D),
-                unchecked((int)0xE11EA53A),
-                unchecked((int)0xE451B3BF),
-                unchecked((int)0xCF2A3EFE),
-                unchecked((int)0x9DF9AC47),
-            };
-
-            List<int> yoBossBaseHashes = new List<int>()
-            {
                 unchecked((int)0x72D38212),
                 unchecked((int)0x60662DFC),
                 unchecked((int)0xD8DA4A99),

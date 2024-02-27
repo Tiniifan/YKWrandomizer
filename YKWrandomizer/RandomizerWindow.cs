@@ -144,41 +144,41 @@ namespace YKWrandomizer
 
             await Task.Run(() =>
             {
-            Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            Randomizer.SwapBosses(checkBoxSwapBosses.Checked, checkBoxStatScaling.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            Randomizer.RandomizeShop(radioButtonShop2.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
-            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-            comboBoxSetStarter1.Invoke((Action)delegate
-            {
-                comboBoxSetStarter2.Invoke((Action)delegate
-                {
-                    Randomizer.RandomizeGiven(radioButtonGiven2.Checked, new int[] { comboBoxSetStarter1.SelectedIndex, comboBoxSetStarter2.SelectedIndex });
-                });
-            });
+                Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
                 progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                Randomizer.SwapBosses(checkBoxSwapBosses.Checked, checkBoxStatScaling.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                Randomizer.RandomizeShop(radioButtonShop2.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
+                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+                comboBoxSetStarter1.Invoke((Action)delegate
+                {
+                    comboBoxSetStarter2.Invoke((Action)delegate
+                    {
+                        Randomizer.RandomizeGiven(radioButtonGiven2.Checked, new int[] { comboBoxSetStarter1.SelectedIndex, comboBoxSetStarter2.SelectedIndex });
+                    });
+                });
+                    progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
             });
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();

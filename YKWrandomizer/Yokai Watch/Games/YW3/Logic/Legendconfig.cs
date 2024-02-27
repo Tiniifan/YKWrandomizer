@@ -23,6 +23,8 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3.Logic
         public new int Seal8Hash { get => base.Seal8Hash; set => base.Seal8Hash = value; }
         public new bool SpoilSeal8 { get => base.SpoilSeal8; set => base.SpoilSeal8 = value; }
         public new int SealNumbers { get => base.SealNumbers; set => base.SealNumbers = value; }
-        public int PageNumber { get; set; }
+        public int PageNumber1 { get; set; }
+        public int Unk1 { get; set; }
+        public int PageNumber2 { get; set; }
     }
 }

@@ -473,7 +473,7 @@ namespace YKWrandomizer.Yokai_Watch
                     // Randomize role
                     if (options["groupBoxRole"].Name != "Unchanged")
                     {
-                        charabase.Rank = Seed.Next(1, 5);
+                        charabase.Role = Seed.Next(1, 5);
                     }
 
                     // Randomize status
@@ -580,13 +580,13 @@ namespace YKWrandomizer.Yokai_Watch
                         charaparam.AttributeDamageWind = attributeDamage[5];
 
                         // YKW3
-                        charaparam.Strongest = (byte)Seed.Next(0, 7);
+                        charaparam.Strongest = (byte)Seed.Next(1, 7);
                     }
 
                     // Randomize weakness
                     if (options["groupBoxWeakness"].Name != "Unchanged")
                     {
-                        charaparam.Weakness = Seed.Next(0, 7);
+                        charaparam.Weakness = Seed.Next(1, 7);
                     }
 
                     // Randomize stat
@@ -1135,16 +1135,15 @@ namespace YKWrandomizer.Yokai_Watch
                 IEncountTable[] encountTables = staticEncountersData.Item1;
                 IEncountChara[] encountCharas = staticEncountersData.Item2;
 
-                // Get scoutable yokai
                 List<int> scoutableParamHashes = Charaparams
-                    .Where(x => x.ScoutableHash != 0x00
-                                && x.ShowInMedalium == true
-                                && (Charabases.FirstOrDefault(y => y.BaseHash == x.BaseHash) is var charaBase)
-                                && !charaBase.IsLegend
-                                && !charaBase.IsPionner
-                                && !charaBase.IsLegendaryMystery)
-                    .Select(x => x.ParamHash)
-                    .ToList();
+                             .Where(charaparam =>
+                             {
+                                 ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
+                                 string tribeName = (Game.Name == "Yo-Kai Watch 1") ? Game.Tribes[charaparam.Tribe] : Game.Tribes[charabase.Tribe];
+                                 return (charaparam.ScoutableHash != 0x00 && charaparam.ShowInMedalium == true);
+                             })
+                             .Select(x => x.ParamHash)
+                             .ToList();
 
                 // Get static yokai
                 List<int> staticParamHashes = Charaparams
@@ -1307,12 +1306,12 @@ namespace YKWrandomizer.Yokai_Watch
             {
                 // Get scoutable yokai
                 List<(ICharaparam, ICharabase)> scoutableYokai = Charaparams
-                    .Where(x => x.ScoutableHash != 0x00
-                                && x.ShowInMedalium == true
-                                && Charabases.FirstOrDefault(y => y.BaseHash == x.BaseHash) is ICharabase charaBase
-                                && !charaBase.IsLegend
-                                && !charaBase.IsPionner
-                                && !charaBase.IsLegendaryMystery)
+                    .Where(charaparam =>
+                    {
+                        ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
+                        string tribeName = (Game.Name == "Yo-Kai Watch 1") ? Game.Tribes[charaparam.Tribe] : Game.Tribes[charabase.Tribe];
+                        return (charaparam.ScoutableHash != 0x00 && charaparam.ShowInMedalium == true);
+                    })
                     .Select(x => (x, Charabases.FirstOrDefault(y => y.BaseHash == x.BaseHash)))
                     .Where(tuple => tuple.Item2 != null)
                     .ToList();
@@ -1632,12 +1631,12 @@ namespace YKWrandomizer.Yokai_Watch
 
             // Get scoutable yokai
             List<(ICharaparam, ICharabase)> scoutableYokai = Charaparams
-                .Where(x => x.ScoutableHash != 0x00
-                            && x.ShowInMedalium == true
-                            && Charabases.FirstOrDefault(y => y.BaseHash == x.BaseHash) is ICharabase charaBase
-                            && !charaBase.IsLegend
-                            && !charaBase.IsPionner
-                            && !charaBase.IsLegendaryMystery)
+                .Where(charaparam =>
+                {
+                    ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
+                    string tribeName = (Game.Name == "Yo-Kai Watch 1") ? Game.Tribes[charaparam.Tribe] : Game.Tribes[charabase.Tribe];
+                    return (charaparam.ScoutableHash != 0x00 && charaparam.ShowInMedalium == true);
+                })
                 .Select(x => (x, Charabases.FirstOrDefault(y => y.BaseHash == x.BaseHash)))
                 .Where(tuple => tuple.Item2 != null)
                 .ToList();
@@ -1827,19 +1826,8 @@ namespace YKWrandomizer.Yokai_Watch
         {
             if (randomize == false) return;
 
-            // Get scoutable yokai
+            // get scoutable yokai
             List<int> scoutableYokai = Charaparams
-                .Where(x => x.ScoutableHash != 0x00
-                            && x.ShowInMedalium == true
-                            && Charabases.FirstOrDefault(y => y.BaseHash == x.BaseHash) is ICharabase charaBase
-                            && !charaBase.IsLegend
-                            && !charaBase.IsPionner
-                            && !charaBase.IsLegendaryMystery)
-                .Select(x => x.ParamHash)
-                .ToList();
-
-            // get all yokais
-            int[] allYokais = Charaparams
              .Where(charaparam =>
              {
                  ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
@@ -1848,7 +1836,7 @@ namespace YKWrandomizer.Yokai_Watch
                         || (charaparam.ScoutableHash == 0x00 && charaparam.ShowInMedalium == true && tribeName != "Boss" && tribeName != "Untribe");
              })
              .Select(x => x.ParamHash)
-             .ToArray();
+             .ToList();
 
             int fileCount = 0;
 
@@ -1877,7 +1865,7 @@ namespace YKWrandomizer.Yokai_Watch
                             if ((Game.Name == "Yo-Kai Watch 1" || Game.Name == "Yo-Kai Watch 2" || Game.Name == "Yo-Kai Watch 3") && fileCount == 0 && yokaiCount == 0 && starters[0] != -1)
                             {
                                 // Change the starter
-                                bytesInt = allYokais[starters[0]];
+                                bytesInt = scoutableYokai[starters[0]];
                                 if (scoutableYokai.Contains(bytesInt))
                                 {
                                     scoutableYokai.Remove(bytesInt);
@@ -1886,7 +1874,7 @@ namespace YKWrandomizer.Yokai_Watch
                             else if (Game.Name == "Yo-Kai Watch 3" && fileCount == 0 && yokaiCount == 1 && starters[1] != -1)
                             {
                                 // Change the starter
-                                bytesInt = allYokais[starters[1]];
+                                bytesInt = scoutableYokai[starters[1]];
                                 if (scoutableYokai.Contains(bytesInt))
                                 {
                                     scoutableYokai.Remove(bytesInt);
