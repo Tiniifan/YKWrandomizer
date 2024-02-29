@@ -37,7 +37,9 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
         public Dictionary<int, int> BossBattles => Common.Battles.BossBattles.YW3;
 
-        private List<ICharaparam> BlastersTCharaparam = new List<ICharaparam>();
+        public (float, float, float, float)[] ActionPercentages => Common.ActionPercentages.YW3;
+
+        public Dictionary<uint, string> StaticYokais => Common.StaticYokais.YW3;
 
         public ARC0 Game { get; set; }
 
@@ -199,27 +201,12 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 .Select(x => x.ToClass<Charaparam>())
                 .ToList();
 
-
-            // Remove blasters t mini boss
-            foreach (int paramHash in Common.MiniBossBlastersT.YW3)
-            {
-                Charaparam charaparam = charaparams.FirstOrDefault(x => x.ParamHash == paramHash);
-
-                if (charaparam != null)
-                {
-                    BlastersTCharaparam.Add(charaparam);
-                }
-            }
-
             return charaparams.ToArray();
         }
 
         public void SaveCharaparam(ICharaparam[] charaparams)
         {
-            List<ICharaparam> charaparamsList = charaparams.ToList();
-            charaparamsList.AddRange(BlastersTCharaparam);
-
-            Charaparam[] formatCharaparams = charaparamsList.OfType<Charaparam>().ToArray();
+            Charaparam[] formatCharaparams = charaparams.OfType<Charaparam>().ToArray();
 
             VirtualDirectory characterFolder = Game.Directory.GetFolderFromFullPath("data/res/character");
             string lastCharaparam = characterFolder.Files.Keys.Where(x => x.StartsWith("chara_param")).OrderByDescending(x => x).First();
@@ -820,7 +807,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
             Game.Directory.GetFolderFromFullPath("/data/res/character").Files[lastLegendConfig].ByteContent = legendConfigFile.Save();
         }
 
-        public void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null)
+        public void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null, bool addFile = false)
         {
             List<int> unbefriendableYokaiParamHashes = new List<int>()
             {
@@ -1044,6 +1031,71 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 unchecked((int)0x9DF9AC47),
             };
 
+            Dictionary<int, int> yokaiTransferAnimation = new Dictionary<int, int>()
+            {
+                { unchecked((int)0xC6112648), unchecked((int)0x571CDF2B) },
+                { unchecked((int)0xADD74C4F), unchecked((int)0xD87E487C) },
+                { unchecked((int)0xD0A0B80A), unchecked((int)0xD87E487C) },
+                { unchecked((int)0x642C610D), unchecked((int)0x65EE0B3A) },
+                { unchecked((int)0x666ADF54), unchecked((int)0x65EE0B3A) },
+                { unchecked((int)0x67A8B563), unchecked((int)0x65EE0B3A) },
+                { unchecked((int)0x9B121E4F), unchecked((int)0x2A42A425) },
+                { unchecked((int)0x82092F0E), unchecked((int)0x2A42A425) },
+                { unchecked((int)0xBFBB2BA4), unchecked((int)0x4AED8F3D) },
+                { unchecked((int)0xC0753E10), unchecked((int)0xEF54D8E0) },
+                { unchecked((int)0x0D239B68), unchecked((int)0x0CE1F15F) },
+                { unchecked((int)0x1438AA29), unchecked((int)0x0CE1F15F) },
+                { unchecked((int)0x3F15F9EA), unchecked((int)0x0CE1F15F) },
+                { unchecked((int)0x8BF32C28), unchecked((int)0x12ACFD9C) },
+                { unchecked((int)0x89B59271), unchecked((int)0x0BB7CCDD) },
+                { unchecked((int)0x2A865716), unchecked((int)0x0AE34E1E) },
+                { unchecked((int)0xDAD67CC7), unchecked((int)0xDB1416F0) },
+                { unchecked((int)0x960AB5A2), unchecked((int)0xC5AD7A9D) },
+                { unchecked((int)0x0141366E), unchecked((int)0x226C131D) },
+                { unchecked((int)0x13F49980), unchecked((int)0xC5AD7A9D) },
+                { unchecked((int)0xAB48FEE5), unchecked((int)0x3365E026) },
+                { unchecked((int)0x369FC65C), unchecked((int)0x550C874C) },
+                { unchecked((int)0x8E23A139), unchecked((int)0x378367AE) },
+                { unchecked((int)0x9C960ED7), unchecked((int)0x1EE81D2E) },
+                { unchecked((int)0xE3581B63), unchecked((int)0x5B327E5F) },
+                { unchecked((int)0xE29A7154), unchecked((int)0x5B327E5F) },
+                { unchecked((int)0xE0DCCF0D), unchecked((int)0x5B327E5F) },
+                { unchecked((int)0xE11EA53A), unchecked((int)0x5B327E5F) },
+                { unchecked((int)0xE451B3BF), unchecked((int)0x5B327E5F) },
+
+            };
+
+            List<int> dontRezize = new List<int>()
+            {
+                unchecked((int)0xC6112648),
+                unchecked((int)0xADD74C4F),
+                unchecked((int)0xD0A0B80A),
+                unchecked((int)0x642C610D),
+                unchecked((int)0x666ADF54),
+                unchecked((int)0x67A8B563),
+                unchecked((int)0x9B121E4F),
+                unchecked((int)0x82092F0E),
+                unchecked((int)0x8865DB96),
+                unchecked((int)0xBFBB2BA4),
+                unchecked((int)0xC0753E10),
+                unchecked((int)0x56DEB51C),
+                unchecked((int)0x0D239B68),
+                unchecked((int)0x1438AA29),
+                unchecked((int)0x3F15F9EA),
+                unchecked((int)0x8BF32C28),
+                unchecked((int)0x89B59271),
+                unchecked((int)0x2A865716),
+                unchecked((int)0xDAD67CC7),
+                unchecked((int)0x960AB5A2),
+                unchecked((int)0x855F128C),
+                unchecked((int)0x0141366E),
+                unchecked((int)0x13F49980),
+                unchecked((int)0xAB48FEE5),
+                unchecked((int)0x369FC65C),
+                unchecked((int)0x8E23A139),
+                unchecked((int)0x9C960ED7),
+            };
+
             // Get the index of the latest befriendable yokai
             int lastBefriendableIndex = charaparams.FindLastIndex(x =>
             {
@@ -1075,6 +1127,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
             foreach (int unbefriendableYokaiBaseHash in unbefriendableYokaiBaseHashes)
             {
+                ICharabase cloned = (ICharabase)charabases.FirstOrDefault(x => x.BaseHash == unbefriendableYokaiBaseHash).Clone();
                 int newBaseHash = unchecked((int)Crc32.Compute(Encoding.GetEncoding("Shift-JIS").GetBytes("added_base_" + medalIndex)));
                 int newParamHash = unchecked((int)Crc32.Compute(Encoding.GetEncoding("Shift-JIS").GetBytes("added_param_" + medalIndex)));
 
@@ -1085,27 +1138,54 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                     if (charascales.Any(x => x.BaseHash == unbefriendableYokaiBaseHash))
                     {
                         ICharascale yokaiCharascale = (ICharascale)charascales.FirstOrDefault(x => x.BaseHash == unbefriendableYokaiBaseHash).Clone();
-                        yokaiCharascale.BaseHash = newBaseHash;
-                        yokaiCharascale.Scale1 /= 1.5f;
-                        yokaiCharascale.Scale2 /= 1.5f;
-                        yokaiCharascale.Scale3 /= 2f;
-                        yokaiCharascale.Scale4 /= 1.5f;
-                        yokaiCharascale.Scale5 /= 1.1f;
-                        yokaiCharascale.Scale6 /= 1.5f;
-                        yokaiCharascale.Scale7 /= 1.5f;
 
-                        if (unbefriendableYokaiBaseHash == unchecked((int)0xE452A275) || unbefriendableYokaiBaseHash == unchecked((int)0xFD499334))
+                        if (dontRezize.IndexOf(unbefriendableYokaiBaseHash) == -1)
                         {
+                            yokaiCharascale.BaseHash = newBaseHash;
                             yokaiCharascale.Scale1 /= 1.5f;
                             yokaiCharascale.Scale2 /= 1.5f;
                             yokaiCharascale.Scale3 /= 2f;
                             yokaiCharascale.Scale4 /= 1.5f;
-                            yokaiCharascale.Scale5 /= 1.5f;
+                            yokaiCharascale.Scale5 /= 1.1f;
                             yokaiCharascale.Scale6 /= 1.5f;
+                            yokaiCharascale.Scale7 /= 1.5f;
+
+                            if (unbefriendableYokaiBaseHash == unchecked((int)0xE452A275) || unbefriendableYokaiBaseHash == unchecked((int)0xFD499334))
+                            {
+                                yokaiCharascale.Scale1 /= 1.5f;
+                                yokaiCharascale.Scale2 /= 1.5f;
+                                yokaiCharascale.Scale3 /= 2f;
+                                yokaiCharascale.Scale4 /= 1.5f;
+                                yokaiCharascale.Scale5 /= 1.5f;
+                                yokaiCharascale.Scale6 /= 1.5f;
+                            }
                         }
 
-                        // Perform blasters t scale
-                        if (yokaiCharascale.Scale7 <= 0)
+                        if (yokaiCharascale.Scale1 == 0)
+                        {
+                            yokaiCharascale.Scale1 = 1f;
+                        }
+                        if (yokaiCharascale.Scale2 == 0)
+                        {
+                            yokaiCharascale.Scale2 = 1f;
+                        }
+                        if (yokaiCharascale.Scale3 == 0)
+                        {
+                            yokaiCharascale.Scale3 = 1f;
+                        }
+                        if (yokaiCharascale.Scale4 == 0)
+                        {
+                            yokaiCharascale.Scale4 = 1f;
+                        }
+                        if (yokaiCharascale.Scale5 == 0)
+                        {
+                            yokaiCharascale.Scale5 = 0.5f;
+                        }
+                        if (yokaiCharascale.Scale6 == 0)
+                        {
+                            yokaiCharascale.Scale6 = 1f;
+                        }
+                        if (yokaiCharascale.Scale7 == 0)
                         {
                             yokaiCharascale.Scale7 = 1f;
                         }
@@ -1120,13 +1200,13 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                         yokaiCharascale.Scale2 = 1f;
                         yokaiCharascale.Scale3 = 1f;
                         yokaiCharascale.Scale4 = 1f;
-                        yokaiCharascale.Scale5 = 1f;
+                        yokaiCharascale.Scale5 = 0.5f;
                         yokaiCharascale.Scale6 = 1f;
                         yokaiCharascale.Scale7 = 1f;
                         charascales.Add(yokaiCharascale);
                     }
 
-                    ICharabase yokaiCharabase = (ICharabase)charabases.FirstOrDefault(x => x.BaseHash == unbefriendableYokaiBaseHash).Clone();
+                    ICharabase yokaiCharabase = cloned;
                     yokaiCharabase.BaseHash = newBaseHash;
                     yokaiCharabase.Tribe = 6;
                     charabases.Add(yokaiCharabase);
@@ -1148,6 +1228,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                     yokaiCharaparam.ScoutableHash = 4;
                     yokaiCharaparam.BattleType = 2;
                     yokaiCharaparam.EquipmentSlotsAmount = 1;
+                    yokaiCharaparam.GuardHash = unchecked((int)0x5320D06F);
                     charaparams.Insert(lastBefriendableIndex, yokaiCharaparam);
 
                     // Add battle charaparam
@@ -1166,6 +1247,36 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
                     medalIndex++;
                     lastBefriendableIndex++;
+                }
+
+                if (addFile)
+                {
+                    // Add animation
+                    if (yokaiTransferAnimation.ContainsKey(unbefriendableYokaiBaseHash))
+                    {
+                        ICharabase sourceBase = charabases.FirstOrDefault(x => x.BaseHash == yokaiTransferAnimation[unbefriendableYokaiBaseHash]);
+
+                        if (sourceBase != null)
+                        {
+                            string sourceCode = GameSupport.GetFileModelText(sourceBase.FileNamePrefix, sourceBase.FileNameNumber, sourceBase.FileNameVariant);
+                            string newCode = GameSupport.GetFileModelText(cloned.FileNamePrefix, cloned.FileNameNumber, cloned.FileNameVariant);
+                            VirtualDirectory outputDirectory = Game.Directory.GetFolderFromFullPath("/data/character/" + newCode);
+
+                            foreach (KeyValuePair<string, SubMemoryStream> file in Game.Directory.GetFolderFromFullPath("/data/character/" + sourceCode).Files)
+                            {
+                                if (!file.Key.Contains("_p00") && !file.Key.Contains("_p10"))
+                                {
+                                    string fileNewName = file.Key.Replace(sourceCode, newCode);
+                                    if (!outputDirectory.Files.ContainsKey(fileNewName))
+                                    {
+                                        outputDirectory.AddFile(fileNewName, file.Value);
+                                    }
+                                    
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
 

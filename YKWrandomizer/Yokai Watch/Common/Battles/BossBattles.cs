@@ -86,7 +86,7 @@ namespace YKWrandomizer.Yokai_Watch.Common.Battles
             {unchecked((int)0x685A4693), 65 },
             {unchecked((int)0xE6D54170), 70 },
             {unchecked((int)0x127DF3EA), 10 },
-            {unchecked((int)0x8B74A250), 15 },
+            {unchecked((int)0x16FE5BD8), 15 }, // Supermanager
             {unchecked((int)0xFC7392C6), 15 },
             {unchecked((int)0x00C85C04), 20 },
             {unchecked((int)0x99C10DBE), 25 },

@@ -27,6 +27,10 @@ namespace YKWrandomizer.Yokai_Watch.Games
 
         Dictionary<int, int> BossBattles { get; }
 
+        (float, float, float, float)[] ActionPercentages { get; }
+
+        Dictionary<uint, string> StaticYokais { get; }
+
         ARC0 Game { get; set; }
 
         ARC0 Language { get; set; }
@@ -105,7 +109,7 @@ namespace YKWrandomizer.Yokai_Watch.Games
 
         void SaveStaticEncounters(IEncountTable[] encountTables, IEncountChara[] encountCharas);
 
-        void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null);
+        void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null, bool addFile = false);
 
         void FixYokai(List<ICharabase> charabases);
 

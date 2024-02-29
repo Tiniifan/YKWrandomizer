@@ -24,13 +24,13 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3.Logic
         public new int Weakness { get => base.Weakness; set => base.Weakness = value; }
         public int Unk2 { get; set; }
         public new int AttackHash { get => base.AttackHash; set => base.AttackHash = value; }
-        public int Unk3 { get; set; }
+        public new float AttackPercentage { get => base.AttackPercentage; set => base.AttackPercentage = value; }
         public new int TechniqueHash { get => base.TechniqueHash; set => base.TechniqueHash = value; }
-        public int Unk4 { get; set; }
+        public new float TechniquePercentage { get => base.TechniquePercentage; set => base.TechniquePercentage = value; }
         public new int InspiritHash { get => base.InspiritHash; set => base.InspiritHash = value; }
-        public int Unk5 { get; set; }
-        public int Unk6 { get; set; }
-        public int Unk7 { get; set; }
+        public new float InspiritPercentage { get => base.InspiritPercentage; set => base.InspiritPercentage = value; }
+        public new int GuardHash { get => base.GuardHash; set => base.GuardHash = value; }
+        public new float GuardPercentage { get => base.GuardPercentage; set => base.GuardPercentage = value; }
         public new int SoultimateHash { get => base.SoultimateHash; set => base.SoultimateHash = value; }
         public new int AbilityHash { get => base.AbilityHash; set => base.AbilityHash = value; }
         public int Unk8 { get; set; }

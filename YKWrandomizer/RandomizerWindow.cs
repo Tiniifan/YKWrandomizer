@@ -94,6 +94,7 @@ namespace YKWrandomizer
                     labelStarter1.Text = "Cadin";
                     labelStarter2.Visible = false;
                     comboBoxSetStarter2.Visible = false;
+                    groupBoxWildMiscellaneous.Enabled = true;
                 }
                 else if (game is YW2)
                 {
@@ -106,6 +107,7 @@ namespace YKWrandomizer
                     labelStarter1.Text = "Jibanyan";
                     labelStarter2.Visible = false;
                     comboBoxSetStarter2.Visible = false;
+                    groupBoxWildMiscellaneous.Enabled = true;
                 }
                 else if (game is YW3)
                 {
@@ -118,6 +120,7 @@ namespace YKWrandomizer
                     labelStarter2.Text = "Usapyon";
                     labelStarter2.Visible = true;
                     comboBoxSetStarter2.Visible = true;
+                    groupBoxWildMiscellaneous.Enabled = false;
                 }
 
                 Randomizer = new Randomizer(game);

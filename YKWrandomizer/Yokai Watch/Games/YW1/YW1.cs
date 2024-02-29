@@ -37,6 +37,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
 
         public Dictionary<int, int> BossBattles => Common.Battles.BossBattles.YW1;
 
+        public (float, float, float, float)[] ActionPercentages => Common.ActionPercentages.YW1;
+
+        public Dictionary<uint, string> StaticYokais => Common.StaticYokais.YW1;
+
         public ARC0 Game { get; set; }
 
         public ARC0 Language { get; set; }
@@ -567,7 +571,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             Game.Directory.GetFolderFromFullPath("/data/res/battle").Files[lastEncounter].ByteContent = encountConfig.Save();
         }
 
-        public void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null)
+        public void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null, bool addFile = false)
         {
             Dictionary<int, int> yoCriminalsBaseHashes = new Dictionary<int, int>()
             {
@@ -792,6 +796,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
                     yokaiBossCharaparam.Experience = 5;
                     yokaiBossCharaparam.Money = 5;
                     yokaiBossCharaparam.Tribe = 6;
+                    yokaiBossCharaparam.GuardHash = unchecked((int)0x61930F85);
 
                     charaparams.Insert(lastBefriendableIndex, yokaiBossCharaparam);
 

@@ -450,6 +450,16 @@ namespace YKWrandomizer.Yokai_Watch
                 // Playable yokai
                 if ((charaparam.ScoutableHash != 0x00 && charaparam.ShowInMedalium == true) || (charaparam.ScoutableHash == 0x00 && charaparam.ShowInMedalium == true && tribeName != "Boss" && tribeName != "Untribe"))
                 {
+                    // Fix yokai that don't have action
+                    if (charaparam.AttackPercentage == 0 && charaparam.TechniquePercentage == 0 && charaparam.InspiritPercentage == 0 && charaparam.GuardPercentage == 0)
+                    {
+                        (float, float, float, float) actionPercentage = Game.ActionPercentages[Seed.Next(Game.ActionPercentages.Length)];
+                        charaparam.AttackPercentage = actionPercentage.Item1;
+                        charaparam.TechniquePercentage = actionPercentage.Item2;
+                        charaparam.InspiritPercentage = actionPercentage.Item3;
+                        charaparam.GuardPercentage = actionPercentage.Item4;
+                    }
+
                     // Randomize tribe
                     if (options["groupBoxTribe"].Name != "Unchanged")
                     {
@@ -724,7 +734,7 @@ namespace YKWrandomizer.Yokai_Watch
                 }
 
                 // Playable yokai and mini-boss yokai
-                if (tribeName != "Boss" && tribeName != "Untribe")
+                if ((charaparam.ScoutableHash != 0x00 && charaparam.ShowInMedalium == true) || (charaparam.ScoutableHash == 0x00 && charaparam.ShowInMedalium == true && tribeName != "Boss" && tribeName != "Untribe") || Game.StaticYokais.ContainsKey((uint)charaparam.ParamHash))
                 {
                     // Randomize attack
                     if (options["groupBoxAttack"].Name != "Unchanged")
@@ -754,6 +764,16 @@ namespace YKWrandomizer.Yokai_Watch
                     if (options["groupBoxSkill"].Name != "Unchanged")
                     {
                         charaparam.AbilityHash = (int)Game.Skills.ElementAt(Seed.Next(Game.Skills.Count)).Key;
+                    }
+
+                    // Randomize action percentage
+                    if (options["groupBoxActionPercentage"].Name != "Unchanged")
+                    {
+                        (float, float, float, float) actionPercentage = Game.ActionPercentages[Seed.Next(Game.ActionPercentages.Length)];
+                        charaparam.AttackPercentage = actionPercentage.Item1;
+                        charaparam.TechniquePercentage = actionPercentage.Item2;
+                        charaparam.InspiritPercentage = actionPercentage.Item3;
+                        charaparam.GuardPercentage = actionPercentage.Item4;
                     }
 
                     // Randomize Blaster T moveset
@@ -812,6 +832,11 @@ namespace YKWrandomizer.Yokai_Watch
                     // Fix money
                     if (Game.Name == "Yo-Kai Watch 3")
                     {
+                        if (battleCharaparam.Money == 0)
+                        {
+                            battleCharaparam.Money = 5 + (charabase.Rank + 1) * 6;
+                        }
+
                         if (options["groupBoxMiscellaneous"].CheckBoxes["checkBoxScaleMoney"].Checked)
                         {
                             if (battleCharaparam.Money > 35)
@@ -819,8 +844,14 @@ namespace YKWrandomizer.Yokai_Watch
                                 battleCharaparam.Money = 5 + (charabase.Rank + 1) * 6;
                             }
                         }
-                    } else
+                    } 
+                    else
                     {
+                        if (charaparam.Money == 0)
+                        {
+                            charaparam.Money = 5 + (charabase.Rank + 1) * 6;
+                        }
+
                         if (options["groupBoxMiscellaneous"].CheckBoxes["checkBoxScaleMoney"].Checked)
                         {
                             if (charaparam.Money > 35)
@@ -830,10 +861,14 @@ namespace YKWrandomizer.Yokai_Watch
                         }
                     }
 
-
                     // Fix experience
                     if (Game.Name == "Yo-Kai Watch 3")
                     {
+                        if (battleCharaparam.Experience == 0)
+                        {
+                            battleCharaparam.Experience = 26 + (charabase.Rank + 1) * 4;
+                        }
+
                         if (options["groupBoxMiscellaneous"].CheckBoxes["checkBoxScaleMoney"].Checked)
                         {
                             if (battleCharaparam.Experience > 46)
@@ -841,8 +876,14 @@ namespace YKWrandomizer.Yokai_Watch
                                 battleCharaparam.Experience = 26 + (charabase.Rank + 1) * 4;
                             }
                         }
-                    } else
+                    } 
+                    else
                     {
+                        if (charaparam.Experience == 0)
+                        {
+                            charaparam.Experience = 26 + (charabase.Rank + 1) * 4;
+                        }
+
                         if (options["groupBoxMiscellaneous"].CheckBoxes["checkBoxScaleMoney"].Checked)
                         {
                             if (charaparam.Experience > 46)
@@ -1136,25 +1177,23 @@ namespace YKWrandomizer.Yokai_Watch
                 IEncountChara[] encountCharas = staticEncountersData.Item2;
 
                 List<int> scoutableParamHashes = Charaparams
-                             .Where(charaparam =>
-                             {
-                                 ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
-                                 string tribeName = (Game.Name == "Yo-Kai Watch 1") ? Game.Tribes[charaparam.Tribe] : Game.Tribes[charabase.Tribe];
-                                 return (charaparam.ScoutableHash != 0x00 && charaparam.ShowInMedalium == true);
-                             })
-                             .Select(x => x.ParamHash)
-                             .ToList();
+                .Where(charaparam =>
+                {
+                    ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
+                    string tribeName = (Game.Name == "Yo-Kai Watch 1") ? Game.Tribes[charaparam.Tribe] : Game.Tribes[charabase.Tribe];
+                    return (charaparam.ScoutableHash != 0x00 && charaparam.ShowInMedalium == true);
+                })
+                .Select(x => x.ParamHash)
+                .ToList();
 
                 // Get static yokai
                 List<int> staticParamHashes = Charaparams
-                    .Where(charaparam =>
-                    {
-                        ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
-                        string tribeName = (Game.Name == "Yo-Kai Watch 1") ? Game.Tribes[charaparam.Tribe] : Game.Tribes[charabase.Tribe];
-                        return (charaparam.ShowInMedalium == false && tribeName != "Boss" && tribeName != "Untribe");
-                    })
-                    .Select(x => x.ParamHash)
-                    .ToList();
+                .Where(charaparam =>
+                {
+                    return Game.StaticYokais.ContainsKey((uint)charaparam.ParamHash);
+                })
+                .Select(x => x.ParamHash)
+                .ToList();
 
                 // Randomize static encounters
                 foreach (IEncountChara encountChara in encountCharas)
@@ -1306,26 +1345,24 @@ namespace YKWrandomizer.Yokai_Watch
             {
                 // Get scoutable yokai
                 List<(ICharaparam, ICharabase)> scoutableYokai = Charaparams
-                    .Where(charaparam =>
-                    {
-                        ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
-                        string tribeName = (Game.Name == "Yo-Kai Watch 1") ? Game.Tribes[charaparam.Tribe] : Game.Tribes[charabase.Tribe];
-                        return (charaparam.ScoutableHash != 0x00 && charaparam.ShowInMedalium == true);
-                    })
-                    .Select(x => (x, Charabases.FirstOrDefault(y => y.BaseHash == x.BaseHash)))
-                    .Where(tuple => tuple.Item2 != null)
-                    .ToList();
+                .Where(charaparam =>
+                {
+                    ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
+                    string tribeName = (Game.Name == "Yo-Kai Watch 1") ? Game.Tribes[charaparam.Tribe] : Game.Tribes[charabase.Tribe];
+                    return (charaparam.ScoutableHash != 0x00 && charaparam.ShowInMedalium == true);
+                })
+                .Select(x => (x, Charabases.FirstOrDefault(y => y.BaseHash == x.BaseHash)))
+                .Where(tuple => tuple.Item2 != null)
+                .ToList();
 
                 // Get static yokai
                 List<int> staticParamHashes = Charaparams
-                    .Where(charaparam =>
-                    {
-                        ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
-                        string tribeName = (Game.Name == "Yo-Kai Watch 1") ? Game.Tribes[charaparam.Tribe] : Game.Tribes[charabase.Tribe];
-                        return (charaparam.ShowInMedalium == false && tribeName != "Boss" && tribeName != "Untribe");
-                    })
-                    .Select(x => x.ParamHash)
-                    .ToList();
+                .Where(charaparam =>
+                {
+                    return Game.StaticYokais.ContainsKey((uint)charaparam.ParamHash);
+                })
+                .Select(x => x.ParamHash)
+                .ToList();
 
                 // Set area dictionary
                 Dictionary<string, (int, int)> areas = new Dictionary<string, (int, int)>();
@@ -1926,7 +1963,7 @@ namespace YKWrandomizer.Yokai_Watch
         {
             if (randomize == false) return;
 
-            Game.UnlockUnscoutableYokai(Charaparams, Charabases, Charascales, HackslashCharaparams, BattleCharaparams);
+            Game.UnlockUnscoutableYokai(Charaparams, Charabases, Charascales, HackslashCharaparams, BattleCharaparams, true);
         }
 
         public string[] GetPlayableYokai(bool autorizeUnscoutableYokai)

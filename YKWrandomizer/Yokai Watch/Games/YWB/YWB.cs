@@ -36,6 +36,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YWB
 
         public Dictionary<int, int> BossBattles => Common.Battles.BossBattles.YWB;
 
+        public (float, float, float, float)[] ActionPercentages => Common.ActionPercentages.YWB;
+
+        public Dictionary<uint, string> StaticYokais => Common.StaticYokais.YWB;
+
         public ARC0 Game { get; set; }
 
         public ARC0 Language { get; set; }
@@ -498,7 +502,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YWB
 
         }
 
-        public void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null)
+        public void UnlockUnscoutableYokai(List<ICharaparam> charaparams, List<ICharabase> charabases, List<ICharascale> charascales, List<IHackslashCharaparam> hackslashCharaparams = null, List<IBattleCharaparam> battleCharaparams = null, bool addFile = false)
         {
 
         }

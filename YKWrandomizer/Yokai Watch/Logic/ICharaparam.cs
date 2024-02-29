@@ -67,6 +67,12 @@
 
         public int EquipmentSlotsAmount { get; set; }
         public int BattleType { get; set; }
+        public int Attitude { get; set; }
+        public float AttackPercentage { get; set; }
+        public float TechniquePercentage { get; set; }
+        public float InspiritPercentage { get; set; }
+        public int GuardHash { get; set; }
+        public float GuardPercentage { get; set; }
 
         public object Clone()
         {

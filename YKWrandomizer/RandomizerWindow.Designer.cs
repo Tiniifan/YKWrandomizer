@@ -171,6 +171,9 @@ namespace YKWrandomizer
             this.radioButtonShop2 = new System.Windows.Forms.RadioButton();
             this.radioButtonShop1 = new System.Windows.Forms.RadioButton();
             this.groupBoxGivenYokai = new System.Windows.Forms.GroupBox();
+            this.labelStarter2 = new System.Windows.Forms.Label();
+            this.comboBoxSetStarter2 = new System.Windows.Forms.ComboBox();
+            this.labelStarter1 = new System.Windows.Forms.Label();
             this.comboBoxSetStarter1 = new System.Windows.Forms.ComboBox();
             this.radioButtonGiven2 = new System.Windows.Forms.RadioButton();
             this.checkBoxSetStarter = new System.Windows.Forms.CheckBox();
@@ -181,9 +184,9 @@ namespace YKWrandomizer
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
-            this.labelStarter1 = new System.Windows.Forms.Label();
-            this.labelStarter2 = new System.Windows.Forms.Label();
-            this.comboBoxSetStarter2 = new System.Windows.Forms.ComboBox();
+            this.groupBoxActionPercentage = new System.Windows.Forms.GroupBox();
+            this.radioButtonActionPercentage2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonActionPercentage1 = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -234,6 +237,7 @@ namespace YKWrandomizer
             this.groupBoxShop.SuspendLayout();
             this.groupBoxGivenYokai.SuspendLayout();
             this.groupBoxRequestedYokai.SuspendLayout();
+            this.groupBoxActionPercentage.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -1031,6 +1035,7 @@ namespace YKWrandomizer
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.groupBoxActionPercentage);
             this.tabPage6.Controls.Add(this.groupBoxMiscellaneous);
             this.tabPage6.Controls.Add(this.groupBoxAttack);
             this.tabPage6.Controls.Add(this.groupBoxInspirit);
@@ -1050,9 +1055,9 @@ namespace YKWrandomizer
             this.groupBoxMiscellaneous.Controls.Add(this.checkBoxScaleEXP);
             this.groupBoxMiscellaneous.Controls.Add(this.checkBoxScaleMoney);
             this.groupBoxMiscellaneous.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxMiscellaneous.Location = new System.Drawing.Point(398, 137);
+            this.groupBoxMiscellaneous.Location = new System.Drawing.Point(12, 259);
             this.groupBoxMiscellaneous.Name = "groupBoxMiscellaneous";
-            this.groupBoxMiscellaneous.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxMiscellaneous.Size = new System.Drawing.Size(573, 116);
             this.groupBoxMiscellaneous.TabIndex = 35;
             this.groupBoxMiscellaneous.TabStop = false;
             this.groupBoxMiscellaneous.Text = "Miscellaneous";
@@ -1939,6 +1944,36 @@ namespace YKWrandomizer
             this.groupBoxGivenYokai.TabStop = false;
             this.groupBoxGivenYokai.Text = "Given Yokai";
             // 
+            // labelStarter2
+            // 
+            this.labelStarter2.AutoSize = true;
+            this.labelStarter2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStarter2.Location = new System.Drawing.Point(187, 53);
+            this.labelStarter2.Name = "labelStarter2";
+            this.labelStarter2.Size = new System.Drawing.Size(49, 13);
+            this.labelStarter2.TabIndex = 15;
+            this.labelStarter2.Text = "Jibanyan";
+            // 
+            // comboBoxSetStarter2
+            // 
+            this.comboBoxSetStarter2.Enabled = false;
+            this.comboBoxSetStarter2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxSetStarter2.FormattingEnabled = true;
+            this.comboBoxSetStarter2.Location = new System.Drawing.Point(242, 48);
+            this.comboBoxSetStarter2.Name = "comboBoxSetStarter2";
+            this.comboBoxSetStarter2.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxSetStarter2.TabIndex = 14;
+            // 
+            // labelStarter1
+            // 
+            this.labelStarter1.AutoSize = true;
+            this.labelStarter1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStarter1.Location = new System.Drawing.Point(187, 27);
+            this.labelStarter1.Name = "labelStarter1";
+            this.labelStarter1.Size = new System.Drawing.Size(49, 13);
+            this.labelStarter1.TabIndex = 13;
+            this.labelStarter1.Text = "Jibanyan";
+            // 
             // comboBoxSetStarter1
             // 
             this.comboBoxSetStarter1.Enabled = false;
@@ -2033,35 +2068,41 @@ namespace YKWrandomizer
             this.label4.Text = "Randomize...";
             this.label4.Visible = false;
             // 
-            // labelStarter1
+            // groupBoxActionPercentage
             // 
-            this.labelStarter1.AutoSize = true;
-            this.labelStarter1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelStarter1.Location = new System.Drawing.Point(187, 27);
-            this.labelStarter1.Name = "labelStarter1";
-            this.labelStarter1.Size = new System.Drawing.Size(49, 13);
-            this.labelStarter1.TabIndex = 13;
-            this.labelStarter1.Text = "Jibanyan";
+            this.groupBoxActionPercentage.Controls.Add(this.radioButtonActionPercentage2);
+            this.groupBoxActionPercentage.Controls.Add(this.radioButtonActionPercentage1);
+            this.groupBoxActionPercentage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxActionPercentage.Location = new System.Drawing.Point(398, 137);
+            this.groupBoxActionPercentage.Name = "groupBoxActionPercentage";
+            this.groupBoxActionPercentage.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxActionPercentage.TabIndex = 36;
+            this.groupBoxActionPercentage.TabStop = false;
+            this.groupBoxActionPercentage.Text = "Yokai Action Percentage";
             // 
-            // labelStarter2
+            // radioButtonActionPercentage2
             // 
-            this.labelStarter2.AutoSize = true;
-            this.labelStarter2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelStarter2.Location = new System.Drawing.Point(187, 53);
-            this.labelStarter2.Name = "labelStarter2";
-            this.labelStarter2.Size = new System.Drawing.Size(49, 13);
-            this.labelStarter2.TabIndex = 15;
-            this.labelStarter2.Text = "Jibanyan";
+            this.radioButtonActionPercentage2.AutoSize = true;
+            this.radioButtonActionPercentage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonActionPercentage2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonActionPercentage2.Name = "radioButtonActionPercentage2";
+            this.radioButtonActionPercentage2.Size = new System.Drawing.Size(65, 17);
+            this.radioButtonActionPercentage2.TabIndex = 7;
+            this.radioButtonActionPercentage2.Text = "Random";
+            this.radioButtonActionPercentage2.UseVisualStyleBackColor = true;
             // 
-            // comboBoxSetStarter2
+            // radioButtonActionPercentage1
             // 
-            this.comboBoxSetStarter2.Enabled = false;
-            this.comboBoxSetStarter2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxSetStarter2.FormattingEnabled = true;
-            this.comboBoxSetStarter2.Location = new System.Drawing.Point(242, 48);
-            this.comboBoxSetStarter2.Name = "comboBoxSetStarter2";
-            this.comboBoxSetStarter2.Size = new System.Drawing.Size(137, 21);
-            this.comboBoxSetStarter2.TabIndex = 14;
+            this.radioButtonActionPercentage1.AutoSize = true;
+            this.radioButtonActionPercentage1.Checked = true;
+            this.radioButtonActionPercentage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonActionPercentage1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonActionPercentage1.Name = "radioButtonActionPercentage1";
+            this.radioButtonActionPercentage1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonActionPercentage1.TabIndex = 6;
+            this.radioButtonActionPercentage1.TabStop = true;
+            this.radioButtonActionPercentage1.Text = "Unchanged";
+            this.radioButtonActionPercentage1.UseVisualStyleBackColor = true;
             // 
             // RandomizerWindow
             // 
@@ -2164,6 +2205,8 @@ namespace YKWrandomizer
             this.groupBoxGivenYokai.PerformLayout();
             this.groupBoxRequestedYokai.ResumeLayout(false);
             this.groupBoxRequestedYokai.PerformLayout();
+            this.groupBoxActionPercentage.ResumeLayout(false);
+            this.groupBoxActionPercentage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2325,5 +2368,8 @@ namespace YKWrandomizer
         private System.Windows.Forms.Label labelStarter2;
         private System.Windows.Forms.ComboBox comboBoxSetStarter2;
         private System.Windows.Forms.Label labelStarter1;
+        private System.Windows.Forms.GroupBox groupBoxActionPercentage;
+        private System.Windows.Forms.RadioButton radioButtonActionPercentage2;
+        private System.Windows.Forms.RadioButton radioButtonActionPercentage1;
     }
 }

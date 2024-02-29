@@ -92,6 +92,7 @@
     <Compile Include="Tools\Crc32.cs" />
     <Compile Include="Tools\SubMemoryStream.cs" />
     <Compile Include="Tools\VirtualDirectory.cs" />
+    <Compile Include="Yokai Watch\Common\Battles\ActionPercentages.cs" />
     <Compile Include="Yokai Watch\Common\Battles\BossBattles.cs" />
     <Compile Include="Yokai Watch\Common\Moveset\Attacks.cs" />
     <Compile Include="Yokai Watch\Common\Moveset\Inspirits.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Tools\Option.cs" />
     <Compile Include="Tools\BinaryDataReader.cs" />
     <Compile Include="Tools\RandomNumber.cs" />
+    <Compile Include="Yokai Watch\Common\Yokais\StaticYokais.cs" />
     <Compile Include="Yokai Watch\Games\YW1\Logic\LegendConfig.cs" />
     <Compile Include="Yokai Watch\Games\YW1\Logic\CapsuleConfig.cs" />
     <Compile Include="Yokai Watch\Games\YW1\Logic\ShopConfig.cs" />
