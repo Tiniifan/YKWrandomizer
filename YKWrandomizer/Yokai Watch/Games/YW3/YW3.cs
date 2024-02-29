@@ -12,6 +12,7 @@ using YKWrandomizer.Level5.Binary;
 using YKWrandomizer.Level5.Binary.Logic;
 using YKWrandomizer.Yokai_Watch.Games.YW3.Logic;
 using YKWrandomizer.Yokai_Watch.Logic;
+using YKWrandomizer.Level5.Image;
 
 namespace YKWrandomizer.Yokai_Watch.Games.YW3
 {
@@ -984,9 +985,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 unchecked((int)0xF19FB431),
                 unchecked((int)0x510AC7CF),
                 unchecked((int)0x43BF6821),
-                unchecked((int)0x7EDF4191),
                 unchecked((int)0x67C470D0),
-                unchecked((int)0x4CE92313),
                 unchecked((int)0x2BCA94AF),
                 unchecked((int)0x16AABD1F),
                 unchecked((int)0x0FB18C5E),
@@ -1018,8 +1017,6 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 unchecked((int)0xAD5EE601),
                 unchecked((int)0x2F0E71D0),
                 unchecked((int)0x36154091),
-                unchecked((int)0x3DBBDE3E),
-                unchecked((int)0x24A0EF7F),
                 unchecked((int)0xA3E029CF),
                 unchecked((int)0xB1558621),
                 unchecked((int)0xE3581B63),
@@ -1033,36 +1030,41 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
             Dictionary<int, int> yokaiTransferAnimation = new Dictionary<int, int>()
             {
-                { unchecked((int)0xC6112648), unchecked((int)0x571CDF2B) },
-                { unchecked((int)0xADD74C4F), unchecked((int)0xD87E487C) },
-                { unchecked((int)0xD0A0B80A), unchecked((int)0xD87E487C) },
-                { unchecked((int)0x642C610D), unchecked((int)0x65EE0B3A) },
-                { unchecked((int)0x666ADF54), unchecked((int)0x65EE0B3A) },
-                { unchecked((int)0x67A8B563), unchecked((int)0x65EE0B3A) },
+                { unchecked((int)0xC6112648), unchecked((int)0x05357651) },
+                { unchecked((int)0xADD74C4F), unchecked((int)0xA3C41DF7) },
+                { unchecked((int)0xD0A0B80A), unchecked((int)0xA3C41DF7) },
+                { unchecked((int)0x642C610D), unchecked((int)0xB3958AD0) },
+                { unchecked((int)0x666ADF54), unchecked((int)0xB3958AD0) },
+                { unchecked((int)0x67A8B563), unchecked((int)0xB3958AD0) },
                 { unchecked((int)0x9B121E4F), unchecked((int)0x2A42A425) },
                 { unchecked((int)0x82092F0E), unchecked((int)0x2A42A425) },
-                { unchecked((int)0xBFBB2BA4), unchecked((int)0x4AED8F3D) },
+                { unchecked((int)0xBFBB2BA4), unchecked((int)0xCC79FD93) },
                 { unchecked((int)0xC0753E10), unchecked((int)0xEF54D8E0) },
                 { unchecked((int)0x0D239B68), unchecked((int)0x0CE1F15F) },
                 { unchecked((int)0x1438AA29), unchecked((int)0x0CE1F15F) },
                 { unchecked((int)0x3F15F9EA), unchecked((int)0x0CE1F15F) },
-                { unchecked((int)0x8BF32C28), unchecked((int)0x12ACFD9C) },
-                { unchecked((int)0x89B59271), unchecked((int)0x0BB7CCDD) },
+                { unchecked((int)0x8BF32C28), unchecked((int)0xCA592025) },
+                { unchecked((int)0x89B59271), unchecked((int)0xCA592025) },
                 { unchecked((int)0x2A865716), unchecked((int)0x0AE34E1E) },
                 { unchecked((int)0xDAD67CC7), unchecked((int)0xDB1416F0) },
-                { unchecked((int)0x960AB5A2), unchecked((int)0xC5AD7A9D) },
+                { unchecked((int)0x960AB5A2), unchecked((int)0x4B17BF0B) },
                 { unchecked((int)0x0141366E), unchecked((int)0x226C131D) },
                 { unchecked((int)0x13F49980), unchecked((int)0xC5AD7A9D) },
-                { unchecked((int)0xAB48FEE5), unchecked((int)0x3365E026) },
+                { unchecked((int)0xAB48FEE5), unchecked((int)0xFEA94B75) },
                 { unchecked((int)0x369FC65C), unchecked((int)0x550C874C) },
                 { unchecked((int)0x8E23A139), unchecked((int)0x378367AE) },
                 { unchecked((int)0x9C960ED7), unchecked((int)0x1EE81D2E) },
-                { unchecked((int)0xE3581B63), unchecked((int)0x5B327E5F) },
-                { unchecked((int)0xE29A7154), unchecked((int)0x5B327E5F) },
-                { unchecked((int)0xE0DCCF0D), unchecked((int)0x5B327E5F) },
-                { unchecked((int)0xE11EA53A), unchecked((int)0x5B327E5F) },
-                { unchecked((int)0xE451B3BF), unchecked((int)0x5B327E5F) },
-
+                { unchecked((int)0xE3581B63), unchecked((int)0x229873B3) },
+                { unchecked((int)0xE29A7154), unchecked((int)0x229873B3) },
+                { unchecked((int)0xE0DCCF0D), unchecked((int)0x229873B3) },
+                { unchecked((int)0xE11EA53A), unchecked((int)0x229873B3) },
+                { unchecked((int)0xE451B3BF), unchecked((int)0x229873B3) },
+                { unchecked((int)0xDDD40C4D), unchecked((int)0x01B556C0) },
+                { unchecked((int)0x8865DB96), unchecked((int)0xC0A33C49) },
+                { unchecked((int)0x67C470D0), unchecked((int)0x2B6E964A) },
+                { unchecked((int)0x43BF6821), unchecked((int)0x3C211FDE) },
+                { unchecked((int)0xCFEC1BE7), unchecked((int)0xAB6A9C12) },
+                { unchecked((int)0xA3E029CF), unchecked((int)0xF3098C44) },
             };
 
             List<int> dontRezize = new List<int>()
@@ -1161,31 +1163,31 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                             }
                         }
 
-                        if (yokaiCharascale.Scale1 == 0)
+                        if (yokaiCharascale.Scale1 <= 0)
                         {
                             yokaiCharascale.Scale1 = 1f;
                         }
-                        if (yokaiCharascale.Scale2 == 0)
+                        if (yokaiCharascale.Scale2 <= 0)
                         {
                             yokaiCharascale.Scale2 = 1f;
                         }
-                        if (yokaiCharascale.Scale3 == 0)
+                        if (yokaiCharascale.Scale3 <= 0)
                         {
                             yokaiCharascale.Scale3 = 1f;
                         }
-                        if (yokaiCharascale.Scale4 == 0)
+                        if (yokaiCharascale.Scale4 <= 0)
                         {
                             yokaiCharascale.Scale4 = 1f;
                         }
-                        if (yokaiCharascale.Scale5 == 0)
+                        if (yokaiCharascale.Scale5 <= 0)
                         {
                             yokaiCharascale.Scale5 = 0.5f;
                         }
-                        if (yokaiCharascale.Scale6 == 0)
+                        if (yokaiCharascale.Scale6 <= 0)
                         {
                             yokaiCharascale.Scale6 = 1f;
                         }
-                        if (yokaiCharascale.Scale7 == 0)
+                        if (yokaiCharascale.Scale7 <= 0)
                         {
                             yokaiCharascale.Scale7 = 1f;
                         }
@@ -1251,15 +1253,42 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
 
                 if (addFile)
                 {
-                    // Add animation
-                    if (yokaiTransferAnimation.ContainsKey(unbefriendableYokaiBaseHash))
-                    {
-                        ICharabase sourceBase = charabases.FirstOrDefault(x => x.BaseHash == yokaiTransferAnimation[unbefriendableYokaiBaseHash]);
+                    ICharabase sourceBase = charabases.FirstOrDefault(x => yokaiTransferAnimation.ContainsKey(unbefriendableYokaiBaseHash) && x.BaseHash == yokaiTransferAnimation[unbefriendableYokaiBaseHash]);
+                    string newCode = GameSupport.GetFileModelText(cloned.FileNamePrefix, cloned.FileNameNumber, cloned.FileNameVariant);
 
-                        if (sourceBase != null)
+                    // Add medal
+                    if (!Game.Directory.GetFolderFromFullPath("/data/menu/medal_icon/").Files.ContainsKey(newCode + ".xi"))
+                    {
+                        byte[] newIconMedal = null;
+
+                        if (Game.Directory.GetFolderFromFullPath("/data/menu/face_icon/").Files.ContainsKey(newCode + ".xi"))
+                        {
+                            // Custom
+                            Bitmap faceIcon = IMGC.ToBitmap(Game.Directory.GetFileFromFullPath("/data/menu/face_icon/" + newCode + ".xi"));
+                            Bitmap template = (Bitmap)Image.FromStream(new ResourceReader("y_medal_template_no_icon.png").GetResourceStream());
+
+                            template = Draw.DrawImage(template, 4, 3, faceIcon, 54, 54, false);
+                            newIconMedal = IMGC.ToIMGC(template, new RGBA8());
+                        }
+                        else
+                        {
+                            // No custom
+
+                            newIconMedal = IMGC.ToIMGC((Bitmap)Image.FromStream(new ResourceReader("y_medal_template_no_icon.png").GetResourceStream()), new RGBA8());
+                        }
+
+                        if (newIconMedal != null)
+                        {
+                            Game.Directory.GetFolderFromFullPath("/data/menu/medal_icon/").AddFile(newCode + ".xi", new SubMemoryStream(newIconMedal));
+                        }
+                    }
+
+                    if (sourceBase != null )
+                    {
+                        // Add animation
+                        if (yokaiTransferAnimation.ContainsKey(unbefriendableYokaiBaseHash))
                         {
                             string sourceCode = GameSupport.GetFileModelText(sourceBase.FileNamePrefix, sourceBase.FileNameNumber, sourceBase.FileNameVariant);
-                            string newCode = GameSupport.GetFileModelText(cloned.FileNamePrefix, cloned.FileNameNumber, cloned.FileNameVariant);
                             VirtualDirectory outputDirectory = Game.Directory.GetFolderFromFullPath("/data/character/" + newCode);
 
                             foreach (KeyValuePair<string, SubMemoryStream> file in Game.Directory.GetFolderFromFullPath("/data/character/" + sourceCode).Files)
@@ -1267,15 +1296,15 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                                 if (!file.Key.Contains("_p00") && !file.Key.Contains("_p10"))
                                 {
                                     string fileNewName = file.Key.Replace(sourceCode, newCode);
+
                                     if (!outputDirectory.Files.ContainsKey(fileNewName))
                                     {
                                         outputDirectory.AddFile(fileNewName, file.Value);
                                     }
-                                    
+
                                 }
                             }
                         }
-
                     }
                 }
             }

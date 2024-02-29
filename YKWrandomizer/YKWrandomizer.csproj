@@ -262,6 +262,8 @@
   <ItemGroup>
     <Content Include="Icon.ico" />
     <Content Include="LICENSE-APACHE.txt" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_template.png" />
+    <EmbeddedResource Include="Yokai Watch\Common\Medals\y_medal_template_no_icon.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
