@@ -577,5 +577,71 @@ namespace YKWrandomizer.Level5.Binary
 
             return totalCount;
         }
+
+        public void UpdateStrings(int key, string newText)
+        {
+            if (Strings.ContainsKey(key))
+            {
+                int offset = 0;
+                Strings[key] = newText;
+
+                Dictionary<int, string> newStrings = new Dictionary<int, string>();
+                Dictionary<int, int> newOffset = new Dictionary<int, int>();
+
+                foreach (KeyValuePair<int, string> kvp in Strings.OrderBy(kv => kv.Key))
+                {
+                    newStrings.Add(offset, kvp.Value);
+                    newOffset.Add(kvp.Key, offset);
+                    offset += Encoding.GetByteCount(kvp.Value) + 1;
+                }
+
+                foreach (Entry entry in Entries)
+                {
+                    entry.UpdateString(newOffset, newStrings);
+                }
+
+                Strings = newStrings;
+            }
+        }
+
+        private void UpdateStringsEntries(Dictionary<string, object> dictionary, Dictionary<int, int> indexes)
+        {
+            foreach (var kvp in dictionary)
+            {
+                if (kvp.Value is Dictionary<string, object> nestedDictionary)
+                {
+                    UpdateStringsEntries(nestedDictionary, indexes);
+                }
+                else if (kvp.Value is List<Variable> variables)
+                {
+                    foreach (Variable variable in variables)
+                    {
+                        if (variable.Type == Logic.Type.String)
+                        {
+                            int offset = (int)variable.Value;
+
+                            if (Strings.ContainsKey(offset))
+                            {
+                                variable.Value = indexes[(int)variable.Value];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public int InsertStrings(string newText)
+        {
+            int offset = 0;
+
+            if (Strings.Count > 0)
+            {
+                KeyValuePair<int, string> lastItem = Strings.ElementAt(Strings.Count - 1);
+                offset = lastItem.Key + Encoding.GetBytes(lastItem.Value).Length + 1;
+            }
+
+            Strings[offset] = newText;
+            return offset;
+        }
     }
 }

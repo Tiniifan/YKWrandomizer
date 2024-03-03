@@ -1245,6 +1245,121 @@ namespace YKWrandomizer.Yokai_Watch
             }
             else
             {
+                if (Game.Name == "Yo-Kai Watch 3")
+                {
+                    string[] mapNames = Game.GetMapWhoContainsEncounter();
+                    List<(IEncountTable, IEncountChara[])> storyBosses = new List<(IEncountTable, IEncountChara[])>();
+
+                    // Get all story bosses
+                    foreach (string mapName in mapNames)
+                    {
+                        (IEncountTable[], IEncountChara[]) encounterData = Game.GetMapEncounter(mapName);
+
+                        if (encounterData.Item2 != null)
+                        {
+                            foreach (IEncountTable encountTable in encounterData.Item1)
+                            {
+                                if (Game.BossBattles.ContainsKey(encountTable.EncountConfigHash))
+                                {
+                                    IEncountChara[] relatedYokais = encountTable.EncountOffsets.Where(x => x != -1).Select(x => (IEncountChara)encounterData.Item2[x].Clone()).ToArray();
+                                    storyBosses.Add(((IEncountTable)encountTable.Clone(), relatedYokais));
+                                }
+                            }
+
+                        }
+                    }
+
+                    // Randomize
+                    foreach (string mapName in mapNames)
+                    {
+                        var encounterDataNotTransformed = Game.GetMapEncounter(mapName);
+                        (IEncountTable[], List<IEncountChara>) encounterData = (
+                            encounterDataNotTransformed.Item1,
+                            encounterDataNotTransformed.Item2.ToList()
+                        );
+
+                        if (encounterData.Item2 != null)
+                        {
+                            for (int i = 0; i < encounterData.Item1.Length; i++)
+                            {
+                                if (Game.BossBattles.ContainsKey(encounterData.Item1[i].EncountConfigHash))
+                                {
+                                    int randomBoss = Seed.Next(storyBosses.Count);
+                                    (IEncountTable, IEncountChara[]) randomEncounterData = storyBosses[randomBoss];
+
+                                    // Set levels
+                                    int oldLevel = Game.BossBattles[storyBosses[randomBoss].Item1.EncountConfigHash];
+                                    int newLevel = Game.BossBattles[encounterData.Item1[i].EncountConfigHash];
+                                    int encountConfigHash = encounterData.Item1[i].EncountConfigHash;
+
+                                    // Transfer encount table
+                                    encounterData.Item1[i] = randomEncounterData.Item1;
+
+                                    // Keep right encount config hash
+                                    encounterData.Item1[i].EncountConfigHash = encountConfigHash;
+
+                                    // Reset encount offset
+                                    for (int j = 0; j < encounterData.Item1[i].EncountOffsets.Length; j++)
+                                    {
+                                        encounterData.Item1[i].EncountOffsets[j] = -1;
+                                    }
+
+                                    for (int j = 0; j < randomEncounterData.Item2.Length; j++)
+                                    {
+                                        // Transfer encount chara
+                                        encounterData.Item1[i].EncountOffsets[j] = encounterData.Item2.Count;
+
+                                        // Get charaparam of the boss
+                                        ICharaparam bossCharaparam = Charaparams.FirstOrDefault(x => x.ParamHash == randomEncounterData.Item2[j].ParamHash);
+
+                                        // Adapt the stats of the boss
+                                        if (bossCharaparam != null)
+                                        {
+                                            double ratioLevel = (double)newLevel / oldLevel;
+
+                                            if (oldLevel != newLevel)
+                                            {
+                                                // Get stats
+                                                int[] minStat = new int[5] { bossCharaparam.MinHP, bossCharaparam.MinStrength, bossCharaparam.MinSpirit, bossCharaparam.MinDefense, bossCharaparam.MinSpeed };
+                                                int[] maxStat = new int[5] { bossCharaparam.MaxHP, bossCharaparam.MaxStrength, bossCharaparam.MaxSpirit, bossCharaparam.MaxDefense, bossCharaparam.MaxSpeed };
+
+                                                for (int s = 0; s < 5; s++)
+                                                {
+                                                    minStat[s] = (int)(minStat[s] * ratioLevel);
+                                                    maxStat[s] = (int)(maxStat[s] * ratioLevel);
+                                                }
+
+                                                // Save
+                                                bossCharaparam.MinHP = minStat[0];
+                                                bossCharaparam.MinStrength = minStat[1];
+                                                bossCharaparam.MinSpirit = minStat[2];
+                                                bossCharaparam.MinDefense = minStat[3];
+                                                bossCharaparam.MinSpeed = minStat[4];
+                                                bossCharaparam.MaxHP = maxStat[0];
+                                                bossCharaparam.MaxStrength = maxStat[1];
+                                                bossCharaparam.MaxSpirit = maxStat[2];
+                                                bossCharaparam.MaxDefense = maxStat[3];
+                                                bossCharaparam.MaxSpeed = maxStat[4];
+                                                bossCharaparam.Experience = (int)(bossCharaparam.Experience * ratioLevel);
+                                                bossCharaparam.Experience = (int)(bossCharaparam.Money * ratioLevel);
+                                            }
+                                        }
+
+                                        // Insert the new boss
+                                        encounterData.Item2.Add(randomEncounterData.Item2[j]);
+                                    }
+
+                                    // Remove
+                                    storyBosses.RemoveAt(randomBoss);
+                                }
+                            }
+
+                            // Save 
+                            Game.SaveMapEncounter(mapName, encounterData.Item1, encounterData.Item2.ToArray());
+                        }
+                    }
+                }
+
                 // Get encounters
                 (IEncountTable[], IEncountChara[]) staticEncountersData = Game.GetStaticEncounters();
                 IEncountTable[] encountTables = staticEncountersData.Item1;
@@ -1252,14 +1367,25 @@ namespace YKWrandomizer.Yokai_Watch
 
                 // Get tables containing only boss battles
                 List<(IEncountTable, int)> bossEncountTables = Game.BossBattles
-                    .Select(bossBattle =>
+                .Select(bossBattle =>
+                {
+                    // Join table and supposed boss level
+                    IEncountTable originalEncountTable = encountTables.FirstOrDefault(x => x.EncountConfigHash == bossBattle.Key);
+
+                    if (originalEncountTable != null)
                     {
-                        // Join table and supposed boss level
-                        IEncountTable encountTable = (IEncountTable)encountTables.FirstOrDefault(x => x.EncountConfigHash == bossBattle.Key).Clone();
-                        return (encountTable, bossBattle.Value);
-                    })
-                    .Where(tuple => tuple.encountTable != null)
-                    .ToList();
+                        // Clone the table only if it's not null
+                        IEncountTable clonedEncountTable = (IEncountTable)originalEncountTable.Clone();
+                        return (clonedEncountTable, bossBattle.Value);
+                    }
+                    else
+                    {
+                        // If the original table is null, return a tuple with null
+                        return ((IEncountTable)null, bossBattle.Value);
+                    }
+                })
+                .Where(tuple => tuple.Item1 != null) // Filter out tuples where the cloned table is null
+                .ToList();
 
                 int[] randomOrder = Seed.GetNumbers(0, bossEncountTables.Count, bossEncountTables.Count).ToArray();
 
@@ -1994,6 +2120,13 @@ namespace YKWrandomizer.Yokai_Watch
                            || (charaparam.ScoutableHash == 0x00 && charaparam.ShowInMedalium == true && tribeName != "Boss" && tribeName != "Untribe");
                 })
                 .ToArray(), charabasesCloned.ToArray());
+        }
+
+        public void DebugMe(bool debugMe)
+        {
+            if (debugMe == false) return;
+
+            Game.DebugMe();
         }
     }
 }

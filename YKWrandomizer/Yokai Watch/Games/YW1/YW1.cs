@@ -874,5 +874,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW1
             // Save
             SaveShop("shop_shpN007.cfg", shopConfigs, null);
         }
+
+        public void DebugMe()
+        {
+
+        }
     }
 }

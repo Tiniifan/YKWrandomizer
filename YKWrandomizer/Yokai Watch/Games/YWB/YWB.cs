@@ -521,5 +521,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YWB
         {
 
         }
+
+        public void DebugMe()
+        {
+
+        }
     }
 }

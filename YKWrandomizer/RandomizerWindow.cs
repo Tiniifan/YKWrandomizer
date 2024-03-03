@@ -94,7 +94,7 @@ namespace YKWrandomizer
                     labelStarter1.Text = "Cadin";
                     labelStarter2.Visible = false;
                     comboBoxSetStarter2.Visible = false;
-                    groupBoxWildMiscellaneous.Enabled = true;
+                    checkBoxDebugMe.Enabled = false;
                 }
                 else if (game is YW2)
                 {
@@ -107,7 +107,7 @@ namespace YKWrandomizer
                     labelStarter1.Text = "Jibanyan";
                     labelStarter2.Visible = false;
                     comboBoxSetStarter2.Visible = false;
-                    groupBoxWildMiscellaneous.Enabled = true;
+                    checkBoxDebugMe.Enabled = false;
                 }
                 else if (game is YW3)
                 {
@@ -120,7 +120,7 @@ namespace YKWrandomizer
                     labelStarter2.Text = "Usapyon";
                     labelStarter2.Visible = true;
                     comboBoxSetStarter2.Visible = true;
-                    groupBoxWildMiscellaneous.Enabled = false;
+                    checkBoxDebugMe.Enabled = true;
                 }
 
                 Randomizer = new Randomizer(game);
@@ -133,56 +133,56 @@ namespace YKWrandomizer
             }
         }
 
-        private async void RandomizeSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RandomizeSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             label4.Text = "Randomize";
             label4.Visible = true;
             progressBar1.Visible = true;
 
-            int totalTasks = 10;
+            int totalTasks = 11;
             progressBar1.Minimum = 0;
             progressBar1.Maximum = totalTasks;
             progressBar1.Value = 0;
             randomizeSaveToolStripMenuItem.Enabled = false;
 
-            await Task.Run(() =>
+            Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            Randomizer.SwapBosses(checkBoxSwapBosses.Checked, checkBoxStatScaling.Checked);
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            Randomizer.RandomizeShop(radioButtonShop2.Checked);
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            comboBoxSetStarter1.Invoke((Action)delegate
             {
-                Randomizer.RemoveUnscoutableYokai(checkBoxUnlockYokai.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeLegendary(radioButtonLegendaryYokai2.Checked, checkBoxRequirmentsLegendaryYokai.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.SwapBosses(checkBoxSwapBosses.Checked, checkBoxStatScaling.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeYokai(TabControlToDictOption(yokaiTabControl), numericUpDownBossBaseStat.Value);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeStatic(radioButtonStaticYokai2.Checked, numericUpDownStaticYokai.Value);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeWild(radioButtonWild2.Checked, numericUpDownWild.Value);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeShop(radioButtonShop2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeTreasureBox(radioButtonTreasureBox2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                Randomizer.RandomizeCrankKai(radioButtonCrankKai2.Checked);
-                progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
-
-                comboBoxSetStarter1.Invoke((Action)delegate
+                comboBoxSetStarter2.Invoke((Action)delegate
                 {
-                    comboBoxSetStarter2.Invoke((Action)delegate
-                    {
-                        Randomizer.RandomizeGiven(radioButtonGiven2.Checked, new int[] { comboBoxSetStarter1.SelectedIndex, comboBoxSetStarter2.SelectedIndex });
-                    });
+                    Randomizer.RandomizeGiven(radioButtonGiven2.Checked, new int[] { comboBoxSetStarter1.SelectedIndex, comboBoxSetStarter2.SelectedIndex });
                 });
-                    progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
             });
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
+
+            Randomizer.DebugMe(checkBoxDebugMe.Checked);
+            progressBar1.Invoke((Action)delegate { progressBar1.Value++; });
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = Path.GetFileName(openFileDialog1.FileName);

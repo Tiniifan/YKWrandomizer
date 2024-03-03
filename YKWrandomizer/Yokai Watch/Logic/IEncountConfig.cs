@@ -17,5 +17,10 @@
     {
         public int ParamHash { get; set; }
         public int Level { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

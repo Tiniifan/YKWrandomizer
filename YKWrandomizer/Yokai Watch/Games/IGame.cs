@@ -116,5 +116,7 @@ namespace YKWrandomizer.Yokai_Watch.Games
         void FixArea();
 
         void FixShop();
+
+        void DebugMe();
     }
 }

@@ -76,39 +76,80 @@ namespace YKWrandomizer.Yokai_Watch.Common.Battles
 
         public static Dictionary<int, int> YW3 = new Dictionary<int, int>()
         {
-            {unchecked((int)0x59653864), 35 },
-            {unchecked((int)0x11853600), 40 },
-            {unchecked((int)0x59987A7E), 50 },
-            {unchecked((int)0xA4F0460D), 60 },
-            {unchecked((int)0x95185C90), 70 },
-            {unchecked((int)0x336F5724), 80 },
-            {unchecked((int)0xF3D91E18), 60 },
-            {unchecked((int)0x685A4693), 65 },
-            {unchecked((int)0xE6D54170), 70 },
-            {unchecked((int)0x127DF3EA), 10 },
-            {unchecked((int)0x16FE5BD8), 15 }, // Supermanager
-            {unchecked((int)0xFC7392C6), 15 },
-            {unchecked((int)0x00C85C04), 20 },
-            {unchecked((int)0x99C10DBE), 25 },
-            {unchecked((int)0xEEC63D28), 30 },
-            {unchecked((int)0x70A2A88B), 40 },
-            {unchecked((int)0xB8743B61), 35 },
-            {unchecked((int)0x567A5A4D), 45 },
-            {unchecked((int)0xC81ECFEE), 45 },
-            {unchecked((int)0xBF19FF78), 50 },
-            {unchecked((int)0x25A303D8), 25 },
-            {unchecked((int)0xCBAD62F4), 60 },
-            {unchecked((int)0x55C9F757), 65 },
-            {unchecked((int)0x22CEC7C1), 50 },
-            {unchecked((int)0x9D1F64BD), 60 },
-            {unchecked((int)0x04163507), 65 },
-            {unchecked((int)0x73110591), 65 },
-            {unchecked((int)0xED759032), 70 },
-            {unchecked((int)0x9A72A0A4), 75 },
-            {unchecked((int)0x8FAACB53), 60 },
-            {unchecked((int)0x16A39AE9), 60 },
-            {unchecked((int)0x61A4AA7F), 60 },
-            {unchecked((int)0xFFC03FDC), 99 },
+            {unchecked((int)0x59653864), 35 }, // Boss rush
+            {unchecked((int)0xA4F0460D), 60 }, // Boss rush
+            {unchecked((int)0x95185C90), 70 }, // Boss rush
+            {unchecked((int)0x336F5724), 80 }, // Boss rush
+            {unchecked((int)0xF3D91E18), 60 }, // Boss rush
+            {unchecked((int)0x685A4693), 65 }, // Boss rush
+            {unchecked((int)0xE6D54170), 70 }, // Boss rush
+            {unchecked((int)0x127DF3EA), 10 }, // Boss rush
+            {unchecked((int)0x16FE5BD8), 15 }, // Boss rush Supermanager
+            {unchecked((int)0xFC7392C6), 15 }, // Boss rush
+            {unchecked((int)0x00C85C04), 20 }, // Boss rush
+            {unchecked((int)0x99C10DBE), 25 }, // Boss rush
+            {unchecked((int)0xEEC63D28), 30 }, // Boss rush
+            {unchecked((int)0x70A2A88B), 40 }, // Boss rush
+            {unchecked((int)0xB8743B61), 35 }, // Boss rush
+            {unchecked((int)0x567A5A4D), 45 }, // Boss rush
+            {unchecked((int)0xC81ECFEE), 45 }, // Boss rush
+            {unchecked((int)0xBF19FF78), 50 }, // Boss rush
+            {unchecked((int)0x25A303D8), 25 }, // Boss rush
+            {unchecked((int)0xCBAD62F4), 60 }, // Boss rush
+            {unchecked((int)0x55C9F757), 65 }, // Boss rush
+            {unchecked((int)0x22CEC7C1), 50 }, // Boss rush
+            {unchecked((int)0x9D1F64BD), 60 }, // Boss rush
+            {unchecked((int)0x04163507), 65 }, // Boss rush
+            {unchecked((int)0x73110591), 65 }, // Boss rush
+            {unchecked((int)0xED759032), 70 }, // Boss rush
+            {unchecked((int)0x9A72A0A4), 75 }, // Boss rush
+            {unchecked((int)0x8FAACB53), 60 }, // Boss rush
+            {unchecked((int)0x16A39AE9), 60 }, // Boss rush
+            {unchecked((int)0x61A4AA7F), 60 }, // Boss rush
+            {unchecked((int)0xFFC03FDC), 99 }, // Boss rush
+            {unchecked((int)0x8A066E8B), 25 }, // Story
+            {unchecked((int)0x59987A7E), 50 }, // Story
+            {unchecked((int)0x040F2432), 45 }, // Story
+            {unchecked((int)0xAC6F6707), 45 }, // Story
+            {unchecked((int)0x967BADEA), 70 }, // Story
+            {unchecked((int)0xB42976C2), 75 }, // Story
+            {unchecked((int)0x6F9C44F9), 70 }, // Story
+            {unchecked((int)0x54B1577D), 75 }, // Story
+            {unchecked((int)0x125E7D76), 80 }, // Story
+            {unchecked((int)0xD7B48B59), 85 }, // Story
+            {unchecked((int)0xA26A1853), 45 }, // Story
+            {unchecked((int)0x18E7D676), 35 }, // Story
+            {unchecked((int)0xE6530C2A), 60 }, // Story
+            // {unchecked((int)0xC06C69DE), 00 }, // Story
+            // {unchecked((int)0xC8A524AC), 00 }, // Story
+            {unchecked((int)0x688D22F9), 25 }, // Story
+            {unchecked((int)0xF1847343), 25 }, // Story
+            {unchecked((int)0x868343D5), 25 }, // Story
+            {unchecked((int)0x11853600), 40 }, // Story
+            // {unchecked((int)0x68296372), 00 }, // Story
+            {unchecked((int)0x4E1E2C27), 50 }, // Story
+            {unchecked((int)0x0CC66940), 40 }, // Story
+            {unchecked((int)0x7BC159D6), 40 }, // Story
+            {unchecked((int)0x44266724), 40 }, // Story
+            {unchecked((int)0x75E45BC9), 25 }, // Story
+            {unchecked((int)0x46AC6E15), 25 }, // Story
+            {unchecked((int)0x5E970EE2), 65 }, // Story
+            {unchecked((int)0x1CB6EC22), 20 }, // Story
+            {unchecked((int)0xD7EA3F87), 10 }, // Story
+            {unchecked((int)0x95CF38FA), 15 }, // Story
+            {unchecked((int)0xC82369F6), 25 }, // Story
+            {unchecked((int)0x7D5619FB), 75 }, // Story
+            {unchecked((int)0x06FE2243), 60 }, // Story
+            {unchecked((int)0xCA5422DD), 60 }, // Story
+            {unchecked((int)0xDD2F369E), 20 }, // Story
+            {unchecked((int)0xE04F1F2E), 60 }, // Story
+            {unchecked((int)0x7BCC47A5), 65 }, // Story
+            {unchecked((int)0xB766473B), 65 }, // Story
+            {unchecked((int)0x0E0F7E94), 70 }, // Story
+            {unchecked((int)0x0C3B2B5A), 80 }, // Story
+            {unchecked((int)0xC0912BC4), 50 }, // Story
+            {unchecked((int)0x4036304B), 99 }, // Story
+            {unchecked((int)0x9F0A31E3), 25 }, // Story
         };
 
         public static Dictionary<int, int> YWB = new Dictionary<int, int>()

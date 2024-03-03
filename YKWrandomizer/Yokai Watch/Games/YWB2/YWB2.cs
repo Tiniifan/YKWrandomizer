@@ -604,5 +604,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
         {
 
         }
+
+        public void DebugMe()
+        {
+
+        }
     }
 }

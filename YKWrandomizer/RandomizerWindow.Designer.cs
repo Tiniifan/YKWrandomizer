@@ -97,6 +97,9 @@ namespace YKWrandomizer
             this.radioButtonExperience2 = new System.Windows.Forms.RadioButton();
             this.radioButtonExperience1 = new System.Windows.Forms.RadioButton();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.groupBoxActionPercentage = new System.Windows.Forms.GroupBox();
+            this.radioButtonActionPercentage2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonActionPercentage1 = new System.Windows.Forms.RadioButton();
             this.groupBoxMiscellaneous = new System.Windows.Forms.GroupBox();
             this.checkBoxScaleEXP = new System.Windows.Forms.CheckBox();
             this.checkBoxScaleMoney = new System.Windows.Forms.CheckBox();
@@ -184,9 +187,7 @@ namespace YKWrandomizer
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
-            this.groupBoxActionPercentage = new System.Windows.Forms.GroupBox();
-            this.radioButtonActionPercentage2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonActionPercentage1 = new System.Windows.Forms.RadioButton();
+            this.checkBoxDebugMe = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -210,6 +211,7 @@ namespace YKWrandomizer
             this.groupBoxDrop.SuspendLayout();
             this.groupBoxExperience.SuspendLayout();
             this.tabPage6.SuspendLayout();
+            this.groupBoxActionPercentage.SuspendLayout();
             this.groupBoxMiscellaneous.SuspendLayout();
             this.groupBoxAttack.SuspendLayout();
             this.groupBoxInspirit.SuspendLayout();
@@ -237,7 +239,6 @@ namespace YKWrandomizer
             this.groupBoxShop.SuspendLayout();
             this.groupBoxGivenYokai.SuspendLayout();
             this.groupBoxRequestedYokai.SuspendLayout();
-            this.groupBoxActionPercentage.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -335,9 +336,9 @@ namespace YKWrandomizer
             this.checkBoxSwapModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxSwapModel.Location = new System.Drawing.Point(18, 28);
             this.checkBoxSwapModel.Name = "checkBoxSwapModel";
-            this.checkBoxSwapModel.Size = new System.Drawing.Size(85, 17);
+            this.checkBoxSwapModel.Size = new System.Drawing.Size(381, 17);
             this.checkBoxSwapModel.TabIndex = 11;
-            this.checkBoxSwapModel.Text = "Swap Model";
+            this.checkBoxSwapModel.Text = "Swap Model (do not enable if you want a good experience without softlock)";
             this.checkBoxSwapModel.UseVisualStyleBackColor = true;
             // 
             // groupBoxHatedFood
@@ -1049,6 +1050,42 @@ namespace YKWrandomizer
             this.tabPage6.TabIndex = 2;
             this.tabPage6.Text = "Param (2)";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxActionPercentage
+            // 
+            this.groupBoxActionPercentage.Controls.Add(this.radioButtonActionPercentage2);
+            this.groupBoxActionPercentage.Controls.Add(this.radioButtonActionPercentage1);
+            this.groupBoxActionPercentage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxActionPercentage.Location = new System.Drawing.Point(398, 137);
+            this.groupBoxActionPercentage.Name = "groupBoxActionPercentage";
+            this.groupBoxActionPercentage.Size = new System.Drawing.Size(187, 116);
+            this.groupBoxActionPercentage.TabIndex = 36;
+            this.groupBoxActionPercentage.TabStop = false;
+            this.groupBoxActionPercentage.Text = "Yokai Action Percentage";
+            // 
+            // radioButtonActionPercentage2
+            // 
+            this.radioButtonActionPercentage2.AutoSize = true;
+            this.radioButtonActionPercentage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonActionPercentage2.Location = new System.Drawing.Point(18, 50);
+            this.radioButtonActionPercentage2.Name = "radioButtonActionPercentage2";
+            this.radioButtonActionPercentage2.Size = new System.Drawing.Size(65, 17);
+            this.radioButtonActionPercentage2.TabIndex = 7;
+            this.radioButtonActionPercentage2.Text = "Random";
+            this.radioButtonActionPercentage2.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonActionPercentage1
+            // 
+            this.radioButtonActionPercentage1.AutoSize = true;
+            this.radioButtonActionPercentage1.Checked = true;
+            this.radioButtonActionPercentage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonActionPercentage1.Location = new System.Drawing.Point(18, 27);
+            this.radioButtonActionPercentage1.Name = "radioButtonActionPercentage1";
+            this.radioButtonActionPercentage1.Size = new System.Drawing.Size(81, 17);
+            this.radioButtonActionPercentage1.TabIndex = 6;
+            this.radioButtonActionPercentage1.TabStop = true;
+            this.radioButtonActionPercentage1.Text = "Unchanged";
+            this.radioButtonActionPercentage1.UseVisualStyleBackColor = true;
             // 
             // groupBoxMiscellaneous
             // 
@@ -2024,6 +2061,7 @@ namespace YKWrandomizer
             // 
             // groupBoxRequestedYokai
             // 
+            this.groupBoxRequestedYokai.Controls.Add(this.checkBoxDebugMe);
             this.groupBoxRequestedYokai.Controls.Add(this.checkBoxUnlockYokai);
             this.groupBoxRequestedYokai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxRequestedYokai.Location = new System.Drawing.Point(12, 259);
@@ -2068,41 +2106,16 @@ namespace YKWrandomizer
             this.label4.Text = "Randomize...";
             this.label4.Visible = false;
             // 
-            // groupBoxActionPercentage
+            // checkBoxDebugMe
             // 
-            this.groupBoxActionPercentage.Controls.Add(this.radioButtonActionPercentage2);
-            this.groupBoxActionPercentage.Controls.Add(this.radioButtonActionPercentage1);
-            this.groupBoxActionPercentage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxActionPercentage.Location = new System.Drawing.Point(398, 137);
-            this.groupBoxActionPercentage.Name = "groupBoxActionPercentage";
-            this.groupBoxActionPercentage.Size = new System.Drawing.Size(187, 116);
-            this.groupBoxActionPercentage.TabIndex = 36;
-            this.groupBoxActionPercentage.TabStop = false;
-            this.groupBoxActionPercentage.Text = "Yokai Action Percentage";
-            // 
-            // radioButtonActionPercentage2
-            // 
-            this.radioButtonActionPercentage2.AutoSize = true;
-            this.radioButtonActionPercentage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonActionPercentage2.Location = new System.Drawing.Point(18, 50);
-            this.radioButtonActionPercentage2.Name = "radioButtonActionPercentage2";
-            this.radioButtonActionPercentage2.Size = new System.Drawing.Size(65, 17);
-            this.radioButtonActionPercentage2.TabIndex = 7;
-            this.radioButtonActionPercentage2.Text = "Random";
-            this.radioButtonActionPercentage2.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonActionPercentage1
-            // 
-            this.radioButtonActionPercentage1.AutoSize = true;
-            this.radioButtonActionPercentage1.Checked = true;
-            this.radioButtonActionPercentage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonActionPercentage1.Location = new System.Drawing.Point(18, 27);
-            this.radioButtonActionPercentage1.Name = "radioButtonActionPercentage1";
-            this.radioButtonActionPercentage1.Size = new System.Drawing.Size(81, 17);
-            this.radioButtonActionPercentage1.TabIndex = 6;
-            this.radioButtonActionPercentage1.TabStop = true;
-            this.radioButtonActionPercentage1.Text = "Unchanged";
-            this.radioButtonActionPercentage1.UseVisualStyleBackColor = true;
+            this.checkBoxDebugMe.AutoSize = true;
+            this.checkBoxDebugMe.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxDebugMe.Location = new System.Drawing.Point(23, 49);
+            this.checkBoxDebugMe.Name = "checkBoxDebugMe";
+            this.checkBoxDebugMe.Size = new System.Drawing.Size(280, 17);
+            this.checkBoxDebugMe.TabIndex = 11;
+            this.checkBoxDebugMe.Text = "Unlock me (enable only if you are softlock in the story)";
+            this.checkBoxDebugMe.UseVisualStyleBackColor = true;
             // 
             // RandomizerWindow
             // 
@@ -2157,6 +2170,8 @@ namespace YKWrandomizer
             this.groupBoxExperience.ResumeLayout(false);
             this.groupBoxExperience.PerformLayout();
             this.tabPage6.ResumeLayout(false);
+            this.groupBoxActionPercentage.ResumeLayout(false);
+            this.groupBoxActionPercentage.PerformLayout();
             this.groupBoxMiscellaneous.ResumeLayout(false);
             this.groupBoxMiscellaneous.PerformLayout();
             this.groupBoxAttack.ResumeLayout(false);
@@ -2205,8 +2220,6 @@ namespace YKWrandomizer
             this.groupBoxGivenYokai.PerformLayout();
             this.groupBoxRequestedYokai.ResumeLayout(false);
             this.groupBoxRequestedYokai.PerformLayout();
-            this.groupBoxActionPercentage.ResumeLayout(false);
-            this.groupBoxActionPercentage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2371,5 +2384,6 @@ namespace YKWrandomizer
         private System.Windows.Forms.GroupBox groupBoxActionPercentage;
         private System.Windows.Forms.RadioButton radioButtonActionPercentage2;
         private System.Windows.Forms.RadioButton radioButtonActionPercentage1;
+        private System.Windows.Forms.CheckBox checkBoxDebugMe;
     }
 }

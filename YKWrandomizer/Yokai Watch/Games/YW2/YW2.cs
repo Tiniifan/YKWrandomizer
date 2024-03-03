@@ -1040,5 +1040,10 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
                 SaveShop(files[i], shopConfigs, validConditions);
             }
         }
+
+        public void DebugMe()
+        {
+
+        }
     }
 }
