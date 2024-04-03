@@ -1341,7 +1341,7 @@ namespace YKWrandomizer.Yokai_Watch
                                                 bossCharaparam.MaxDefense = maxStat[3];
                                                 bossCharaparam.MaxSpeed = maxStat[4];
                                                 bossCharaparam.Experience = (int)(bossCharaparam.Experience * ratioLevel);
-                                                bossCharaparam.Experience = (int)(bossCharaparam.Money * ratioLevel);
+                                                bossCharaparam.Money = (int)(bossCharaparam.Money * ratioLevel);
                                             }
                                         }
 
@@ -1445,7 +1445,7 @@ namespace YKWrandomizer.Yokai_Watch
                                             bossCharaparam.MaxDefense = maxStat[3];
                                             bossCharaparam.MaxSpeed = maxStat[4];
                                             bossCharaparam.Experience = (int)(bossCharaparam.Experience * ratioLevel);
-                                            bossCharaparam.Experience = (int)(bossCharaparam.Money * ratioLevel);
+                                            bossCharaparam.Money = (int)(bossCharaparam.Money * ratioLevel);
                                         }
                                     }
                                 }

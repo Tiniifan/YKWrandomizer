@@ -122,9 +122,9 @@ namespace YKWrandomizer.Yokai_Watch.Common.Battles
             {unchecked((int)0xE6530C2A), 60 }, // Story
             // {unchecked((int)0xC06C69DE), 00 }, // Story
             // {unchecked((int)0xC8A524AC), 00 }, // Story
-            {unchecked((int)0x688D22F9), 25 }, // Story
-            {unchecked((int)0xF1847343), 25 }, // Story
-            {unchecked((int)0x868343D5), 25 }, // Story
+            //{unchecked((int)0x688D22F9), 25 }, // Agent X - Story
+            //{unchecked((int)0xF1847343), 25 }, // Agent X - Story
+            //{unchecked((int)0x868343D5), 25 }, // Agent X - Story
             {unchecked((int)0x11853600), 40 }, // Story
             // {unchecked((int)0x68296372), 00 }, // Story
             {unchecked((int)0x4E1E2C27), 50 }, // Story

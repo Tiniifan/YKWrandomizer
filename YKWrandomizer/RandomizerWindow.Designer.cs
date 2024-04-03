@@ -182,12 +182,12 @@ namespace YKWrandomizer
             this.checkBoxSetStarter = new System.Windows.Forms.CheckBox();
             this.radioButtonGiven1 = new System.Windows.Forms.RadioButton();
             this.groupBoxRequestedYokai = new System.Windows.Forms.GroupBox();
+            this.checkBoxDebugMe = new System.Windows.Forms.CheckBox();
             this.checkBoxUnlockYokai = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkBoxDebugMe = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -2071,6 +2071,17 @@ namespace YKWrandomizer
             this.groupBoxRequestedYokai.TabStop = false;
             this.groupBoxRequestedYokai.Text = "More Options";
             // 
+            // checkBoxDebugMe
+            // 
+            this.checkBoxDebugMe.AutoSize = true;
+            this.checkBoxDebugMe.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxDebugMe.Location = new System.Drawing.Point(23, 49);
+            this.checkBoxDebugMe.Name = "checkBoxDebugMe";
+            this.checkBoxDebugMe.Size = new System.Drawing.Size(280, 17);
+            this.checkBoxDebugMe.TabIndex = 11;
+            this.checkBoxDebugMe.Text = "Unlock me (enable only if you are softlock in the story)";
+            this.checkBoxDebugMe.UseVisualStyleBackColor = true;
+            // 
             // checkBoxUnlockYokai
             // 
             this.checkBoxUnlockYokai.AutoSize = true;
@@ -2105,17 +2116,6 @@ namespace YKWrandomizer
             this.label4.TabIndex = 3;
             this.label4.Text = "Randomize...";
             this.label4.Visible = false;
-            // 
-            // checkBoxDebugMe
-            // 
-            this.checkBoxDebugMe.AutoSize = true;
-            this.checkBoxDebugMe.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxDebugMe.Location = new System.Drawing.Point(23, 49);
-            this.checkBoxDebugMe.Name = "checkBoxDebugMe";
-            this.checkBoxDebugMe.Size = new System.Drawing.Size(280, 17);
-            this.checkBoxDebugMe.TabIndex = 11;
-            this.checkBoxDebugMe.Text = "Unlock me (enable only if you are softlock in the story)";
-            this.checkBoxDebugMe.UseVisualStyleBackColor = true;
             // 
             // RandomizerWindow
             // 

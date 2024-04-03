@@ -1001,13 +1001,13 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW2
 
             // Fidgephant quest
             (IEncountTable[], IEncountChara[]) map_t131g00_encounterData = GetMapEncounter("t131g00");
-            map_t131g00_encounterData.Item2[4].ParamHash = unchecked((int)0x5B364E19);
-            map_t131g00_encounterData.Item2[5].ParamHash = unchecked((int)0x5B364E19);
-            map_t131g00_encounterData.Item2[6].ParamHash = unchecked((int)0x5B364E19);
-            map_t131g00_encounterData.Item2[7].ParamHash = unchecked((int)0x5B364E19);
-            map_t131g00_encounterData.Item2[54].ParamHash = unchecked((int)0x5B364E19);
-            map_t131g00_encounterData.Item2[55].ParamHash = unchecked((int)0x5B364E19);
-            map_t131g00_encounterData.Item2[61].ParamHash = unchecked((int)0x5B364E19);
+            map_t131g00_encounterData.Item2[4].ParamHash = unchecked((int)0xC16DAFA4);
+            map_t131g00_encounterData.Item2[5].ParamHash = unchecked((int)0xC16DAFA4);
+            map_t131g00_encounterData.Item2[6].ParamHash = unchecked((int)0xC16DAFA4);
+            map_t131g00_encounterData.Item2[7].ParamHash = unchecked((int)0xC16DAFA4);
+            map_t131g00_encounterData.Item2[54].ParamHash = unchecked((int)0xC16DAFA4);
+            map_t131g00_encounterData.Item2[55].ParamHash = unchecked((int)0xC16DAFA4);
+            map_t131g00_encounterData.Item2[61].ParamHash = unchecked((int)0xC16DAFA4);
             SaveMapEncounter("t131g00", map_t131g00_encounterData.Item1, map_t131g00_encounterData.Item2);
         }
 

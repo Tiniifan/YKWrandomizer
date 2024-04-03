@@ -94,7 +94,7 @@ namespace YKWrandomizer.Yokai_Watch.Common
             {0x5674D2DE, "Employee"},
             {0xF003D96A, "Elite Employee"},
             {0x3062F43C, "Zombie"},
-            {0x18A78ECD, "Demandi"},
+            //{0x18A78ECD, "Demandi"},
             {0xE387EF89, "Ghoulfamily"},
             {0x45F0E43D, "Ghoulfamily"},
             {0x8057DAB3, "Ghoulfamily"},
