@@ -605,8 +605,8 @@ namespace YKWrandomizer.Yokai_Watch
                         int[] minStat = new int[5] { charaparam.MinHP, charaparam.MinStrength, charaparam.MinSpirit, charaparam.MinDefense, charaparam.MinSpeed };
                         int[] maxStat = new int[5] { charaparam.MaxHP, charaparam.MaxStrength, charaparam.MaxSpirit, charaparam.MaxDefense, charaparam.MaxSpeed };
 
-                        int[] randomMinStat = Seed.GetNumbers(0, 6, 5).ToArray();
-                        int[] randomMaxStat = Seed.GetNumbers(0, 6, 5).ToArray();
+                        int[] randomMinStat = Seed.GetNumbers(0, 5, 5).ToArray();
+                        int[] randomMaxStat = Seed.GetNumbers(0, 5, 5).ToArray();
 
                         charaparam.MinHP = minStat[randomMinStat[0]];
                         charaparam.MinStrength = minStat[randomMinStat[1]];

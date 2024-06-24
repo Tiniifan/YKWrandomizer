@@ -936,7 +936,6 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 unchecked((int)0xC4B68260),
                 unchecked((int)0xB3285090),
                 unchecked((int)0x288D1CFF),
-                unchecked((int)0x137A2F0B),
                 unchecked((int)0x8149C5EC),
             };
 
@@ -1051,6 +1050,7 @@ namespace YKWrandomizer.Yokai_Watch.Games.YW3
                 unchecked((int)0xE451B3BF),
                 unchecked((int)0xCF2A3EFE),
                 unchecked((int)0x9DF9AC47),
+                unchecked((int)0x7571DF3E),
             };
 
             Dictionary<int, int> yokaiTransferAnimation = new Dictionary<int, int>()
