@@ -35,6 +35,4 @@ The Tool is written in C# and the project is Open Source, everyone can contribut
 ![](https://i.imgur.com/1e6P844.png) |  ![](https://imgur.com/pXfFPHI.png)
 ![](https://media.discordapp.net/attachments/1087091821995360327/1115248584674254879/image.png)  |  ![](https://media.discordapp.net/attachments/1087091821995360327/1115252996796850186/image.png)
 
-[Join the Official Discord!](https://discord.gg/3wKp5ZxA9N)
-
 [Guide How to Randomize YKW games! 1.4 Guide](https://github.com/Tiniifan/YKWrandomizer/wiki)
